@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
+import "@/app/style/globals.css";
+import { CookiesProvider } from 'next-client-cookies/server';
+import ReduxProvider from "@/app/store/reduxProvider"
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,9 +17,18 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
+
+return (
+    <ReduxProvider>
+    <CookiesProvider>
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+       <div className="lg:container w-screen mx-auto"> 
+        {children}
+        </div>
+      </body>
     </html>
+    </CookiesProvider>
+    </ReduxProvider>
   );
 }
