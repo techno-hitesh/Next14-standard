@@ -6,6 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { useRouter } from "next/navigation";
 import { RegisterType } from "@/app/types/userTypes";
 import { registerUserAPI } from "@/app/services/apis/user";
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const initialFormState: RegisterType = {
@@ -43,11 +44,9 @@ const RegisterPage = () => {
     }else{
        setFormErrors({});
        setIsSubmit(true);
-       const registerResp = await registerUserAPI(JSON.stringify(value))
-       console.log("error registerResp",registerResp)   
+       const registerResp = await registerUserAPI(JSON.stringify(value))  
        if(registerResp?.status ==201){
-        console.log("registerResp",registerResp)
-        // localStorage.setItem("newUsers", JSON.stringify(value));
+        // console.log(" 201 registerResp",registerResp)
         toast.success("Successfully registered.");
         setTimeout(()=>{
           router.push("/login")

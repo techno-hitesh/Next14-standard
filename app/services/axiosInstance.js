@@ -15,8 +15,8 @@ const getToken = () => {
 axiosInstance.interceptors.request.use(
   request => {
     const storedToken = getToken();
-    console.log("tokn header",storedToken,authConfig.storageTokenKeyName)
-    if (storedToken) {
+    console.log("tokn headersss",storedToken)
+    if (storedToken !== null) {
       request.headers.Authorization = `Bearer ${storedToken}`
     }
 
@@ -32,9 +32,14 @@ axiosInstance.interceptors.response.use(
     return response
   },
   error => {
-    if (error.response?.status === 401) {
+    if (error.response?.status === 401 || 404) {
+      console.log("storedToken undefined",error.response)
+      deleteCookie(authConfig.storageTokenKeyName)
+      deleteCookie(authConfig.storageRole)
+
       localStorage.clear()
       if (typeof window !== 'undefined') {
+        console.log("storedToken undefined",)
         window.location.replace('/')
       }
     }
@@ -42,5 +47,10 @@ axiosInstance.interceptors.response.use(
     return Promise.reject(error)
   }
 )
+
+function deleteCookie(name) {
+  document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+}
+
 
 export default axiosInstance

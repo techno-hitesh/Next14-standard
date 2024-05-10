@@ -3,4 +3,3 @@ export default {
     storageRole:"userRole",
     toastShownBefore:"toastShownBefore"
 }
-  

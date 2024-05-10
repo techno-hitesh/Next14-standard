@@ -3,7 +3,7 @@ import type { NextRequest } from 'next/server'
 import auth from "@/app/configs/auth"
  
 // This function can be marked `async` if using `await` inside
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
  
 
   const path = request.nextUrl.pathname;
@@ -43,7 +43,8 @@ export const config = {
         '/' ,
         '/login',
         '/register',
-        '/dashboard'
+        '/dashboard/:path*',
+        '/dashboard/cart'
     ],
 }
 

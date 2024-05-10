@@ -46,7 +46,7 @@ const Login = () => {
           
           console.log("userRoleAPI", userResp)
 
-          if (userResp) {
+          if (userResp.status == 200) {
 
             setIsSubmit(false);
             // dispatch(addUser(userResp));
@@ -57,7 +57,7 @@ const Login = () => {
 
               console.log("enter in user")
               cookies.set(authConfig.storageRole, role)
-              localStorage.setItem(authConfig.storageTokenKeyName, role)
+              localStorage.setItem(authConfig.storageRole, role)
 
               router.push("/dashboard");
             }
