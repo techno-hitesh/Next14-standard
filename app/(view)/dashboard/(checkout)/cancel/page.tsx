@@ -6,9 +6,9 @@ const CancelForm = () => {
 
   const router = useRouter();
 
-  // setTimeout(()=>{
-  //   router.replace("/dashboard/products")
-  // },2000)
+  setTimeout(()=>{
+    router.replace("/dashboard/products")
+  },2000)
   return (
     <div className="bg-gray-100 h-screen">
       <div className="bg-white p-6  md:mx-auto">
