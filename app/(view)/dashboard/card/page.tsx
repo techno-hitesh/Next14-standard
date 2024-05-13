@@ -103,7 +103,7 @@ const pageCard = () => {
             <img
               src="https://cdn.tailgrids.com/2.0/image/application/images/blogs/blog-01/image-02.jpg"
               alt="image"
-              className="w-full"
+              height={"50%"} width={"87%"}
             />
           </div>
           <div>
@@ -133,7 +133,8 @@ const pageCard = () => {
             <img
               src="https://cdn.tailgrids.com/2.0/image/application/images/blogs/blog-01/image-02.jpg"
               alt="image"
-              className="w-full"
+            //   className="w-full"
+              height={"50%"} width={"87%"}
             />
           </div>
           <div>
@@ -163,7 +164,7 @@ const pageCard = () => {
             <img
               src="https://cdn.tailgrids.com/2.0/image/application/images/blogs/blog-01/image-03.jpg"
               alt="image"
-              className="w-full"
+              className="w-10"
             />
           </div>
           <div>
@@ -193,7 +194,7 @@ const pageCard = () => {
 
 <div className="relative flex flex-col text-gray-700 bg-white shadow-md bg-clip-border rounded-xl w-96">
   <div className="relative mx-4 mt-4 overflow-hidden text-gray-700 bg-white shadow-lg bg-clip-border rounded-xl h-80">
-    <img src="https://docs.material-tailwind.com/img/team-3.jpg" alt="profile-picture" />
+    <img src="https://docs.material-tailwind.com/img/team-3.jpg" alt="profile-picture" height={"50%"} width={"87%"}/>
   </div>
   <div className="p-6 text-center">
     <h4 className="block mb-2 font-sans text-2xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">

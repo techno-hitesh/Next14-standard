@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useCookies } from 'next-client-cookies';
 import authConfig from "@/app/configs/auth"
 import UserModal from "./modal"
+import Link from "next/link";
 
 const Dropdown = (props:{checkerVal:string}) => {
     const cookies = useCookies();
@@ -30,13 +31,16 @@ const Dropdown = (props:{checkerVal:string}) => {
         cookies.remove(authConfig.storageTokenKeyName)
         cookies.remove(authConfig.storageRole)
         router.replace("/login")
+    }
 
+    const userPrfRedirect = ()=>{
+        setIsOpen(false);
+        setTimeout(()=>{
+            router.replace("/dashboard/profile")
+        },1000)
     }
 
 
-    const openUser = () =>{
-        setUserMdl(true)
-    }
     return (
         <>
         <div className='py-2 pb-3'>
@@ -56,23 +60,23 @@ const Dropdown = (props:{checkerVal:string}) => {
                     <div className="origin-top-right absolute right-0 mt-2 w-44 rounded-lg shadow-lg bg-white ring-1 ring-black ring-opacity-5">
                         <ul role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                              <li>
-                                <button
+                                <button type="submit"
                                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                    onClick={openUser}
+                                onClick={userPrfRedirect}
                                 >
                                     User Profile
                                 </button>
                             </li>
-                            {/*
+                            
                             <li>
-                                <a
-                                    href="#"
+                                <button
+                                    type="submit"
                                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                     onClick={closeDropdown}
                                 >
-                                    Option 2
-                                </a>
-                            </li> */}
+                                    Payments
+                                </button>
+                            </li>
                             <li>
                                 <span
                                     
