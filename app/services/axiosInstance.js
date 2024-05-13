@@ -39,7 +39,7 @@ axiosInstance.interceptors.response.use(
 
       localStorage.clear()
       if (typeof window !== 'undefined') {
-        console.log("storedToken undefined",)
+        console.log("storedToken undefined replace",)
         window.location.replace('/')
       }
     }

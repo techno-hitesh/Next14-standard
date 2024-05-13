@@ -1,6 +1,6 @@
 import { ToastContainer, toast } from 'react-toastify';
 import axiosInstance from "../../axiosInstance"
-import { apiRoutes,adminRoutes ,cartRoutes} from '../../ApiRoutes';
+import { apiRoutes,adminRoutes ,cartRoutes,payments} from '../../ApiRoutes';
 import { TokenType,UserType,RegisterType,addToCartType,updateCartItemType } from '@/app/types/userTypes';
 import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.css';
@@ -114,6 +114,17 @@ export const delCartQuantityAPI = async (params: string) =>{
     return response.data;
   } catch (err:any) {
     console.error("delCartQuantityAPI cartError:", err.response?.data?.message,err);
+    toast.error(err?.response?.data?.message || err?.message)
+    // throw error;
+  }
+}
+export const stripeSessionAPI = async (params: any) =>{
+  try {
+    const response = await axiosInstance.post(`${payments.createPayment}`,params)
+    console.log("enter in stripe----",params)
+    return response.data;
+  } catch (err:any) {
+    console.error("stripeSessionAPI cartError:", err.response?.data?.message,err);
     toast.error(err?.response?.data?.message || err?.message)
     // throw error;
   }

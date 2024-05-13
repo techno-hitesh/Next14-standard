@@ -2,12 +2,17 @@
 import React, { useEffect, useState } from 'react'
 import { getItemInCartAPI } from '@/app/services/apis/user'
 import { loadStripe } from '@stripe/stripe-js';
+import CheckoutForm from "../../components/checkoutForm"; 
 import axios from 'axios';
+import { getToCartAPI,updateCartItemAPI,delCartItemAPI,addToCartAPI ,delCartQuantityAPI,stripeSessionAPI} from '@/app/services/apis/user'
+import { useRouter } from "next/navigation"
+import Link from 'next/link';
 
 const CarTByID = ({ params }: { params: { id: any | string } }) => {
 
+    const router = useRouter();
 
-    const [cartItem, setCartItem] = useState([])
+    const [cartItem, setCartItem] = useState<any|[]>([])
     const [subTotal, setSubTotal] = useState("")
 
     const getCartById = async () => {
@@ -22,19 +27,75 @@ const CarTByID = ({ params }: { params: { id: any | string } }) => {
    const publishableKey:string|any =  process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY;
    const stripePromise = loadStripe(publishableKey);
 
+   
    const createCheckOutSession = async () => {
-    // const stripe = await stripePromise;
-    // const checkoutSession = await axios.post('/api/create-stripe-session', {
-    //   item: item,
-    // });
-    // const result = await stripe.redirectToCheckout({
-    //   sessionId: checkoutSession.data.id,
-    // });
-    // if (result.error) {
-    //   alert(result.error.message);
-    // }
+
+    const stripe:any = await stripePromise;
+
+    const items = {
+        totalProduct:[
+            {
+                "cartId":cartItem[0]?._id,
+                "productId": cartItem[0]?.productDetails?.productId,
+                "productName": cartItem[0]?.productDetails?.productName,
+                "productPrice": cartItem[0]?.productDetails?.productPrice,
+                "productDescription": cartItem[0]?.productDetails?.productDescription,
+                "productQuantity":cartItem[0]?.quantity
+            }                
+        ],
+        "totalCartAmount": subTotal
+    }
+  
+    const checkoutSession = await stripeSessionAPI(items);
+
+    console.log("checkoutSession*********",checkoutSession,"********",checkoutSession.sessionId)
+    if(checkoutSession.status == 201){
+
+        const result = await stripe.redirectToCheckout({
+            sessionId: checkoutSession.sessionId,
+
+        });
+
+        if (result.error) {
+        alert(result.error.message);
+        }
+    }
+    
   };
 
+
+  const handleAddToCart = async (productData:any) => {
+    const param = {
+      "productId": productData.productId,
+      "productName": productData.productName
+    }
+    const resp = await addToCartAPI(param)
+    // // console.log("Increments--------", resp)
+    if (resp.status == 200) {
+        getCartById();
+      // console.log("Increments-----", resp)
+      // router.replace("/dashboard/cart")
+    } 
+  }
+
+
+  const handleDelCartQuantity = async(id:any) =>{
+
+    const resp = await delCartQuantityAPI(id)
+    if(resp.status == 200){
+        getCartById();
+    }
+  }
+
+  const handleDelCartItem = async(id:string) =>{
+
+    console.log("remove cart--",id)
+    const resp = await delCartItemAPI(id);
+    if(resp.status == 200){
+        getCartById();
+      console.log("res del item--",resp)
+    }
+  }
 
 
     useEffect(() => {
@@ -43,6 +104,10 @@ const CarTByID = ({ params }: { params: { id: any | string } }) => {
     }, [])
 
 
+    const handleClose = () =>{
+        router.replace("/dashboard/products")
+    }
+  
     return (
         <>
 
@@ -61,7 +126,7 @@ const CarTByID = ({ params }: { params: { id: any | string } }) => {
                                         <div className="flex items-start justify-between">
                                             <h2 className="text-lg font-medium text-gray-900" id="slide-over-title">Shopping Cart</h2>
                                             <div className="ml-3 flex h-7 items-center">
-                                                <button type="button" className="relative -m-2 p-2 text-gray-400 hover:text-gray-500" >
+                                                <button type="button" className="relative -m-2 p-2 text-gray-400 hover:text-gray-500" onClick={handleClose} >
                                                     <span className="absolute -inset-0.5"></span>
                                                     <span className="sr-only">Close panel</span>
                                                     <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" aria-hidden="true">
@@ -75,7 +140,7 @@ const CarTByID = ({ params }: { params: { id: any | string } }) => {
                                             <div className="flow-root">
                                                 <ul role="list" className="-my-6 divide-y divide-gray-200">
 
-                                                    {cartItem && cartItem.length > 0 ? cartItem.map((data: any, i) => (
+                                                    {cartItem && cartItem.length > 0 ? cartItem.map((data: any) => (
 
 
                                                         <div key={data?.productDetails?.productId}>
@@ -96,28 +161,26 @@ const CarTByID = ({ params }: { params: { id: any | string } }) => {
                                                                     </div>
                                                                     <div className="flex flex-1 items-end justify-between text-sm">
                                                                         <p className="text-gray-500 font-bold">
-                                                                            {/* <button data-action="decrement" className=" mr-1 bg-gray-200 text-gray-600 hover:text-gray-700 hover:bg-gray-300 h-full w-10 rounded-l cursor-pointer outline-none" disabled={data?.quantity === 1 ? true : false} onClick={()=>handleDelCartQuantity(data._id)} > */}
-                                                                            {/* <span className="m-auto text-2xl font-thin">−</span>
-      </button> */}
+                                                                          <button data-action="decrement" className=" mr-1 bg-gray-200 text-gray-600 hover:text-gray-700 hover:bg-gray-300 h-full w-10 rounded-l cursor-pointer outline-none" disabled={data?.quantity === 1 ? true : false} onClick={()=>handleDelCartQuantity(data._id)} > 
+                                                                             <span className="m-auto text-2xl font-thin">−</span>
+      </button> 
 
                                                                             Qty {data?.quantity}
-                                                                            {/* <button
+                                                                            <button
             data-action="decrement"
             className="ml-1 bg-gray-200 text-gray-600 hover:text-gray-700 hover:bg-gray-300 h-full w-10 rounded-l cursor-pointer outline-none"
             onClick={() => handleAddToCart(data?.productDetails)} // Pass parameters if needed
         >
             <span className="m-auto text-2xl font-thin">+</span>
-        </button> */}
+        </button>
                                                                         </p>
-                                                                        {/* <div className="flex">
+                                                                        <div className="flex">
         <button type="button" className="font-medium text-red-600 hover:text-indigo-500" onClick={(e)=>handleDelCartItem(data?._id)}>Remove</button>
-
+        </div>
+ {/*
         <button type="button" className="font-medium text-yellow-600 ml-1 hover:text-indigo-500" onClick={(e)=>handleBuySingleCart(data?._id)}> Buy This Now</button>
        
       </div> */}
-
-
-
 
                                                                     </div>
 
@@ -140,6 +203,7 @@ const CarTByID = ({ params }: { params: { id: any | string } }) => {
 
                                         </div>
                                         <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
+                                          {/* <PaymentElement /> */}
                                         <div className="mt-6">
                                             <button className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700" onClick={createCheckOutSession}>Checkout</button>
                                         </div>
@@ -149,10 +213,10 @@ const CarTByID = ({ params }: { params: { id: any | string } }) => {
                                         <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                                             <p>
                                                 or
-                                                <button type="button" className="font-medium text-indigo-600 hover:text-indigo-500">
-                                                    Continue Shopping
-                                                    <span aria-hidden="true"> &rarr;</span>
-                                                </button>
+                                               <Link href="/dashboard/products" className="font-medium text-indigo-600 hover:text-indigo-500">
+                  Continue Shopping
+                  <span aria-hidden="true"> &rarr;</span>
+                </Link>
                                             </p>
                                         </div>
                                     </div>

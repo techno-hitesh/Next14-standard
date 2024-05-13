@@ -1,13 +1,15 @@
 "use client"
 import React, { useEffect, useState,MouseEvent } from 'react'
-import { getToCartAPI,updateCartItemAPI,delCartItemAPI,addToCartAPI ,delCartQuantityAPI} from '@/app/services/apis/user'
+import { getToCartAPI,updateCartItemAPI,delCartItemAPI,addToCartAPI ,delCartQuantityAPI,stripeSessionAPI} from '@/app/services/apis/user'
 import { useRouter } from "next/navigation"
+import { loadStripe } from '@stripe/stripe-js';
+import Link from 'next/link';
 
 const UserCart = () => {
 
   const router = useRouter();
 
-  const [getAllData, setGetAllData] = useState([])
+  const [getAllData, setGetAllData] = useState<any|[]>([])
   const [subTotal, setSubTotal] = useState("")
 
   const getAllCart = async () => {
@@ -81,6 +83,47 @@ const UserCart = () => {
     router.replace(`/dashboard/cart/${id}`)
   }
 
+  const publishableKey:string|any =  process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY;
+  const stripePromise = loadStripe(publishableKey);
+
+  const createCheckOutSession = async () => {
+
+    const totalProduct  = getAllData.map((cartItem:any)=>(
+              {
+                  "cartId":cartItem?._id,
+                  "productId": cartItem?.productDetails?.productId,
+                  "productName": cartItem?.productDetails?.productName,
+                  "productPrice": cartItem?.productDetails?.productPrice,
+                  "productDescription": cartItem?.productDetails?.productDescription,
+                  "productQuantity":cartItem?.quantity
+              }
+    ))
+
+    const totalCartAmount = subTotal
+    const formattedData = {
+      totalProduct,
+      totalCartAmount
+    };
+
+    const stripe:any = await stripePromise;
+
+    const checkoutSession = await stripeSessionAPI(formattedData);
+
+    console.log("checkoutSession*********",checkoutSession,"********",checkoutSession.sessionId)
+    if(checkoutSession.status == 201){
+
+        const result = await stripe.redirectToCheckout({
+            sessionId: checkoutSession.sessionId,
+            
+        });
+
+        if (result.error) {
+        alert(result.error.message);
+        }
+    }
+    
+  };
+
 
   return (
     <>
@@ -113,7 +156,7 @@ const UserCart = () => {
             <div className="mt-8">
               <div className="flow-root">
                 <ul role="list" className="-my-6 divide-y divide-gray-200">
-                  {getAllData && getAllData.length > 0 ? getAllData.map((data: any, i) => (
+                  {getAllData && getAllData.length > 0 ? getAllData.map((data: any) => (
 
                    
                     <div key={data?.productDetails?.productId}>
@@ -153,10 +196,6 @@ const UserCart = () => {
                             <button type="button" className="font-medium text-yellow-600 ml-1 hover:text-indigo-500" onClick={(e)=>handleBuySingleCart(data?._id)}> Buy This Now</button>
                            
                           </div>
-
-                          
-
-
                         </div>
 
                       </div>
@@ -178,7 +217,7 @@ const UserCart = () => {
             </div>
             <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
             <div className="mt-6">
-              <a href="#" className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700">Checkout</a>
+              <a href="#" className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700" onClick={createCheckOutSession}>Checkout</a>
             </div>
           </div>
 
@@ -186,10 +225,10 @@ const UserCart = () => {
           <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
               <p>
                 or
-                <button type="button" className="font-medium text-indigo-600 hover:text-indigo-500">
+                <Link href="/dashboard/products" className="font-medium text-indigo-600 hover:text-indigo-500">
                   Continue Shopping
                   <span aria-hidden="true"> &rarr;</span>
-                </button>
+                </Link>
               </p>
             </div>
             </div>
