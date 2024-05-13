@@ -4,6 +4,8 @@ import { getToCartAPI,updateCartItemAPI,delCartItemAPI,addToCartAPI ,delCartQuan
 import { useRouter } from "next/navigation"
 import { loadStripe } from '@stripe/stripe-js';
 import Link from 'next/link';
+import EmptyCart from "@/public/images/bag.svg";
+import Image from 'next/image';
 
 const UserCart = () => {
 
@@ -87,23 +89,45 @@ const UserCart = () => {
   const stripePromise = loadStripe(publishableKey);
 
   const createCheckOutSession = async () => {
+    console.log(getAllData.length)
 
-    const totalProduct  = getAllData.map((cartItem:any)=>(
-              {
-                  "cartId":cartItem?._id,
-                  "productId": cartItem?.productDetails?.productId,
-                  "productName": cartItem?.productDetails?.productName,
-                  "productPrice": cartItem?.productDetails?.productPrice,
-                  "productDescription": cartItem?.productDetails?.productDescription,
-                  "productQuantity":cartItem?.quantity
-              }
-    ))
+    let formattedData
+    if(getAllData.length ===1){
+        formattedData = {
+            totalProduct:[
+                {
+                    "cartId":getAllData[0]?._id,
+                    "productId": getAllData[0]?.productDetails?.productId,
+                    "productName": getAllData[0]?.productDetails?.productName,
+                    "productPrice": getAllData[0]?.productDetails?.productPrice,
+                    "productDescription": getAllData[0]?.productDetails?.productDescription,
+                    "productQuantity":getAllData[0]?.quantity
+                }                
+            ],
+            "totalCartAmount": subTotal
+        }
 
-    const totalCartAmount = subTotal
-    const formattedData = {
-      totalProduct,
-      totalCartAmount
-    };
+    }else if(getAllData.length >1){
+        const totalProduct  = getAllData.map((cartItem:any)=>(
+            {
+                "cartId":cartItem?._id,
+                "productId": cartItem?.productDetails?.productId,
+                "productName": cartItem?.productDetails?.productName,
+                "productPrice": cartItem?.productDetails?.productPrice,
+                "productDescription": cartItem?.productDetails?.productDescription,
+                "productQuantity":cartItem?.quantity
+            }
+        ))
+
+        const totalCartAmount = subTotal
+        formattedData = {
+          totalProduct,
+          totalCartAmount
+        };
+
+    }
+  
+
 
     const stripe:any = await stripePromise;
 
@@ -177,23 +201,25 @@ const UserCart = () => {
                         </div>
                         <div className="flex flex-1 items-end justify-between text-sm">
                           <p className="text-gray-500 font-bold">
-                          <button data-action="decrement" className=" mr-1 bg-gray-200 text-gray-600 hover:text-gray-700 hover:bg-gray-300 h-full w-10 rounded-l cursor-pointer outline-none" disabled={data?.quantity === 1 ? true : false} onClick={()=>handleDelCartQuantity(data._id)} >
+                          <button data-action="decrement" className=" mr-1 bg-gray-200 text-gray-600 hover:text-gray-700 hover:bg-gray-300 h-8 w-10 rounded-l cursor-pointer outline-none" disabled={data?.quantity === 1 ? true : false} onClick={()=>handleDelCartQuantity(data._id)} >
                             <span className="m-auto text-2xl font-thin">−</span>
                           </button>
 
                           Qty {data?.quantity}
                           <button
                                 data-action="decrement"
-                                className="ml-1 bg-gray-200 text-gray-600 hover:text-gray-700 hover:bg-gray-300 h-full w-10 rounded-l cursor-pointer outline-none"
+                                className="ml-1 bg-gray-200 text-gray-600 hover:text-gray-700 hover:bg-gray-300 h-8 w-10 rounded-l cursor-pointer outline-none"
                                 onClick={() => handleAddToCart(data?.productDetails)} // Pass parameters if needed
                             >
                                 <span className="m-auto text-2xl font-thin">+</span>
                             </button>
                           </p>
                           <div className="flex">
-                            <button type="button" className="font-medium text-red-600 hover:text-indigo-500" onClick={(e)=>handleDelCartItem(data?._id)}>Remove</button>
+                            <button type="button" className="font-medium text-red-600 hover:text-indigo-500 mr-9" onClick={(e)=>handleDelCartItem(data?._id)}>Remove</button>
 
+                            {getAllData && getAllData.length >1 ? 
                             <button type="button" className="font-medium text-yellow-600 ml-1 hover:text-indigo-500" onClick={(e)=>handleBuySingleCart(data?._id)}> Buy This Now</button>
+                            : ""}
                            
                           </div>
                         </div>
@@ -203,7 +229,15 @@ const UserCart = () => {
                     </div>
                  
 
-            )):"Empty Cart..."}
+            )):
+            <Image
+            priority
+            src={EmptyCart}
+            height={32}
+            width={32}
+            alt="Follow us on Twitter"
+        />
+          }
                 </ul>
               </div>
             </div>

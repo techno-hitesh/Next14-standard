@@ -1,18 +1,39 @@
 "use client"
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import Logo from "@/public/images/3.svg"
+import siteIcon from "@/public/images/4.svg"
 import { userRoute } from '../utils/navLink'
 import { usePathname } from 'next/navigation'
 import { NavbarUserType } from '@/app/types/userTypes'
-import Dropdown from './dropdown'
-
+import Dropdown from './dropdown';
+import { useDispatch, useSelector } from "react-redux"
+import { addUser } from '@/app/store/slices/userSlicer'
+import { getToCartAPI } from '@/app/services/apis/user'
 
 const Navbar = () => {
+   
 
     const pathname = usePathname()
     const [arrLink,setArrLink] = useState<[]|any>(userRoute)
+    const [subTotal, setSubTotal] = useState(0)
+
+    const getAllCart = async () => {
+        const resp = await getToCartAPI();
+        if (resp.status == 200) {
+          const datas = resp.data.cartItems.filter((data:any)=>{
+            if(data.message !== "Product not found"){
+                return data
+            }
+          })
+          setSubTotal(resp.data.totalCount);
+        }
+      }
+    
+      useEffect(() => {
+        getAllCart()
+      }, [])
 
 
     const links = pathname.startsWith("/dashboard") ? "/dashboard" : "#";
@@ -25,9 +46,9 @@ const Navbar = () => {
                         <Link href={links}>
                             <Image
                                 priority
-                                src={Logo}
-                                height={32}
-                                width={32}
+                                src={siteIcon}
+                                height={34}
+                                width={35}
                                 alt="Follow us on Twitter"
                             />
                         </Link>
@@ -46,9 +67,29 @@ const Navbar = () => {
                     </li>
                     ))}
                 </ul>
-                <Dropdown  checkerVal= {"Guest"}/>
 
-            </div>
+
+             
+            <Link href={`${links}/cart`}>
+                <div className="relative py-2">
+                    <div className="t-0 absolute left-6">
+                    {/* {subTotal >0 ? 
+                        <p className="flex h-2 w-2 items-center justify-center rounded-full bg-red-500 p-3 text-xs text-white">{subTotal}</p>:""} */}
+                    </div>
+                    <Image
+                        priority
+                        src={Logo}
+                        height={32}
+                        width={32}
+                        alt="Follow us on Twitter"
+                    />
+                </div>
+            </Link>
+            
+               
+            <Dropdown  checkerVal= {"Guest"}/>
+
+        </div>
 
     </>
  )

@@ -23,5 +23,5 @@ export const cartRoutes = {
 }
 
 export const payments = {
-    createPayment:"/user/process-payments"
+    createPayment:"/user/process-payment"
 }

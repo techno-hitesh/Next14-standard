@@ -13,14 +13,14 @@ import 'react-toastify/dist/ReactToastify.css';
 import { UserType, TokenType } from "@/app/types/userTypes"
 import authConfig from "@/app/configs/auth"
 
-
 const Login = () => {
+
   const cookies = useCookies();
   const router = useRouter();
 
   const dispatch = useDispatch();
   const userData = useSelector((state: any) => {
-    return state.users;
+    return state.user;
   })
 
   const [formValue, setFormValue] = useState<UserType | any>({ email: "", password: "" })
@@ -49,7 +49,7 @@ const Login = () => {
           if (userResp.status == 200) {
 
             setIsSubmit(false);
-            // dispatch(addUser(userResp));
+            dispatch(addUser(userResp));
 
             const { role } = userResp.userData.role;
 
@@ -58,6 +58,7 @@ const Login = () => {
               console.log("enter in user")
               cookies.set(authConfig.storageRole, role)
               localStorage.setItem(authConfig.storageRole, role)
+
 
               router.push("/dashboard");
             }

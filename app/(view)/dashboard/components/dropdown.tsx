@@ -3,6 +3,7 @@ import { useState} from "react";
 import { useRouter } from "next/navigation";
 import { useCookies } from 'next-client-cookies';
 import authConfig from "@/app/configs/auth"
+import UserModal from "./modal"
 
 const Dropdown = (props:{checkerVal:string}) => {
     const cookies = useCookies();
@@ -11,6 +12,7 @@ const Dropdown = (props:{checkerVal:string}) => {
     // console.log("dropdown",props.checkerVal)
 
     const [isOpen, setIsOpen] = useState(false);
+    const [userMdl,setUserMdl] = useState(false);
 
     const toggleDropdown = () => {
         setIsOpen(!isOpen);
@@ -30,6 +32,11 @@ const Dropdown = (props:{checkerVal:string}) => {
         router.replace("/login")
 
     }
+
+
+    const openUser = () =>{
+        setUserMdl(true)
+    }
     return (
         <>
         <div className='py-2 pb-3'>
@@ -48,15 +55,15 @@ const Dropdown = (props:{checkerVal:string}) => {
                 {isOpen && (
                     <div className="origin-top-right absolute right-0 mt-2 w-44 rounded-lg shadow-lg bg-white ring-1 ring-black ring-opacity-5">
                         <ul role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                            <li>
-                                <a
-                                    href="#"
+                             <li>
+                                <button
                                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                    onClick={closeDropdown}
+                                    onClick={openUser}
                                 >
-                                    Option 1
-                                </a>
+                                    User Profile
+                                </button>
                             </li>
+                            {/*
                             <li>
                                 <a
                                     href="#"
@@ -65,7 +72,7 @@ const Dropdown = (props:{checkerVal:string}) => {
                                 >
                                     Option 2
                                 </a>
-                            </li>
+                            </li> */}
                             <li>
                                 <span
                                     

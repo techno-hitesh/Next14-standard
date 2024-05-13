@@ -12,20 +12,6 @@ const DashboardPage = () => {
   const router  = useRouter();
   const cookies = useCookies();
 
-  const handleSignout = () =>{
-    try {
-      localStorage.removeItem('toastShownBefore');
-      localStorage.removeItem(authConfig.storageTokenKeyName);
-      localStorage.removeItem(authConfig.storageRole);
-      cookies.remove(authConfig.storageTokenKeyName)
-      cookies.remove(authConfig.storageRole)
-      router.replace("/login")
-      
-    } catch (error) {
-        console.log("error",error)
-    }
-   
-  }
   return (
     <>
        <div className="lg:container w-screen mx-auto">
