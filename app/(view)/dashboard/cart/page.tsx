@@ -22,6 +22,7 @@ const UserCart = () => {
             return data
         }
       })
+      // console.log("datas",datas)
       setGetAllData(datas)
       setSubTotal(resp.data.totalCartAmount);
       // console.log("all get cart", resp.data,datas)
@@ -89,7 +90,7 @@ const UserCart = () => {
   const stripePromise = loadStripe(publishableKey);
 
   const createCheckOutSession = async () => {
-    console.log(getAllData.length)
+    // console.log("getAllData",getAllData)
 
     let formattedData
     if(getAllData.length ===1){
@@ -101,7 +102,8 @@ const UserCart = () => {
                     "productName": getAllData[0]?.productDetails?.productName,
                     "productPrice": getAllData[0]?.productDetails?.productPrice,
                     "productDescription": getAllData[0]?.productDetails?.productDescription,
-                    "productQuantity":getAllData[0]?.quantity
+                    "productQuantity":getAllData[0]?.quantity,
+                    "itemPrice":getAllData[0]?.itemPrice
                 }                
             ],
             "totalCartAmount": subTotal
@@ -115,7 +117,8 @@ const UserCart = () => {
                 "productName": cartItem?.productDetails?.productName,
                 "productPrice": cartItem?.productDetails?.productPrice,
                 "productDescription": cartItem?.productDetails?.productDescription,
-                "productQuantity":cartItem?.quantity
+                "productQuantity":cartItem?.quantity,
+                "itemPrice":cartItem?.itemPrice
             }
         ))
 
@@ -126,8 +129,6 @@ const UserCart = () => {
         };
 
     }
-  
-
 
     const stripe:any = await stripePromise;
 

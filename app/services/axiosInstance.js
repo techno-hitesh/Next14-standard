@@ -36,13 +36,13 @@ axiosInstance.interceptors.response.use(
   error => {
     if (error.response?.status === 401 || 404) {
       console.log("storedToken undefined",error.response)
-      deleteCookie(authConfig.storageTokenKeyName)
-      deleteCookie(authConfig.storageRole)
+      // deleteCookie(authConfig.storageTokenKeyName)
+      // deleteCookie(authConfig.storageRole)
 
-      localStorage.clear()
+      // localStorage.clear()
       if (typeof window !== 'undefined') {
         console.log("storedToken undefined replace",)
-        window.location.replace('/')
+        // window.location.replace('/')
       }
     }
 

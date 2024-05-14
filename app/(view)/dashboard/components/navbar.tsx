@@ -19,21 +19,21 @@ const Navbar = () => {
     const [arrLink,setArrLink] = useState<[]|any>(userRoute)
     const [subTotal, setSubTotal] = useState(0)
 
-    const getAllCart = async () => {
-        const resp = await getToCartAPI();
-        if (resp.status == 200) {
-          const datas = resp.data.cartItems.filter((data:any)=>{
-            if(data.message !== "Product not found"){
-                return data
-            }
-          })
-          setSubTotal(resp.data.totalCount);
-        }
-      }
+    // const getAllCart = async () => {
+    //     const resp = await getToCartAPI();
+    //     if (resp.status == 200) {
+    //       const datas = resp.data.cartItems.filter((data:any)=>{
+    //         if(data.message !== "Product not found"){
+    //             return data
+    //         }
+    //       })
+    //       setSubTotal(resp.data.totalCount);
+    //     }
+    //   }
     
-      useEffect(() => {
-        getAllCart()
-      }, [])
+    //   useEffect(() => {
+    //     getAllCart()
+    //   }, [])
 
 
     const links = pathname.startsWith("/dashboard") ? "/dashboard" : "#";

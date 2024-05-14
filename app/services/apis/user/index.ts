@@ -118,6 +118,7 @@ export const delCartQuantityAPI = async (params: string) =>{
     // throw error;
   }
 }
+
 export const stripeSessionAPI = async (params: any) =>{
   try {
     const response = await axiosInstance.post(`${payments.createPayment}`,params)

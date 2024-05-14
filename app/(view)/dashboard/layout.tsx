@@ -13,11 +13,13 @@ export default function RootLayout({
 
    
   return (
+        <>
 
         <div className="lg:container w-screen mx-auto"> 
         <Navbar />
           {children}
         </div>
+        </>
     );
   }
   

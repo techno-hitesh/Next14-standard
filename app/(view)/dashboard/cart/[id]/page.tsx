@@ -40,7 +40,8 @@ const CarTByID = ({ params }: { params: { id: any | string } }) => {
                 "productName": cartItem[0]?.productDetails?.productName,
                 "productPrice": cartItem[0]?.productDetails?.productPrice,
                 "productDescription": cartItem[0]?.productDetails?.productDescription,
-                "productQuantity":cartItem[0]?.quantity
+                "productQuantity":cartItem[0]?.quantity,
+                "itemPrice":cartItem[0]?.itemPrice
             }                
         ],
         "totalCartAmount": subTotal

@@ -19,14 +19,14 @@ const ProductsPage = () => {
 
   return (
     <>
-     <div className="inline-flex">
+     {/* <div className="inline-flex"> */}
      {/* ProductsPage */}
      { usrProducts ?
         <ProductCard  usrProducts={usrProducts}/>
             :"Loading.."
       }
             
-    </div>
+    {/* </div> */}
         
     
     </>
