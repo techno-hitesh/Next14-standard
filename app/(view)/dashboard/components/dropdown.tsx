@@ -40,6 +40,13 @@ const Dropdown = (props:{checkerVal:string}) => {
         },1000)
     }
 
+    const paymentRedirect = ()=>{
+        setIsOpen(false);
+        setTimeout(()=>{
+            router.replace("/dashboard/invoice")
+        },1000)
+    }
+
 
     return (
         <>
@@ -72,9 +79,9 @@ const Dropdown = (props:{checkerVal:string}) => {
                                 <button
                                     type="submit"
                                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                    onClick={closeDropdown}
+                                    onClick={paymentRedirect}
                                 >
-                                    Payments
+                                    Invoice
                                 </button>
                             </li>
                             <li>

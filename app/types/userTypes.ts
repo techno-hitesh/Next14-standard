@@ -1,7 +1,18 @@
-export type UserType = {
+ type UserType = {
     email : string;
     password : string|number;
 }
+
+export type UserDataType = {
+    email: string;
+    fullName: string;
+    _id:string;
+    role:{
+        role:string;
+        _id:string;
+    }
+};
+  
 
 export type TokenType = {
     token : string

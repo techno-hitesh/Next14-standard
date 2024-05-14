@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* Your CSS styles here */
+        .invoice-title {
+            text-align: end;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .billing-information {
+            text-align: left;
+        }
+
+        .billing-informations {
+            text-align: right;
+        }
+
+        .bodys {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+
+  .invoice-container {
+    width: 700px;
+    margin: 50px auto;
+    padding: 30px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+
+  .invoice-header {
+    display: flex;
+    justify-content: end;
+    margin-bottom: 30px;
+  }
+
+  .invoice-title {
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  .billing-information {
+    text-align: left;
+  }
+  .billing-informations {
+    text-align: right;
+  }
+
+  .container {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .invoice-details {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top:10%
+  }
+
+  .invoice-details thead th {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .invoice-details tbody td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .invoice-summary {
+    margin-top: 30px;
+    margin-left:60%;
+  }
+
+  .invoice-summary table {
+    width: 100%;
+  }
+
+  .invoice-summary table tr th,
+  .invoice-summary table tr td {
+    padding: 10px;
+  }
+
+  .payment-information {
+    margin-top: 30px;
+  }
+
+  .payment-instructions {
+    font-weight: bold;
+  }
+
+  .table-start{
+    width: 100%;
+    height: auto;
+  }
+    </style>
+</head>
+<body>
+
+<div class="bodys">
+    <div class="invoice-container">
+        <div class="invoice-header">
+            <h1 class="invoice-title">Invoice</h1>
+        </div>
+
+        <div class="container">
+            <div class="billing-information">
+                <h1>BILLED TO</h1>
+                <p>Samira Hadid</p>
+                <p>123 Anywhere St., Any City, ST 12345</p>
+                <p>(555) 555-5555</p>
+            </div>
+
+            <div class="billing-informations">
+                <h1>Invoice NO 123</h1>
+                <p>{date}</p>
+            </div>
+        </div>
+
+        <div class="invoice-details">
+            <table class="table-start">
+                <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Quantity</th>
+                    <th>Unit Price</th>
+                    <th>Total</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Eggshell Camisole Top</td>
+                    <td>1</td>
+                    <td>$123.00</td>
+                    <td>$123.00</td>
+                </tr>
+                <tr>
+                    <td>Cuban Collar Shirt</td>
+                    <td>2</td>
+                    <td>$127.00</td>
+                    <td>$254.00</td>
+                </tr>
+                <tr>
+                    <td>Floral Cotton Dress</td>
+                    <td>1</td>
+                    <td>$129.00</td>
+                    <td>$129.00</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="invoice-summary">
+            <table>
+                <tbody>
+                <tr>
+                    <th>Subtotal</th>
+                    <td>$500.00</td>
+                </tr>
+                <tr>
+                    <th>Tax (0%)</th>
+                    <td>$0.00</td>
+                </tr>
+                <tr>
+                    <th>Total</th>
+                    <td>$500.00</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="container mt-5">
+            <div class="payment-information">
+                <p class="payment-instructions">Payment Information:</p>
+                <p>Payment Method : Card</p>
+                <p>Pay By : {date}</p>
+            </div>
+
+            <div class="payment-information">
+                <p class="payment-instructions">Users Name</p>
+                <p>1231 Street , model town</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -44,7 +44,7 @@ const Login = () => {
           setIsSubmit(true);
           const userResp = await UserRoleAPI();
           
-          console.log("userRoleAPI", userResp)
+          // console.log("userRoleAPI", userResp)
 
           if (userResp.status == 200) {
 
@@ -55,7 +55,7 @@ const Login = () => {
 
             if (role === "user" || role === "admin") {
 
-              console.log("enter in user")
+              // console.log("enter in user")
               cookies.set(authConfig.storageRole, role)
               localStorage.setItem(authConfig.storageRole, role)
 
