@@ -3,6 +3,7 @@ import React,{useEffect, useState} from 'react'
 import { getPaymentsById } from '@/app/services/apis/payment'
 import Images from "@/public/images/t1.jpg";
 import Image from 'next/image';
+import FileDownloader from '../components/pdf';
 
 const orderByIdView = ({ params }: { params: { id: any | string } }) => {
     console.log("params -- ",params.id)    
@@ -13,7 +14,7 @@ const orderByIdView = ({ params }: { params: { id: any | string } }) => {
     const handlePaymentsId = async() =>{
         const resp = await getPaymentsById(params.id);
         if(resp.status == 200){
-            console.log("resp---",resp.payment,"&&&&&&&&&&&",resp.payment.createdAt);
+            console.log("resp---",resp.payment);
             setOrderVal(resp.payment)
             const date = new Date(resp.payment.createdAt);
 
@@ -25,10 +26,7 @@ const orderByIdView = ({ params }: { params: { id: any | string } }) => {
             });
             setDateTime(formattedDate)
         }
-        
-    }
-
-
+  }
 
     useEffect(()=>{
         handlePaymentsId();
@@ -59,7 +57,8 @@ const orderByIdView = ({ params }: { params: { id: any | string } }) => {
       </div>
 
       <div className="card-body">
-        <h3 className="card-text"> Invoice Download</h3>
+        {/* <h3 className="card-text"> Invoice Download</h3> */}
+        <FileDownloader data={params}/>
       </div>
     </div>
   </div>

@@ -25,5 +25,6 @@ export const cartRoutes = {
 export const payments = {
     createPayment:"/user/process-payment",
     getAllPaymentDetails:"/user/get-payment-details",
-    getPaymentsById:"/user/get-payment/"
+    getPaymentsById:"/user/get-payment/",
+    getpdf:"/user/download-pdf/"
 }
