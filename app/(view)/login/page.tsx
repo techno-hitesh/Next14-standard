@@ -145,10 +145,17 @@ const Login = () => {
           {/* <p className="text-red-500">{formErrors.email}</p> */}
         </label>
 
+        
         <label className="block">
+        <div className="flex items-center justify-between">
           <span className="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700">
-            Password
-          </span>
+              Password
+            </span>
+          <div className="text-sm">
+            <Link href="/forgot" className="font-semibold text-indigo-600 hover:text-indigo-500">Forgot password?</Link>
+          </div>
+        </div>
+          
           <input required type="password" name="password" className="mt-1 w-[350px] md:w-[450px] px-3 py-4 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block rounded-md sm:text-sm focus:ring-1" placeholder="Enter your password"
             value={formValue.password}
             onChange={(e) => handleChange(e)}
@@ -160,7 +167,7 @@ const Login = () => {
           <p className="text-red-500">{apiErr.message}</p>
           : ""
         }
-        <span className='block w-full mr-auto ml-7'>Dont have any Account? <Link className='text-blue-700 font-bold' href="/register">Sign Up</Link></span>
+        <span className='block w-full mr-auto ml-7'>Dont have any Account? <Link className='text-blue-700 font-bold' href="/register">Sign Up</Link></span>     
         <button className='bg-[#53c28b] text-white rounded-md p-[15px] w-[90%]' type="submit">{isSubmit ==true ? "Loading......." :"Log In"}</button>
       </form>
     </>

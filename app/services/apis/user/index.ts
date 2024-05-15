@@ -1,7 +1,7 @@
 import { ToastContainer, toast } from 'react-toastify';
 import axiosInstance from "../../axiosInstance"
 import { apiRoutes,adminRoutes ,cartRoutes,payments} from '../../ApiRoutes';
-import { TokenType,UserType,RegisterType,addToCartType,updateCartItemType } from '@/app/types/userTypes';
+import { TokenType,UserType,RegisterType,addToCartType,updateCartItemType,UserForgotType } from '@/app/types/userTypes';
 import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -24,6 +24,27 @@ export const loginUserAPI = async (params?: UserType|string) =>{
     // throw error;
   }
 }
+
+export const forgotPasswordAPI = async (params: UserForgotType) =>{
+  try {
+    const response = await axiosInstance.post(apiRoutes.forgotUser, params)
+    return response.data;
+  } catch (err:any) {
+    toast.error(err?.response?.data?.message || err?.message)
+    // throw error;
+  }
+}
+
+export const forgotResetAPI = async (params: UserForgotType) =>{
+  try {
+    const response = await axiosInstance.post(apiRoutes.resetPass, params)
+    return response.data;
+  } catch (err:any) {
+    toast.error(err?.response?.data?.message || err?.message)
+    throw err;
+  }
+}
+
 
 export const registerUserAPI = async (params?: UserType|string) =>{
   try {

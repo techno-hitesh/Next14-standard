@@ -2,7 +2,7 @@
 import React,{useState,useEffect} from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import Logo from "@/public/images/3.svg"
+import Logo from "@/public/images/logo.svg"
 import siteIcon from "@/public/images/4.svg"
 import { userRoute } from '../utils/navLink'
 import { usePathname } from 'next/navigation'

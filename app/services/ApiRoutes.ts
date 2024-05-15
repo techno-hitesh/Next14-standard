@@ -3,6 +3,8 @@ export const apiRoutes = {
     logout: '/logout',
     getUsers: '/user/get-user',
     registerUser:'/user/register',
+    forgotUser:"/user/forget-password",
+    resetPass:"/user/reset-password"
 }
 
 export const adminRoutes = {

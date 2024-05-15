@@ -3,6 +3,17 @@ export type UserType = {
     password : string|number;
 }
 
+export type UserForgotType = {
+    email : string;
+}
+
+export type UserResetType = {
+    email : string;
+    otp:number|string;
+    newPassword:number|string;
+    confirmPassword:number|string;
+}
+
 export type UserDataType = {
     email: string;
     fullName: string;
