@@ -1,10 +1,12 @@
 import React from 'react'
 import CardCompo from "./cards"
 import Card1 from './card1'
+import NextForm from '../components/form'
 
 const pageCard = () => {
   return (
     <>
+    <NextForm /> 
     <Card1 />
 {/* <CardCompo /> */}
 <section className="pt-20 pb-10 lg:pt-[120px] lg:pb-20">
@@ -195,7 +197,7 @@ const pageCard = () => {
   </div>
 </section>
 
-<div className="relative flex flex-col text-gray-700 bg-white shadow-md bg-clip-border rounded-xl w-96">
+{/* <div className="relative flex flex-col text-gray-700 bg-white shadow-md bg-clip-border rounded-xl w-96">
   <div className="relative mx-4 mt-4 overflow-hidden text-gray-700 bg-white shadow-lg bg-clip-border rounded-xl h-80">
     <img src="https://docs.material-tailwind.com/img/team-3.jpg" alt="profile-picture" height={"50%"} width={"87%"}/>
   </div>
@@ -225,7 +227,7 @@ const pageCard = () => {
       </i>
     </a>
   </div>
-</div>
+</div> */}
 
 
     </>

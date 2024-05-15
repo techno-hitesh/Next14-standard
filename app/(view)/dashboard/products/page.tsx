@@ -10,7 +10,7 @@ const ProductsPage = () => {
     const handleProducts = async() =>{
         const data = await GetAllProductAPI();
         setUsrProducts(data.data)
-        // console.log(data)
+        console.log(data.data)
     }
     
     useEffect(()=>{
@@ -19,14 +19,14 @@ const ProductsPage = () => {
 
   return (
     <>
-     {/* <div className="inline-flex"> */}
-     {/* ProductsPage */}
-     { usrProducts ?
-        <ProductCard  usrProducts={usrProducts}/>
-            :"Loading.."
-      }
+      <section id="Projects"
+        className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5">
+      { usrProducts ?
+          <ProductCard  usrProducts={usrProducts}/>
+              :"Loading.."
+        }
             
-    {/* </div> */}
+    </section>
         
     
     </>

@@ -10,6 +10,7 @@ const Dropdown = (props:{checkerVal:string}) => {
     const cookies = useCookies();
 
     const router = useRouter();
+    const dropdownRef = useRef(null);
     // console.log("dropdown",props.checkerVal)
 
     const [isOpen, setIsOpen] = useState(false);
@@ -47,12 +48,24 @@ const Dropdown = (props:{checkerVal:string}) => {
         },1000)
     }
 
+    useEffect(() => {
+        const handleOutsideClick = (event:any) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                closeDropdown();
+            }
+        };
+
+        document.addEventListener('mousedown', handleOutsideClick);
+        return () => {
+            document.removeEventListener('mousedown', handleOutsideClick);
+        };
+    }, []);
 
 
     return (
         <>
         <div className='py-2 pb-3'>
-            <div className="relative inline-block" style={{"zIndex":"999"}} >
+            <div className="relative inline-block" ref={dropdownRef}  >
                 <button
                     type="button"
                     className="px-4 py-2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm inline-flex items-center"

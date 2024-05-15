@@ -6,7 +6,7 @@ import Image from 'next/image';
 import FileDownloader from '../components/pdf';
 
 const orderByIdView = ({ params }: { params: { id: any | string } }) => {
-    console.log("params -- ",params.id)    
+    console.log("params sdfsdf-- ",params.id)    
 
     const [orderVal,setOrderVal] = useState<[]|any>("")
     const [dateTime,setDateTime] = useState("")
@@ -32,37 +32,63 @@ const orderByIdView = ({ params }: { params: { id: any | string } }) => {
         handlePaymentsId();
     },[])
 
-
   return (
     <>
 
 {orderVal && orderVal!=="" ? 
-<div className="card mb-3" style={{"maxWidth": "540px;"}}>
-  <div className="row g-0">
-    <div className="col-md-4">
-      <Image src={Images} className="img-fluid rounded-start"
-            alt=""
-            width={0}
-            height={0}
-            sizes="100vw"
-            style={{ width: '28%', height: '50%' }}
-        />
-    </div>
-    <div className="col-md-8">
-      <div className="card-body">
-        <h5 className="card-title">Product Name : {orderVal.totalProduct[0].productName}</h5>
-        <p className="card-text">Product Description : {orderVal.totalProduct[0].productDescription}</p>
-        <p className="card-text">Buyer Name : {orderVal.buyerUserDetails.fullName}</p>
-        <p className="card-text"><small className="text-muted">{dateTime? dateTime :""}</small></p>
-      </div>
 
-      <div className="card-body">
-        {/* <h3 className="card-text"> Invoice Download</h3> */}
-        <FileDownloader data={params}/>
-      </div>
+  <section id="Projects"
+  className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5">
+
+  {orderVal.totalProduct.length > 0 ? 
+    orderVal?.totalProduct.map((data:any, i:number) => (
+
+      <div className="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"> 
+            <img src={data?.productImageUrl}
+                    alt="Product" className="h-80 w-72 object-cover rounded-t-xl" />
+            <div className="px-4 py-3 w-72">
+                <span className="text-gray-400 mr-3 uppercase text-xs">Brand</span>
+                <p className="text-lg font-bold text-black truncate block capitalize">  {data?.productName}</p>
+                <div className="flex items-center">
+                    <p className="text-lg font-semibold text-black cursor-auto my-3"> ₹{data?.productPrice}</p>
+                    {/* <del>
+                        <p className="text-sm text-gray-600 cursor-auto ml-2"> ₹12030</p>
+                    </del> */}
+                     <div className="ml-auto">
+                     Qty {data?.productQuantity}
+                     </div>
+                </div>
+            </div>       
+    </div>
+
+      
+      //   <div className="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl" key={data._id} >
+
+      //   <div className="row g-0">
+      //     <div className="col-md-4">
+      //     <Image src={data?.productImageUrl} className="img-fluid rounded-start" alt="" width={0} height={0} sizes="100vw" style={{objectFit: "cover", height: "50%", width: "30%"}}/>
+      //     </div>
+      //     <div className="col-md-8">
+      //       <div className="card-body">
+      //         <h5 className="card-title">Product Name : {data?.productName}</h5>
+      //         <p className="card-text">Product Description : {data?.productDescription}</p>
+      //         <p className="card-text">Buyer Name : {orderVal.buyerUserDetails.fullName}</p>
+      //         <p className="card-text"><small className="text-muted">{dateTime ? dateTime : ""}</small></p>
+      //       </div>
+      //     </div>
+      //   </div>
+      // </div>
+    )) 
+  : ""}
+
+<div className="card mb-3 mr-3" style={{maxWidth: "540px"}}>
+    <div className="card-body">
+      {/* <h3 className="card-text"> Invoice Download</h3> */}
+      <FileDownloader data={params}/>
     </div>
   </div>
-</div>
+</section>
+
 
 :"Please wait.."}
       
@@ -71,23 +97,3 @@ const orderByIdView = ({ params }: { params: { id: any | string } }) => {
 }
 
 export default orderByIdView
-
-
-{/* <div className="max-w-sm w-full lg:max-w-full lg:flex mt-10">
-  <div className="h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden" style={{ backgroundImage: `url(${Images})` }} title="Woman holding a mug">
-  </div>
-  <div className="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
-    <div className="mb-8">
-      
-      <div className="text-gray-900 font-bold text-xl mb-2">Product Name : {orderVal.totalProduct[0].productName}</div>
-      <p className="text-gray-700 text-base">{orderVal.totalProduct[0].productDescription}</p>
-    </div>
-    <div className="flex items-center">
-      <img className="w-10 h-10 rounded-full mr-4" src="/img/jonathan.jpg" alt="Avatar of Jonathan Reinink" />
-      <div className="text-sm">
-        <p className="text-gray-900 leading-none">{orderVal.buyerUserDetails.fullName}</p>
-        <p className="text-gray-600">{orderVal.createdAt}</p>
-      </div>
-    </div>
-  </div>
-</div> */}

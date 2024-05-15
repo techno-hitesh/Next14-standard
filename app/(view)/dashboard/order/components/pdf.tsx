@@ -1,24 +1,35 @@
-import react from 'react';
-import axios from 'axios';
+import react, { useState } from 'react';
 import { getPdfById } from '@/app/services/apis/payment';
-import Link from 'next/link';
+import "../../style/style.css"
+
 
 const FileDownloader = (data:any) => {
-    console.log("data",data.data.id)
+
     const {id} = data.data;
 
+    const [loading ,setLoading] = useState(false)
+
   const downloadPDF = async () => {
+        setLoading(true)
         const data = await getPdfById(id);
-        console.log("update=----",data)  
+        
+        if(data.success == true){
+          setLoading(false)
+          window.open(data.pdfUrl, '_blank');
+        }
   }
 
   return (
 
     <>
-    {/* <a href="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" target="_blank" rel="noopener noreferrer" ><button>Download CV</button></a> */}
-        <button onClick={downloadPDF}> Download PDF </button>
-        </>
+    {/* {pdfUrl && pdfUrl !="" ? 
+    <a href={pdfUrl} target="_blank" rel="noopener noreferrer" ><button>Download CV</button></a>
+    :""} */}
 
+      <button className='custom-button-primary mt-10' onClick={downloadPDF}> Download Invoice {loading==true ?"Loading....":""} </button>
+        
+       
+    </>
   );
 }
 
