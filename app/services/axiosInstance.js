@@ -17,7 +17,7 @@ const getToken = () => {
 axiosInstance.interceptors.request.use(
   request => {
     const storedToken = getToken();
-    console.log("tokn headersss",storedToken)
+    // console.log("tokn headersss",storedToken)
     if (storedToken !== null) {
       request.headers.Authorization = `Bearer ${storedToken}`
     }

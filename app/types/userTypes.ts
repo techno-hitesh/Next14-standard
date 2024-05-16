@@ -70,3 +70,13 @@ export type updateCartItemType = {
     productName:string
     quantity:number
 }
+
+export type addressType = {
+    mobileNumber?:number,
+    country:string
+    state:string
+    city:string
+    streetAddress:string
+    nearByAddress:string
+    areaPincode?:number
+}

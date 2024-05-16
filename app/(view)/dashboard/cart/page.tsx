@@ -6,6 +6,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import Link from 'next/link';
 import EmptyCart from "@/public/images/bag.svg";
 import Image from 'next/image';
+import { dashboardLinks } from '@/app/configs/authLinks';
 
 const UserCart = () => {
 
@@ -90,62 +91,64 @@ const UserCart = () => {
   const stripePromise = loadStripe(publishableKey);
 
   const createCheckOutSession = async () => {
-    // console.log("getAllData",getAllData)
 
-    let formattedData
-    if(getAllData.length ===1){
-        formattedData = {
-            totalProduct:[
-                {
-                    "cartId":getAllData[0]?._id,
-                    "productId": getAllData[0]?.productDetails?.productId,
-                    "productName": getAllData[0]?.productDetails?.productName,
-                    "productPrice": getAllData[0]?.productDetails?.productPrice,
-                    "productDescription": getAllData[0]?.productDetails?.productDescription,
-                    "productQuantity":getAllData[0]?.quantity,
-                    "itemPrice":getAllData[0]?.itemPrice
-                }                
-            ],
-            "totalCartAmount": subTotal
-        }
+    console.log("getAllData",getAllData)
+    router.push(dashboardLinks.checkoutLinks);
 
-    }else if(getAllData.length >1){
-        const totalProduct  = getAllData.map((cartItem:any)=>(
-            {
-                "cartId":cartItem?._id,
-                "productId": cartItem?.productDetails?.productId,
-                "productName": cartItem?.productDetails?.productName,
-                "productPrice": cartItem?.productDetails?.productPrice,
-                "productDescription": cartItem?.productDetails?.productDescription,
-                "productQuantity":cartItem?.quantity,
-                "itemPrice":cartItem?.itemPrice
-            }
-        ))
+    // let formattedData
+    // if(getAllData.length ===1){
+    //     formattedData = {
+    //         totalProduct:[
+    //             {
+    //                 "cartId":getAllData[0]?._id,
+    //                 "productId": getAllData[0]?.productDetails?.productId,
+    //                 "productName": getAllData[0]?.productDetails?.productName,
+    //                 "productPrice": getAllData[0]?.productDetails?.productPrice,
+    //                 "productDescription": getAllData[0]?.productDetails?.productDescription,
+    //                 "productQuantity":getAllData[0]?.quantity,
+    //                 "itemPrice":getAllData[0]?.itemPrice
+    //             }                
+    //         ],
+    //         "totalCartAmount": subTotal
+    //     }
 
-        const totalCartAmount = subTotal
-        formattedData = {
-          totalProduct,
-          totalCartAmount
-        };
+    // }else if(getAllData.length >1){
+    //     const totalProduct  = getAllData.map((cartItem:any)=>(
+    //         {
+    //             "cartId":cartItem?._id,
+    //             "productId": cartItem?.productDetails?.productId,
+    //             "productName": cartItem?.productDetails?.productName,
+    //             "productPrice": cartItem?.productDetails?.productPrice,
+    //             "productDescription": cartItem?.productDetails?.productDescription,
+    //             "productQuantity":cartItem?.quantity,
+    //             "itemPrice":cartItem?.itemPrice
+    //         }
+    //     ))
 
-    }
+    //     const totalCartAmount = subTotal
+    //     formattedData = {
+    //       totalProduct,
+    //       totalCartAmount
+    //     };
 
-    const stripe:any = await stripePromise;
+    // }
 
-    const checkoutSession = await stripeSessionAPI(formattedData);
+    // const stripe:any = await stripePromise;
 
-    console.log("checkoutSession*********",checkoutSession,"********",checkoutSession.sessionId)
-    if(checkoutSession.status == 201){
+    // const checkoutSession = await stripeSessionAPI(formattedData);
 
-        const result = await stripe.redirectToCheckout({
-            sessionId: checkoutSession.sessionId,
+    // console.log("checkoutSession*********",checkoutSession,"********",checkoutSession.sessionId)
+    // if(checkoutSession.status == 201){
+
+    //     const result = await stripe.redirectToCheckout({
+    //         sessionId: checkoutSession.sessionId,
             
-        });
+    //     });
 
-        if (result.error) {
-        alert(result.error.message);
-        }
-    }
+    //     if (result.error) {
+    //     alert(result.error.message);
+    //     }
+    // }
     
   };
 
@@ -230,7 +233,6 @@ const UserCart = () => {
                       </div>
                     </li>
                     </div>
-                 
 
             )):
             <Image
@@ -254,7 +256,7 @@ const UserCart = () => {
             </div>
             <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
             <div className="mt-6">
-              <a href="#" className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700" onClick={createCheckOutSession}>Checkout</a>
+              <Link href={dashboardLinks.checkoutLinks} className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700">Checkout</Link>
             </div>
           </div>
 
