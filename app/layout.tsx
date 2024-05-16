@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "@/app/style/globals.css";
 import { CookiesProvider } from 'next-client-cookies/server';
-import ReduxProvider from "@/app/store/reduxProvider"
+import ReduxProvider from "./store/reduxProvider";
 
 
 const inter = Inter({ subsets: ["latin"] });

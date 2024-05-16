@@ -14,6 +14,7 @@ const DashboardPage = () => {
 
   return (
     <>
+     
        <div className="lg:container w-screen mx-auto">
           <div>
               <Image
