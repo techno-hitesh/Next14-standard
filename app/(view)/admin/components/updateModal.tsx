@@ -1,11 +1,13 @@
 
 import { GetProductByIdAPI, adminUpdateProductApi } from '@/app/services/apis/admin/products'
+import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
 
-const UpdateModal = ({ id }: { id: { id: any | string } }) => {
+const UpdateModal = ({ id, onUpdateSuccess }: { id: { id: any | string }, onUpdateSuccess: () => void }) => {
        const [showModal,setShowModal]=useState(false)
+       const router=useRouter()
        const [name,setname]=useState("")
        const [description,setdescription]=useState("")
        const [price, setprice] = useState("")
@@ -13,6 +15,7 @@ const UpdateModal = ({ id }: { id: { id: any | string } }) => {
       const getProductById=async()=>{
         const response=await GetProductByIdAPI(id)
         if(response?.status===200){
+          // console.log('byId----------',response)
             setname(response?.getProduct?.productName)
             setdescription(response?.getProduct?.productDescription)
             setprice(response?.getProduct?.productPrice)
@@ -20,7 +23,7 @@ const UpdateModal = ({ id }: { id: { id: any | string } }) => {
         }
       }
 
-
+      
       const handleImgupdate = (e: any) => {
         const file = e.target.files[0];
         if (file) {
@@ -43,12 +46,18 @@ const UpdateModal = ({ id }: { id: { id: any | string } }) => {
       }
        console.log(val)
        const response=await adminUpdateProductApi(id,val)
-       console.log(response)
-
+       if(response?.status===200){
+        // console.log('afterupdate-----------',response)
+        router.push(`/admin/products/${id}`)
+        setShowModal(false)
+        onUpdateSuccess()
+        
+       }
       }
     }
    useEffect(()=>{
     getProductById()
+
    },[])
   return (
   <>
@@ -60,7 +69,7 @@ const UpdateModal = ({ id }: { id: { id: any | string } }) => {
 </div>
 
 {/* <!-- Main modal --> */}
-{showModal ? 
+{showModal &&
 <div id="deleteModal"   aria-hidden="true" className="    overflow-y-auto overflow-x-hidden fixed bg-gray-200 bg-opacity-30 right-0 left-0  z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full">
     <div className="relative left-[30%]   top-[10%] p-4 w-full max-w-md h-full md:h-auto">
         {/* <!-- Modal content --> */}
@@ -70,7 +79,7 @@ const UpdateModal = ({ id }: { id: { id: any | string } }) => {
                 <span className="sr-only">Close modal</span>
             </button>
             <div>
-            <form onSubmit={handlesubmit}>
+            <form >
   
           <div className="grid gap-4 mb-4 sm:grid-cols-2 sm:gap-6 sm:mb-5">
               <div className="sm:col-span-2">
@@ -95,7 +104,7 @@ const UpdateModal = ({ id }: { id: { id: any | string } }) => {
                 <button onClick={()=>setShowModal(false)} data-modal-toggle="deleteModal" type="button" className="py-2 px-3 text-sm font-medium text-gray-500 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-primary-300 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
                     No, cancel
                 </button>
-                <button  type="submit" className="py-2 px-3 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-900">
+                <button onClick={(e)=>handlesubmit(e)}  type="submit" className="py-2 px-3 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-900">
                     Update
                 </button>
             </div>
@@ -104,7 +113,7 @@ const UpdateModal = ({ id }: { id: { id: any | string } }) => {
         </div>
     </div>
 </div>
-: null
+
 }
   </>
   )

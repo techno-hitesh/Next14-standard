@@ -9,23 +9,23 @@ import UpdateModal from '../../../components/updateModal'
 const ProductById = () => {
     const {id}=useParams()
     const router=useRouter()
-    console.log(id)
+    // console.log(id)
     const [productData,setProductData]=useState<any>()
-    const [update,setUpdate]=useState(false)
     //fetching product data (specific product data through id)
-    const fetchdata=async()=>{
+     const fetchdata=async()=>{
         const response=await GetProductByIdAPI(id)
         if(response?.status===200){
-            console.log(response?.getProduct)
+            // console.log("update",response?.getProduct)
             setProductData(response?.getProduct)
         }
     }
      
-    const handledelete=async(id:string)=>{
-         const response=await deleteadminproductApi(id)
-         if(response?.status===200){
-            router.replace("/admin/products")
-         }
+    const handleUpdateSuccess=async()=>{
+        const response=await GetProductByIdAPI(id)
+        if(response?.status===200){
+            // console.log('handlesuccess',response)
+            fetchdata()
+        }
     }
     useEffect(()=>{
      fetchdata()
@@ -34,7 +34,7 @@ const ProductById = () => {
     <>
     <div>
         {productData ? 
-        <div className="bg-gray-100 dark:bg-gray-800 py-8 relative">
+        <div className="bg-gray-100 dark:bg-gray-800 py-8 ">
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row -mx-4">
             <div className="md:flex-1 px-4">
@@ -46,7 +46,7 @@ const ProductById = () => {
                       <ModalDelete id={productData?._id} />
                     </div>
                     <div className="w-1/2 px-2">
-                        <UpdateModal id={productData?._id}/>
+                        <UpdateModal id={productData?._id} onUpdateSuccess={handleUpdateSuccess} />
                     </div>
                 </div>
             </div>

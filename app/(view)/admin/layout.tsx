@@ -1,5 +1,4 @@
 import Navbar from "../dashboard/components/navbar";
-import Sidebar from "./components/sidebar";
 
 
 export default function RootLayout({
@@ -14,7 +13,6 @@ export default function RootLayout({
 
         <div className="lg:container w-screen mx-auto"> 
         <Navbar />
-        {/* <Sidebar/> */}
           {children}
         </div>
         </>

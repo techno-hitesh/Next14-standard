@@ -43,7 +43,6 @@ export const config = {
         '/' ,
         '/login',
         '/register',
-        '/admin',
         '/admin/:path*',
         '/dashboard/:path*',
     ],

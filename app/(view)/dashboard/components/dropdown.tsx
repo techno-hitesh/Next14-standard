@@ -82,7 +82,7 @@ const Dropdown = () => {
     return (
         <>
         <div className='py-2 pb-3'>
-            <div className="relative inline-block" ref={dropdownRef}  >
+            <div className="relative  z-60 inline-block" ref={dropdownRef}  >
                 <button
                     type="button"
                     className="px-4 py-2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm inline-flex items-center"

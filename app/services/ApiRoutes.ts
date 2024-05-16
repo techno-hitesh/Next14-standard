@@ -19,6 +19,7 @@ export const adminRoutes = {
     adminUpdateProduct:"/admin/update-product/",
     createcategory:"/admin/create-category",
     createsubcategory:"/admin/create-sub-category",
+    createproduct:"/admin/create-product",
     
 }
 

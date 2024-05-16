@@ -72,7 +72,7 @@ export const Getallsubcategories=async(id:string)=>{
 
 export const adminUpdateProductApi=async(id:string|any,formdata:any)=>{
       try{
-        const response=await axios.post(baseurl+adminRoutes.adminUpdateProduct+id,formdata,{
+        const response=await axios.patch(baseurl+adminRoutes.adminUpdateProduct+id,formdata,{
           headers:{
             'Authorization':`Bearer ${token}`,
             'Content-Type':'multipart/form-data'
@@ -101,4 +101,18 @@ export const createsubcategoryAPI=async(val:createsubcategoty)=>{
   }catch(err:any){
       toast.error(err?.response?.data?.message || err?.message)
   }
+}
+export const adminCreateProductApi=async(formdata:any)=>{
+  try{
+    const response=await axios.post(adminRoutes.createproduct,formdata,{
+        headers:{
+            'Authorization':`Bearer ${token}`,
+            'Content-Type': 'multipart/form-data'
+        }
+    })
+    console.log("createapi=-----------",formdata)
+  }catch(err:any){
+    console.log("createapi-----------",formdata,err)
+    toast.error(err?.response?.data?.message || err?.message)
+}
 }
