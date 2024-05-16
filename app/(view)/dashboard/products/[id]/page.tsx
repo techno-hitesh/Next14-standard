@@ -7,77 +7,80 @@ import Image from 'next/image'
 import { addToCartAPI,getToCartAPI } from '@/app/services/apis/user'
 import { useRouter } from "next/navigation"
 import { usePathname } from 'next/navigation'
-import { getItemInCartAPI } from '@/app/services/apis/user'
+import { dashboardLinks } from '@/app/configs/authLinks'
 
 const ProductDesp = ({ params }: { params: { id: any | string } }) => {
 
   const router = useRouter();
   const pathname = usePathname()
 
-  // console.log("products res", pathname)
   const [productData, setProductData] = useState<any>()
   const [itemGet, setItemGet] = useState(false)
 
   const products = async () => {
-    const res = await GetProductByIdAPI(params.id);
-    // console.log("products res", res.getProduct)
-    setProductData(res.getProduct)
+    try {
+      const res = await GetProductByIdAPI(params.id);
+      if(res.status == 200 && res.message === "Product found successfully"){
+        setProductData(res.getProduct)
+      }
+    } catch (error) {
+        console.log("error products --",error);
+    }
   }
 
   const ItemInCart = async () => {
-    // const resp = await getItemInCartAPI(params.id)
-    const resp = await getToCartAPI()
-    if (resp.status == 200) {
-      const datas = resp.data.cartItems.filter((data:any)=>{
-        if(data.message !== "Product not found"){
-            return data
-        }       
-      })
+    try {
+      const resp = await getToCartAPI()
+      if (resp.status == 200) {
 
-      // console.log("item in cartsdsdsd--",datas)
-      datas.map((e:any)=>{
-
-        if(e.productDetails.productId === params.id){
-          setItemGet(true);
-        }
-        // console.log("enter in mao--",e)
-      })
-     
+        const datas = resp.data.cartItems.filter((data:any)=>{
+          if(data.message !== "Product not found"){
+              return data
+          }       
+        })
+  
+        datas.map((e:any)=>{
+          if(e.productDetails.productId === params.id){
+            setItemGet(true);
+          }
+        })       
+      }
+      
+    } catch (error) {
+      console.log("error ItemInCart --",error);
     }
-    
-    // if (resp.status == 200 && resp.cartItems != undefined) {
-    //   setItemGet(true);
-    // }
   }
 
   const handleAddToCart = async () => {
-    const param = {
-      "productId": productData._id,
-      "productName": productData.productName
+    try {
+      const param = {
+        "productId": productData._id,
+        "productName": productData.productName
+      }
+      const resp = await addToCartAPI(param)
+      if (resp.status == 201) {
+        router.replace(dashboardLinks.cartsLink)
+      } 
+    } catch (error) {
+      console.log("error handleAddToCart --",error);
     }
-    const resp = await addToCartAPI(param)
-    // console.log("add to cart resp asdsd---", resp)
-    if (resp.status == 201) {
-      // console.log("add to cart resp ---", resp)
-      router.replace("/dashboard/cart")
-    } 
+   
   }
 
   const handleGoToCart = async () => {
-    router.replace("/dashboard/cart")
+    router.replace(dashboardLinks.cartsLink)
   }
 
   useEffect(() => {
     ItemInCart()
     products()
   }, [])
-  // console.log("id--", params.id)
+
   return (
     <>
       {productData ?
 
         <div className="product-card">
-          {/* <Image className="product-card__image" src={productData.productImg} /> */}
           <Image
             className="rounded-t-lg"
             src={productData.productImg}
@@ -85,6 +88,7 @@ const ProductDesp = ({ params }: { params: { id: any | string } }) => {
             width={0}
             height={0}
             sizes="100vw"
+            priority
             style={{ width: '54%', height: '50%' }}
           />
           <p className="product-card__brand">{productData.productName}</p>
