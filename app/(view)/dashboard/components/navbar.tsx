@@ -87,7 +87,7 @@ const Navbar = () => {
             </Link>
             
                
-            <Dropdown  checkerVal= {"Guest"}/>
+            <Dropdown />
 
         </div>
 

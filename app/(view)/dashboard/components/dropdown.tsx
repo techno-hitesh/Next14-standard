@@ -5,13 +5,28 @@ import { useCookies } from 'next-client-cookies';
 import authConfig from "@/app/configs/auth"
 import UserModal from "./modal"
 import Link from "next/link";
+import { useSelector } from "react-redux";
+import { jwtDecodeData } from "@/app/helpers";
 
-const Dropdown = (props:{checkerVal:string}) => {
+const Dropdown = () => {
     const cookies = useCookies();
 
     const router = useRouter();
     const dropdownRef = useRef(null);
-    // console.log("dropdown",props.checkerVal)
+    const [userName,setUserName] = useState("")
+    const userDataName = useSelector((data:any)=> data.users);
+
+    const getUserData = ()=>{
+        if (userDataName !="" && typeof userDataName?.users?.data === 'string') {
+            const decodedData:any = jwtDecodeData(userDataName?.users?.data);
+            setUserName(decodedData?.fullName)
+        }
+    }
+    
+
+    // const userName:any = jwtDecodeData(userDataName?.users[0]?.data)
+    // console.log(typeof userDataName?.users[0]?.data)
+   
 
     const [isOpen, setIsOpen] = useState(false);
     const [userMdl,setUserMdl] = useState(false);
@@ -49,6 +64,8 @@ const Dropdown = (props:{checkerVal:string}) => {
     }
 
     useEffect(() => {
+       
+        getUserData()
         const handleOutsideClick = (event:any) => {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
                 closeDropdown();
@@ -59,7 +76,7 @@ const Dropdown = (props:{checkerVal:string}) => {
         return () => {
             document.removeEventListener('mousedown', handleOutsideClick);
         };
-    }, []);
+    }, [userDataName]);
 
 
     return (
@@ -72,7 +89,7 @@ const Dropdown = (props:{checkerVal:string}) => {
                     onClick={toggleDropdown}
                 >
 
-                    {props ? props.checkerVal : "Guest"} <svg className="w-2.5 h-2.5 ml-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                    {userName && userName!="" ? userName : ""} <svg className="w-2.5 h-2.5 ml-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
                     </svg>
                 </button>
