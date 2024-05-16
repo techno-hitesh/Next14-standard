@@ -3,6 +3,9 @@ import React, { useEffect, useState } from 'react'
 import { UserRoleAPI } from '@/app/services/apis/user'
 import LoadingSpiner from "../components/loading"
 import { UserDataType } from '@/app/types/userTypes'
+import Link from 'next/link'
+import auth from '@/app/configs/auth'
+import Resetpass from '../changePassword/page'
 
 const userProfile = () => {
 
@@ -15,6 +18,7 @@ const userProfile = () => {
       // console.log("res--", resp.userData)
       setUserVal(resp.userData)
       setLoading(true)
+      
     }
   }
 
@@ -71,8 +75,14 @@ const userProfile = () => {
               </dd>
             </div>
           </dl>
+          
+          <Link href={'/dashboard/changePassword'}>
+            <button  className='px-3 my-2 py-1 bg-blue-500 rounded-md hover:bg-blue-700 cursor-pointer text-white'>Reset password</button>
+          </Link>
+          {/* <Resetpass email={userVal?.email}/> */}
         </div>
       </div>
+      
       : <LoadingSpiner />}
     </>
   )
