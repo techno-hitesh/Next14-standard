@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import auth from "@/app/configs/auth"
+import { jwtDecodeData } from './app/helpers';
  
 // This function can be marked `async` if using `await` inside
 export async function middleware(request: NextRequest) {
@@ -12,8 +13,13 @@ export async function middleware(request: NextRequest) {
 
   const token = request.cookies.get(auth.storageTokenKeyName)?.value; 
   const authRole	= request.cookies.get(auth.storageRole)?.value;
+  let getRole:any
+  if(authRole){
+    getRole = jwtDecodeData(authRole);
+    
+  }
 
-  console.log("middleware working",authRole)
+  console.log("middleware working",getRole, "token",token)
 
   if(!isPublicPath && token === undefined ){
     return NextResponse.redirect(new URL('/login', request.url))
@@ -24,12 +30,12 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL('/login', request.url))
   }
 
-  if(isPublicPath && token && authRole === "admin"){
+  if(isPublicPath && token && getRole === "admin"){
     // console.log("middleware working----\public page",request.url)
     return NextResponse.redirect(new URL('/dashboard', request.url))
   }
 
-  if(isPublicPath && token && authRole === "user"){
+  if(isPublicPath && token && getRole === "user"){
     console.log("middleware working----\public page",request.url)
     return NextResponse.redirect(new URL('/dashboard', request.url))
   }  
