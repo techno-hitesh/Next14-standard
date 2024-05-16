@@ -10,6 +10,7 @@ export const dashboardLinks ={
     productsLink :  '/dashboard/products',
     ordersLink : '/dashboard/order',
     ordersIdLink : '/dashboard/order/',
+    checkoutLinks: '/dashboard/checkout'
 }
 
 export const adminLinks = {

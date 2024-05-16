@@ -30,3 +30,9 @@ export const payments = {
     getPaymentsById:"/user/get-payment/",
     getpdf:"/user/download-pdf/"
 }
+
+export const address = {
+    createAddress:"/user/add-address",
+    getAllAddress:"/user/get-address",
+    getAddressById:"/user/get-address/",
+}
