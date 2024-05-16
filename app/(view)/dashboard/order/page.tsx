@@ -4,6 +4,7 @@ import { getAllPayments } from '@/app/services/apis/payment'
 import { useRouter } from 'next/navigation';
 import TableCompo from "./components/table";
 import "@/app/(view)/dashboard/style/style.css"
+import { dashboardLinks } from '@/app/configs/authLinks';
 
 
 const OrderPage = () => {
@@ -12,11 +13,17 @@ const OrderPage = () => {
     const [orderData , setOrderData] = useState<any>([])
 
     const handlePayments = async() =>{
-        const resp = await getAllPayments();
-        if(resp.status == 200){
-            console.log("resp---",resp.payments);
-            setOrderData(resp.payments)
-        }        
+        try {
+            const resp = await getAllPayments();
+            if(resp.status == 200){
+                console.log("resp---",resp.payments);
+                setOrderData(resp.payments)
+            } 
+            
+        } catch (error) {
+            console.log("error handlePayments--",error)
+        }
+               
     }
 
     useEffect(()=>{
@@ -25,7 +32,7 @@ const OrderPage = () => {
 
     const handleView = (id:string) =>{
         console.log("hanlde view",id)
-        route.replace("/dashboard/order/"+id)
+        route.replace(dashboardLinks.ordersIdLink+id)
     }
 
 
@@ -35,7 +42,6 @@ const OrderPage = () => {
     {orderData && orderData.length > 0 ? 
 
         // <TableCompo orderData={orderData}/>
-      
 
 <div className="relative overflow-x-auto mt-10">
     <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
