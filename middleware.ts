@@ -44,7 +44,6 @@ export const config = {
         '/login',
         '/register',
         '/dashboard/:path*',
-        '/dashboard/cart'
     ],
 }
 
