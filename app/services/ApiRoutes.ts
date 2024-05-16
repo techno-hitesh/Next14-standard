@@ -15,6 +15,10 @@ export const adminRoutes = {
     deleteProductById:"admin/delete-product/",
     getallcategories:"/admin/get-all-categories",
     getcategory:"/admin/get-category/",
+    getallsubcategories:"/admin/get-all-sub-categories",
+    adminUpdateProduct:"/admin/update-product/",
+    createcategory:"/admin/create-category",
+    createsubcategory:"/admin/create-sub-category",
     
 }
 

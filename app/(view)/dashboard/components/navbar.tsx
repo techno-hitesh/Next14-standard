@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { addUser } from '@/app/store/slices/userSlicer'
 import { getToCartAPI } from '@/app/services/apis/user'
 import auth from '@/app/configs/auth'
+import { jwtDecodeData } from '@/app/helpers'
 
 
 const Navbar = () => {
@@ -39,11 +40,13 @@ const Navbar = () => {
      
     
     const updateLink=()=>{
+
         const role=localStorage.getItem(auth.storageRole)
         console.log("role",role)
-        if(role==="user"){
+        const decodeRole=jwtDecodeData(role)
+        if(decodeRole==="user"){
             setArrLink(userRoute)
-        }else if(role==="admin"){
+        }else if(decodeRole==="admin"){
             setArrLink(adminRoute)
         }
     }
@@ -107,7 +110,7 @@ const Navbar = () => {
             </Link>
             
                
-            <Dropdown  checkerVal= {"Guest"}/>
+            <Dropdown />
 
         </div>
 

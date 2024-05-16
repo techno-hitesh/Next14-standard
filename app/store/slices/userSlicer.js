@@ -1,12 +1,19 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice,nanoid } from "@reduxjs/toolkit";
 
+const initialState ={
+    users:""
+}
 const userSlices = createSlice({
-    name:"user",
-    initialState:[],
+    name:"addUserSlice",
+    initialState,
     reducers:{
         addUser(state, action){
-            state.push(action.payload);
-            // console.log("action",state,action.payload)
+            // console.log("action--",action)
+            const data={
+                id:nanoid(),
+                data:action.payload
+            }
+            state.users =data;
         },
         removeUser(state, action){},
         deleteUsers(state,action){}

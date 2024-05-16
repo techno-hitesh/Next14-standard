@@ -70,3 +70,33 @@ export type updateCartItemType = {
     productName:string
     quantity:number
 }
+
+export interface subcategory{
+    _id: string
+    subCategoryName:string
+    subCategoryDescription:string
+    categoryId:string
+    createdBy:string
+    createdAt: string
+    updatedAt: string
+}
+export interface category{
+    _id: string,
+    categoryName: string
+    categoryDescription: string
+    createdBy: string
+    createdAt: string
+    updatedAt: string
+    __v: number
+  
+  }
+
+  export type createcategory={
+    categoryName:string
+    categoryDescription:string
+  }
+  export type createsubcategoty={
+    categoryName:string
+    subCategoryName:string
+    subCategoryDescription:string
+  }

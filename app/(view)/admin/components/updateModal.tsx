@@ -1,6 +1,7 @@
 
-import { GetProductByIdAPI, Getallcategories } from '@/app/services/apis/admin/products'
+import { GetProductByIdAPI, adminUpdateProductApi } from '@/app/services/apis/admin/products'
 import React, { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 
 
 const UpdateModal = ({ id }: { id: { id: any | string } }) => {
@@ -8,39 +9,44 @@ const UpdateModal = ({ id }: { id: { id: any | string } }) => {
        const [name,setname]=useState("")
        const [description,setdescription]=useState("")
        const [price, setprice] = useState("")
-       const [selectedOption, setSelectedOption] =useState("Please select a category")
+       const [productImage, setImage] = useState<string | null>(null)
       const getProductById=async()=>{
         const response=await GetProductByIdAPI(id)
         if(response?.status===200){
-            allcategories()
             setname(response?.getProduct?.productName)
             setdescription(response?.getProduct?.productDescription)
             setprice(response?.getProduct?.productPrice)
+            setImage(response?.getProduct?.productImg)
         }
       }
 
-      const allcategories=async()=>{
-        const response=await Getallcategories()
-        if(response?.status===200){
 
+      const handleImgupdate = (e: any) => {
+        const file = e.target.files[0];
+        if (file) {
+          setImage(file);
         }
-        console.log(response)
       }
 
-      const handlecategory = (name: string, id: string) => {
-        setSelectedOption(name);
-        getcategorybyid(id)
-        console.log(`Selected category name: ${name}, ID: ${id}`);
+
+      const handlesubmit=async(e:any)=>{
+     e.preventDefault()
+    if(name==="" || price===""||description===""){
+        toast.error("All fields are requried !")
+    }else{
+      let val={
+
+        productName:name,
+        productPrice:price,
+        productDescription:description,
+        productImg:productImage
       }
-      const getcategorybyid=async(id:string)=>{
-        const response=await getcategorybyidAPI(id)
-        if(response?.status===200){
-        //   subcategory(id)
-        }
-      else{
-        // toast.error("error")
+       console.log(val)
+       const response=await adminUpdateProductApi(id,val)
+       console.log(response)
+
       }
-      }
+    }
    useEffect(()=>{
     getProductById()
    },[])
@@ -64,7 +70,7 @@ const UpdateModal = ({ id }: { id: { id: any | string } }) => {
                 <span className="sr-only">Close modal</span>
             </button>
             <div>
-            <form >
+            <form onSubmit={handlesubmit}>
   
           <div className="grid gap-4 mb-4 sm:grid-cols-2 sm:gap-6 sm:mb-5">
               <div className="sm:col-span-2">
@@ -79,38 +85,12 @@ const UpdateModal = ({ id }: { id: { id: any | string } }) => {
                   <label htmlFor="price" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Price</label>
                   <input type="number" name="price" id="price" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value={price} onChange={(e)=>setprice(e.target.value)} placeholder="₹299" required />
               </div>
-             <div>
-                            <label htmlFor="category">Select a category</label>  
-                    <select value={selectedOption} onChange={(e) => {
-                        const selectedOption = e.target.options[e.target.selectedIndex];
-                        const categoryId = selectedOption.getAttribute('data-id');
-                        if (categoryId) {
-                        handlecategory(selectedOption.value, categoryId);
-                        }
-                    }}>
-                    <option value="">Please select category</option>
-                    {categories.map((option, index) => (
-                        <option key={index} value={option.categoryName} data-id={option._id}>
-                        {option.categoryName}
-                        </option>
-                    ))}
-                    </select>
-                 <label htmlFor="category" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
-                  <select id="category" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                      <option value="">Please Select Category</option>
-                     <option value="TV">TV/Monitors</option>
-                     <option value="PC">PC</option>
-                    <option value="GA">Gaming/Console</option>                     
-                    <option value="PH">Phones</option>                 
-                    </select>
-             </div>
-               <div>
-                <label htmlFor="item-weight" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Item Weight (kg)</label>
-                   <input type="number" name="item-weight" id="item-weight" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value="15" placeholder="Ex. 12" required />
-              </div> 
-            
+              <div>
+          <label htmlFor="productImg">Product Image</label>
+          <input type="file" placeholder="Image"   onChange={handleImgupdate} />
+        </div>
           </div>
-
+               
             <div className="flex justify-center items-center space-x-4">
                 <button onClick={()=>setShowModal(false)} data-modal-toggle="deleteModal" type="button" className="py-2 px-3 text-sm font-medium text-gray-500 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-primary-300 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
                     No, cancel

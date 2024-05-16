@@ -1,17 +1,17 @@
 "use client"
 import Link from "next/link"
-import { useState, useEffect } from "react"
+import { useState} from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { addUser } from "@/app/store/slices/userSlicer"
 import { useRouter } from "next/navigation"
 import { loginUserAPI, UserRoleAPI } from "@/app/services/apis/user/index"
 import { useCookies } from 'next-client-cookies';
-// import { getUserApi,getAdminApi } from "@/services/route"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-// import { getUserRoles } from "@/helpers/common"
-import { UserType, TokenType } from "@/app/types/userTypes"
+import { UserType } from "@/app/types/userTypes"
 import authConfig from "@/app/configs/auth"
+import { jwtDecodeData,jwtEncodeData } from "@/app/helpers" 
+
 
 const Login = () => {
 
@@ -43,29 +43,25 @@ const Login = () => {
         if (check) {
           setIsSubmit(true);
           const userResp = await UserRoleAPI();
+          // console.log("userRoleAPI ", userResp)
           
-          // console.log("userRoleAPI", userResp)
-
           if (userResp.status == 200) {
 
             setIsSubmit(false);
-            dispatch(addUser(userResp));
+            const jwtencode = jwtEncodeData(userResp.userData.fullName);
+            // dispatch(addUser(jwtencode));
+            
 
             const { role } = userResp.userData.role;
+            const jwtRole:any = jwtEncodeData(role);
 
-            if (role === "user" ) {
-
-              // console.log("enter in user")
-              cookies.set(authConfig.storageRole, role)
-              localStorage.setItem(authConfig.storageRole, role)
-
-
+            if (role === "user") {
+              cookies.set(authConfig.storageRole, jwtRole)
+              localStorage.setItem(authConfig.storageRole, jwtRole)
               router.push("/dashboard");
-            }else if(role === "admin"){
-              cookies.set(authConfig.storageRole, role)
-              localStorage.setItem(authConfig.storageRole, role)
-
-
+            }else if(role ==="admin"){
+              cookies.set(authConfig.storageRole, jwtRole)
+              localStorage.setItem(authConfig.storageRole, jwtRole)
               router.push("/admin");
             }
 
@@ -75,7 +71,6 @@ const Login = () => {
           
         }
     }
-
   }
 
 
