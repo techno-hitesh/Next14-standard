@@ -53,7 +53,7 @@ const Login = () => {
 
             const { role } = userResp.userData.role;
 
-            if (role === "user" || role === "admin") {
+            if (role === "user" ) {
 
               // console.log("enter in user")
               cookies.set(authConfig.storageRole, role)
@@ -61,6 +61,12 @@ const Login = () => {
 
 
               router.push("/dashboard");
+            }else if(role === "admin"){
+              cookies.set(authConfig.storageRole, role)
+              localStorage.setItem(authConfig.storageRole, role)
+
+
+              router.push("/admin");
             }
 
           } else {

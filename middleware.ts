@@ -26,7 +26,7 @@ export async function middleware(request: NextRequest) {
 
   if(isPublicPath && token && authRole === "admin"){
     // console.log("middleware working----\public page",request.url)
-    return NextResponse.redirect(new URL('/dashboard', request.url))
+    return NextResponse.redirect(new URL('/admin', request.url))
   }
 
   if(isPublicPath && token && authRole === "user"){
@@ -43,6 +43,8 @@ export const config = {
         '/' ,
         '/login',
         '/register',
+        '/admin',
+        '/admin/:path*',
         '/dashboard/:path*',
     ],
 }

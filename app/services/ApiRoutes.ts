@@ -12,6 +12,9 @@ export const adminRoutes = {
     getAdminUser: '/admin/users',
     getAllProducts:'/admin/get-all-products',
     getProductById:"/admin/get-product/",
+    deleteProductById:"admin/delete-product/",
+    getallcategories:"/admin/get-all-categories",
+    getcategory:"/admin/get-category/",
     
 }
 
