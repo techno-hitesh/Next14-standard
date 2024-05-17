@@ -13,16 +13,13 @@ import { addUser } from '@/app/store/slices/userSlicer'
 import { getToCartAPI } from '@/app/services/apis/user'
 import auth from '@/app/configs/auth'
 import { jwtDecodeData } from '@/app/helpers'
-
+import { NextRequest } from 'next/server'
 
 const Navbar = () => {
-    
-    
     const pathname = usePathname()
     const [arrLink,setArrLink] = useState<[]|any>([])
     const [subTotal, setSubTotal] = useState(0)
-    const role=localStorage.getItem(auth.storageRole)
-    const decodeRole:any=jwtDecodeData(role) 
+    var decodeRole:any
     // const getAllCart = async () => {
     //     const resp = await getToCartAPI();
     //     if (resp.status == 200) {
@@ -41,6 +38,8 @@ const Navbar = () => {
      
     
     const updateLink=()=>{
+        const token=localStorage.getItem(auth.storageRole)
+        decodeRole=jwtDecodeData(token)
         if(decodeRole==="user"){
             setArrLink(userRoute)
         }else if(decodeRole==="admin"){
@@ -107,8 +106,8 @@ const Navbar = () => {
                     />
                 </div>
             </Link>     
-               )
-             }
+             )
+             } 
                
             <Dropdown />
 

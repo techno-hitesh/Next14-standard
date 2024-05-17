@@ -7,7 +7,7 @@ import { createcategory, createsubcategoty } from '@/app/types/userTypes';
 
 
 const baseurl=process.env.NEXT_PUBLIC_API_BASE_URL
-const token=localStorage.getItem(auth.storageTokenKeyName)
+
 export const GetAllProductAPI = async () =>{
     try {
       const response = await axiosInstance.get(adminRoutes.getAllProducts)
@@ -18,6 +18,14 @@ export const GetAllProductAPI = async () =>{
       toast.error(err?.response?.data?.message || err?.message)
      
     }
+}
+export const getproductBySearch=async(data:any)=>{
+  try{
+    const response=await axiosInstance.get(adminRoutes.getproductBySearch+data)
+    return response.data
+  }catch(err:any){
+    toast.error(err?.response?.data?.message || err?.message)
+  }
 }
 
 export const GetProductByIdAPI = async (id:string|any) =>{
@@ -71,6 +79,7 @@ export const Getallsubcategories=async(id:string)=>{
 
 
 export const adminUpdateProductApi=async(id:string|any,formdata:any)=>{
+  const token=localStorage.getItem(auth.storageTokenKeyName)
       try{
         const response=await axios.patch(baseurl+adminRoutes.adminUpdateProduct+id,formdata,{
           headers:{
@@ -103,6 +112,7 @@ export const createsubcategoryAPI=async(val:createsubcategoty)=>{
   }
 }
 export const adminCreateProductApi=async(formdata:any)=>{
+  const token=localStorage.getItem(auth.storageTokenKeyName)
   try{
     const response=await axios.post(baseurl+adminRoutes.createproduct,formdata,{
         headers:{

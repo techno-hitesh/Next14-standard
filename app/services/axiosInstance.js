@@ -17,7 +17,7 @@ const getToken = () => {
 axiosInstance.interceptors.request.use(
   request => {
     const storedToken = getToken();
-    console.log("tokn headersss",storedToken)
+    // console.log("tokn headersss",storedToken)
     if (storedToken !== null) {
       request.headers.Authorization = `Bearer ${storedToken}`
     }
@@ -35,7 +35,7 @@ axiosInstance.interceptors.response.use(
   },
   error => {
     if (error.response?.status === 401 || 404) {
-      console.log("storedToken undefined",error.response)
+      console.log("storedToken undefined",error)
       // deleteCookie(authConfig.storageTokenKeyName)
       // deleteCookie(authConfig.storageRole)
 

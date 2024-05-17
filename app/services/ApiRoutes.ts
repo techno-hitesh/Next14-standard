@@ -20,6 +20,7 @@ export const adminRoutes = {
     createcategory:"/admin/create-category",
     createsubcategory:"/admin/create-sub-category",
     createproduct:"/admin/create-product",
+    getproductBySearch:"/admin/get-all-products?searchQuery="
     
 }
 
@@ -37,4 +38,10 @@ export const payments = {
     getAllPaymentDetails:"/user/get-payment-details",
     getPaymentsById:"/user/get-payment/",
     getpdf:"/user/download-pdf/"
+}
+
+export const address = {
+    createAddress:"/user/add-address",
+    getAllAddress:"/user/get-address",
+    getAddressById:"/user/get-address/",
 }

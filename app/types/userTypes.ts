@@ -100,3 +100,13 @@ export interface category{
     subCategoryName:string
     subCategoryDescription:string
   }
+
+export type addressType = {
+    mobileNumber?:number,
+    country:string
+    state:string
+    city:string
+    streetAddress:string
+    nearByAddress:string
+    areaPincode?:number
+}

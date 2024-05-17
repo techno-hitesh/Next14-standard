@@ -13,11 +13,10 @@ const Dropdown = () => {
     const cookies = useCookies();
 
     const router = useRouter();
-    const dropdownRef = useRef(null);
+    const dropdownRef = useRef<HTMLDivElement>(null);
     const [userName,setUserName] = useState("")
     const userDataName = useSelector((data:any)=> data.users);
-    const role=localStorage.getItem(auth.storageRole)
-    const decodeRole:any=jwtDecodeData(role) 
+    
     const getUserData = ()=>{
         if (userDataName !="" && typeof userDataName?.users?.data === 'string') {
             const decodedData:any = jwtDecodeData(userDataName?.users?.data);
@@ -54,6 +53,8 @@ const Dropdown = () => {
     const userPrfRedirect = ()=>{
         setIsOpen(false);
         setTimeout(()=>{
+            const role=localStorage.getItem(auth.storageRole)
+            const decodeRole:any=jwtDecodeData(role) 
               if(decodeRole==="user"){
                   router.replace("/dashboard/profile")
               }else if(decodeRole==="admin"){
@@ -88,7 +89,7 @@ const Dropdown = () => {
     return (
         <>
         <div className='py-2 pb-3'>
-            <div className="relative  z-60 inline-block" ref={dropdownRef}  >
+            <div className="relative inline-block" ref={dropdownRef}>
                 <button
                     type="button"
                     className="px-4 py-2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm inline-flex items-center"
@@ -101,7 +102,7 @@ const Dropdown = () => {
                 </button>
 
                 {isOpen && (
-                    <div className="origin-top-right absolute right-0 mt-2 w-44 rounded-lg shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+                    <div className="origin-top-right absolute right-0 mt-2 w-44 rounded-lg shadow-lg bg-white ring-1 ring-black ring-opacity-5" style={{zIndex:999}}>
                         <ul role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                              <li>
                                 <button type="submit"

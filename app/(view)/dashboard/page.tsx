@@ -6,6 +6,7 @@ import './style/style.css';
 import authConfig from "@/app/configs/auth"
 import Image from "next/image";
 import T1 from "@/public/images/t1.jpg"
+import CategoryCard from './components/category/categoryCard';
 
 const DashboardPage = () => {
 
@@ -17,13 +18,15 @@ const DashboardPage = () => {
      
        <div className="lg:container w-screen mx-auto">
           <div>
-              <Image
+          <CategoryCard />
+              {/* <Image
                   priority
                   src={T1}
                   // height={32}
                   // width={32}
-                  alt="Follow us on Twitter" />
+                  alt="Follow us on Twitter" /> */}
           </div>
+         
       </div>
     </>
   )

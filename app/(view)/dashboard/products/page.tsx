@@ -8,9 +8,13 @@ const ProductsPage = () => {
     const [usrProducts, setUsrProducts] = useState("")
 
     const handleProducts = async() =>{
+      try {
         const data = await GetAllProductAPI();
         setUsrProducts(data.data)
-        console.log(data.data)
+        // console.log("handleProducts",data.data)        
+      } catch (error) {
+        console.log("error handleProducts",error)
+      }
     }
     
     useEffect(()=>{
