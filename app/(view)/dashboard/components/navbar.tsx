@@ -4,21 +4,22 @@ import Link from 'next/link'
 import Image from 'next/image'
 import Logo from "@/public/images/logo.svg"
 import siteIcon from "@/public/images/4.svg"
-import { userRoute } from '../utils/navLink'
+import { adminRoute, userRoute } from '../utils/navLink'
 import { usePathname } from 'next/navigation'
 import { NavbarUserType } from '@/app/types/userTypes'
 import Dropdown from './dropdown';
 import { useDispatch, useSelector } from "react-redux"
 import { addUser } from '@/app/store/slices/userSlicer'
 import { getToCartAPI } from '@/app/services/apis/user'
+import auth from '@/app/configs/auth'
+import { jwtDecodeData } from '@/app/helpers'
+import { NextRequest } from 'next/server'
 
 const Navbar = () => {
-   
-
     const pathname = usePathname()
-    const [arrLink,setArrLink] = useState<[]|any>(userRoute)
+    const [arrLink,setArrLink] = useState<[]|any>([])
     const [subTotal, setSubTotal] = useState(0)
-
+    var decodeRole:any
     // const getAllCart = async () => {
     //     const resp = await getToCartAPI();
     //     if (resp.status == 200) {
@@ -34,9 +35,25 @@ const Navbar = () => {
     //   useEffect(() => {
     //     getAllCart()
     //   }, [])
+     
+    
+    const updateLink=()=>{
+        const token=localStorage.getItem(auth.storageRole)
+        decodeRole=jwtDecodeData(token)
+        if(decodeRole==="user"){
+            setArrLink(userRoute)
+        }else if(decodeRole==="admin"){
+            setArrLink(adminRoute)
+        }
+    }
 
+   useEffect(()=>{
+      updateLink()
+   },[])
 
-    const links = pathname.startsWith("/dashboard") ? "/dashboard" : "#";
+    const links = pathname.startsWith("/dashboard") ? "/dashboard" : "/admin";
+    
+    
     return (
     <>
             <div className="flex justify-between items-center w-full h-20 px-2 text-black bg-light-800 nav">
@@ -58,19 +75,23 @@ const Navbar = () => {
                 </div>
 
                 <ul className="hidden md:flex">
-                {arrLink !="" && arrLink.map(({ id, link ,name}:NavbarUserType) => (
+                {arrLink !="" && arrLink.length>0 ? arrLink.map(({ id, link ,name}:NavbarUserType) => (
                     <li
                         key={id}
                         className="nav-links px-4 cursor-pointer capitalize font-medium text-gray-500 hover:scale-105 hover:text-black duration-200 link-underline"
                     >
                         <Link href={link}>{name}</Link>
                     </li>
-                    ))}
+                    ))
+                :""
+                }
                 </ul>
 
 
              
-            <Link href={`${links}/cart`}>
+             {
+               decodeRole =="user" && (
+                <Link href={`${links}/cart`}>
                 <div className="relative py-2">
                     <div className="t-0 absolute left-6">
                     {/* {subTotal >0 ? 
@@ -84,8 +105,9 @@ const Navbar = () => {
                         alt="Follow us on Twitter"
                     />
                 </div>
-            </Link>
-            
+            </Link>     
+             )
+             } 
                
             <Dropdown />
 

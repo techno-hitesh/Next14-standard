@@ -7,6 +7,7 @@ import UserModal from "./modal"
 import Link from "next/link";
 import { useSelector } from "react-redux";
 import { jwtDecodeData } from "@/app/helpers";
+import auth from "@/app/configs/auth";
 
 const Dropdown = () => {
     const cookies = useCookies();
@@ -15,7 +16,7 @@ const Dropdown = () => {
     const dropdownRef = useRef<HTMLDivElement>(null);
     const [userName,setUserName] = useState("")
     const userDataName = useSelector((data:any)=> data.users);
-
+    
     const getUserData = ()=>{
         if (userDataName !="" && typeof userDataName?.users?.data === 'string') {
             const decodedData:any = jwtDecodeData(userDataName?.users?.data);
@@ -52,7 +53,13 @@ const Dropdown = () => {
     const userPrfRedirect = ()=>{
         setIsOpen(false);
         setTimeout(()=>{
-            router.replace("/dashboard/profile")
+            const role=localStorage.getItem(auth.storageRole)
+            const decodeRole:any=jwtDecodeData(role) 
+              if(decodeRole==="user"){
+                  router.replace("/dashboard/profile")
+              }else if(decodeRole==="admin"){
+                router.replace("/admin/profile")
+              }
         },1000)
     }
 
@@ -105,8 +112,9 @@ const Dropdown = () => {
                                     User Profile
                                 </button>
                             </li>
-                            
+                          
                             <li>
+                                
                                 <button
                                     type="submit"
                                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
