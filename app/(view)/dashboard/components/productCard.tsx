@@ -5,12 +5,14 @@ import { ProductTypeProps ,ProductType} from '@/app/types/userTypes';
 import '../style/style.css';
 import { useRouter } from "next/navigation"
 import { usePathname } from 'next/navigation'
+import Link from 'next/link';
+import { dashboardLinks } from '@/app/configs/authLinks';
 
 const ProductCard = (usrProducts:ProductTypeProps|any) => {
     const router = useRouter();
     const pathname = usePathname()
 
-    // console.log('usrProducts',usrProducts.usrProducts.products,pathname)
+    console.log('usrProducts',usrProducts.usrProducts)
     const {products} = usrProducts.usrProducts;
 
     const handleCart = (e: MouseEvent<HTMLButtonElement>,product:ProductType) =>{
@@ -23,15 +25,24 @@ const ProductCard = (usrProducts:ProductTypeProps|any) => {
       
         products.map((data:any,i:any)=>(     
         <div className="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl" key={data._id}>
-            {/* <a href="#"> */}
+            <Link href={dashboardLinks.productsLink+"/"+data._id}>
                 <img src={data?.productImg}
-                        alt="Product" className="h-80 w-72 object-cover rounded-t-xl" />
+                        alt="Product" className="h-72 w-72 object-cover rounded-t-xl" />
                 <div className="px-4 py-3 w-72">
                     <span className="text-gray-400 mr-3 uppercase text-xs">Brand</span>
-                    <p className="text-lg font-bold text-black truncate block capitalize"> {data.productName}</p>
+                    <div className="flex justify-between items-center">
+                    <p className="text-lg font-bold text-black truncate capitalize flex-grow">
+                        {data.productName.split(',')[0]}
+                        <span className="font-bold" style={{float:"right"}}>
+                        ₹ {data.productPrice}
+                        </span>
+                    </p>
+                    </div>
+                  
+
                     <div className="flex items-center">
-                    <button className="custom-button-primary" onClick={(e)=>handleCart(e,data._id)} >
-                    Read more...</button> 
+                    {/* <button className="custom-button-primary" onClick={(e)=>handleCart(e,data._id)} >
+                    Read more...</button>  */}
                         {/* <p className="text-lg font-semibold text-black cursor-auto my-3">$149</p>
                         <del>
                             <p className="text-sm text-gray-600 cursor-auto ml-2">$199</p>
@@ -45,7 +56,7 @@ const ProductCard = (usrProducts:ProductTypeProps|any) => {
                             </svg></div> */}
                     </div>
                 </div>
-            {/* </a> */}
+            </Link>
         </div>
 
       

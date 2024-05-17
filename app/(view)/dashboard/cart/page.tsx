@@ -201,7 +201,7 @@ const UserCart = () => {
                             <h3>
                               <a href="#">{data?.productDetails?.productName}</a>
                             </h3>
-                            <p className="ml-4">₹{data?.productDetails?.productPrice}</p>
+                            <p className="ml-4">₹ {data?.productDetails?.productPrice}</p>
                           </div>
                           {/* <p className="mt-1 text-sm text-gray-500">Salmon</p> */}
                         </div>
@@ -251,7 +251,7 @@ const UserCart = () => {
           <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
             <div className="flex justify-between text-base font-medium text-gray-900">
               <p>Subtotal</p>
-              {subTotal!="" ? <p>₹{subTotal}</p>:"Loading...." }
+              {subTotal!="" ? <p>₹ {subTotal}</p>:"Loading...." }
              
             </div>
             <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>

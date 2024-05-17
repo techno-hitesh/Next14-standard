@@ -268,7 +268,7 @@ const CheckoutPage = () => {
                 <p className="text-sm font-medium text-white text-opacity-80"> Qty {data?.quantity}</p>
               </div>
             </div>
-            <p className="text-sm font-semibold text-white">₹{data?.productDetails?.productPrice}</p>
+            <p className="text-sm font-semibold text-white">₹ {data?.productDetails?.productPrice}</p>
           </li>
 
         )):""}
