@@ -104,13 +104,14 @@ export const createsubcategoryAPI=async(val:createsubcategoty)=>{
 }
 export const adminCreateProductApi=async(formdata:any)=>{
   try{
-    const response=await axios.post(adminRoutes.createproduct,formdata,{
+    const response=await axios.post(baseurl+adminRoutes.createproduct,formdata,{
         headers:{
             'Authorization':`Bearer ${token}`,
             'Content-Type': 'multipart/form-data'
         }
     })
     console.log("createapi=-----------",formdata)
+    return response?.data
   }catch(err:any){
     console.log("createapi-----------",formdata,err)
     toast.error(err?.response?.data?.message || err?.message)

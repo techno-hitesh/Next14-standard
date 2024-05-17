@@ -21,7 +21,8 @@ const Navbar = () => {
     const pathname = usePathname()
     const [arrLink,setArrLink] = useState<[]|any>([])
     const [subTotal, setSubTotal] = useState(0)
-
+    const role=localStorage.getItem(auth.storageRole)
+    const decodeRole:any=jwtDecodeData(role) 
     // const getAllCart = async () => {
     //     const resp = await getToCartAPI();
     //     if (resp.status == 200) {
@@ -40,10 +41,6 @@ const Navbar = () => {
      
     
     const updateLink=()=>{
-
-        const role=localStorage.getItem(auth.storageRole)
-        console.log("role",role)
-        const decodeRole=jwtDecodeData(role)
         if(decodeRole==="user"){
             setArrLink(userRoute)
         }else if(decodeRole==="admin"){
@@ -93,7 +90,9 @@ const Navbar = () => {
 
 
              
-            <Link href={`${links}/cart`}>
+             {
+               decodeRole =="user" && (
+                <Link href={`${links}/cart`}>
                 <div className="relative py-2">
                     <div className="t-0 absolute left-6">
                     {/* {subTotal >0 ? 
@@ -109,6 +108,9 @@ const Navbar = () => {
                 </div>
             </Link>
             
+               )
+             }
+          
                
             <Dropdown />
 
