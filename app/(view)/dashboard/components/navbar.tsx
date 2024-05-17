@@ -106,11 +106,9 @@ const Navbar = () => {
                         alt="Follow us on Twitter"
                     />
                 </div>
-            </Link>
-            
+            </Link>     
                )
              }
-          
                
             <Dropdown />
 
