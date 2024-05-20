@@ -59,6 +59,14 @@ export const deleteadminCategoryApi=async(id:any)=>{
   }
 }
 
+export const deleteadminsubCategoryApi=async(id:any)=>{
+  try{
+      const response=await axiosInstance.delete(adminRoutes.deletesubcategoryById+id)
+      return response?.data
+  }catch(err:any){
+      toast.error(err?.response?.data?.message || err?.message)
+  }
+}
 export const Getallcategories=async()=>{
   try{
       const response=await axiosInstance.get(adminRoutes.getallcategories)
@@ -76,6 +84,14 @@ export const getcategorybyidAPI=async(id:string)=>{
       toast.error(err?.response?.data?.message || err?.message)
   }
 }
+export const getsubcategorybyidAPI=async(id:string |any)=>{
+  try{
+      const response=await axiosInstance.get(adminRoutes.getsubcategorybyId+id)
+      return response.data
+  }catch(err:any){
+      toast.error(err?.response?.data?.message || err?.message)
+  }
+}
 
 export const Getallsubcategories=async(id:string)=>{
   try{
@@ -86,6 +102,14 @@ export const Getallsubcategories=async(id:string)=>{
   }
 }
 
+export const Getallsubcategory=async()=>{
+  try{
+      const response=await axiosInstance.get(adminRoutes.getallsubcategories)
+      return response.data
+  }catch(err:any){
+      toast.error(err?.response?.data?.message || err?.message)
+  }
+}
 
 export const adminUpdateProductApi=async(id:string|any,formdata:any)=>{
   const token=localStorage.getItem(auth.storageTokenKeyName)
@@ -115,6 +139,20 @@ export const adminUpdateCategoryApi=async(id:string|any,formdata:any)=>{
         console.log(err)
       }
 }
+export const adminUpdateSubCategoryApi=async(id:string|any,formdata:any)=>{
+  const token=localStorage.getItem(auth.storageTokenKeyName)
+      try{
+        const response=await axios.patch(baseurl+adminRoutes.adminUpdateSubCategoryAPi+id,formdata,{
+          headers:{
+            'Authorization':`Bearer ${token}`,
+            'Content-Type':'multipart/form-data'
+          }
+        })
+        return response?.data
+      }catch(err:any){
+        console.log(err)
+      }
+}
 export const createcategoryAPI=async(val:any)=>{
   try{
     const token=localStorage.getItem(auth.storageTokenKeyName)
@@ -130,9 +168,15 @@ export const createcategoryAPI=async(val:any)=>{
   }
 }
 
-export const createsubcategoryAPI=async(val:createsubcategoty)=>{
+export const createsubcategoryAPI=async(val:any)=>{
   try{
-      const response=await axiosInstance.post(adminRoutes.createsubcategory,val)
+    const token=localStorage.getItem(auth.storageTokenKeyName)
+      const response=await axios.post(baseurl+adminRoutes.createsubcategory,val,{
+        headers:{
+          "Authorization":`Bearer ${token}`,
+          'Content-Type': 'multipart/form-data'
+        }
+      })
       return response?.data
      
   }catch(err:any){
