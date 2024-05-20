@@ -42,3 +42,29 @@ export const getAddressByIdAPI = async (id:string) =>{
     // throw error;
   }
 }
+
+// /user/delete-address/
+
+export const delAddressByIdAPI = async (id:string) =>{
+  try {
+    const response = await axiosInstance.delete(`${address.delAddressById}${id}`)
+    return response.data;
+  } catch (err:any) {
+    // console.error("Login Error:", err.response?.data?.message,err);
+    toast.error(err?.response?.data?.message || err?.message)
+    return err?.response?.data?.message || err?.message
+    // throw error;
+  }
+}
+
+export const updateAddressAPI = async (id:string,params:any) =>{
+  try {
+    const response = await axiosInstance.patch(`${address.updateAddress}${id}`,params)
+    return response.data;
+  } catch (err:any) {
+    // console.error("Login Error:", err.response?.data?.message,err);
+    toast.error(err?.response?.data?.message || err?.message)
+    return err?.response?.data?.message || err?.message
+    // throw error;
+  }
+}

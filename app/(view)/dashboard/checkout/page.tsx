@@ -49,7 +49,7 @@ const CheckoutPage = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    console.log("name",name)
+    // console.log("name",name)
     setFormValue((prevProps: addressType) => ({
       ...prevProps,
       [name]: value
@@ -59,7 +59,7 @@ const CheckoutPage = () => {
   const handleSubmit = async(e: React.SyntheticEvent<HTMLFormElement>) =>{
     e.preventDefault()
 
-    console.log("formValue",formValue)
+    // console.log("formValue",formValue)
     // let errForm: {} | "" = validate(formValue);
 
     // if(!Object.keys(errForm).length){
@@ -139,7 +139,7 @@ const CheckoutPage = () => {
 
   const validate = (values: any | {}) => {
     const errors: addressType | any = {};
-    console.log("values==--- validate--",values)
+    // console.log("values==--- validate--",values)
 
   //   {streetAddress: "",
   //   nearByAddress: "",
@@ -214,17 +214,17 @@ const CheckoutPage = () => {
   const innumber = (e :React.SyntheticEvent<HTMLFormElement>) =>{
     // const {name,value} = e;
 
-    console.log("number--",e)
+    // console.log("number--",e)
   }
 
   return (
     <>
     <ToastContainer />
     <div className="relative mx-auto w-full bg-white">
-  <div className="grid min-h-screen grid-cols-10">
-    <div className="col-span-full py-6 px-4 sm:py-12 lg:col-span-6 lg:py-24">
+      <div className="grid min-h-screen grid-cols-10">
+      <div className="col-span-full py-6 px-4 sm:py-12 lg:col-span-6 lg:py-24">
         <CheckoutForm />
-    </div>
+      </div>
 
 
 

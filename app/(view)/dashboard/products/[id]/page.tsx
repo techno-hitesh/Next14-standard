@@ -17,11 +17,17 @@ const ProductDesp = ({ params }: { params: { id: any | string } }) => {
 
   const [productData, setProductData] = useState<any>()
   const [itemGet, setItemGet] = useState(false)
+  const [quantity,setQuantity] =  useState("")
 
   const products = async () => {
     try {
       const res = await GetProductByIdAPI(params.id);
       if(res.status == 200 && res.message === "Product found successfully"){
+        // console.log("*****",res.getProduct.productStockQuantity)
+        if(res.getProduct.productStockQuantity <=10){
+          setQuantity(res.getProduct.productStockQuantity)
+        }
+
         setProductData(res.getProduct)
       }
     } catch (error) {
@@ -95,8 +101,9 @@ const ProductDesp = ({ params }: { params: { id: any | string } }) => {
                     </p> */}
                   
                     </div>
-                    <p className="product-card__brand">{productData.productName}</p>
-                    <p className="product-card__description">{productData.productDescription}</p>
+                    <p className="product-card__brand ">{productData.productName}</p>
+                    <h3 className='mt-3'>{quantity!="" ? `ONLY ${quantity} ITEMS IN STOCK` :""}</h3>
+                    <p className="product-card__description mt-3">{productData.productDescription}</p>
                     <p className="product-card__price"> ₹ {productData.productPrice}</p>
 
                     {itemGet == false ?

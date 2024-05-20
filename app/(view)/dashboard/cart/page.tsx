@@ -45,16 +45,16 @@ const UserCart = () => {
 
   const handleDelCartItem = async(id:string) =>{
 
-    console.log("remove cart--",id)
+    // console.log("remove cart--",id)
     const resp = await delCartItemAPI(id);
     if(resp.status == 200){
       getAllCart();
-      console.log("res del item--",resp)
+      // console.log("res del item--",resp)
     }
   }
 
   const handleAddToCart = async (productData:any) => {
-    console.log("Sdfsdf09u889789798",productData)
+    // console.log("Sdfsdf09u889789798",productData)
     const param = {
       "productId": productData.productId,
       "productName": productData.productName
@@ -92,7 +92,7 @@ const UserCart = () => {
 
   const createCheckOutSession = async () => {
 
-    console.log("getAllData",getAllData)
+    // console.log("getAllData",getAllData)
     router.push(dashboardLinks.checkoutLinks);
 
     // let formattedData

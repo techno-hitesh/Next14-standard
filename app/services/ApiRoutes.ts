@@ -35,4 +35,6 @@ export const address = {
     createAddress:"/user/add-address",
     getAllAddress:"/user/get-address",
     getAddressById:"/user/get-address/",
+    delAddressById:"/user/delete-address/",
+    updateAddress:"/user/update-address/"
 }

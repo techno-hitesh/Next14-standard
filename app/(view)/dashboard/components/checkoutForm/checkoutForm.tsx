@@ -9,7 +9,11 @@ import "react-country-state-city/dist/react-country-state-city.css";
 import PlaceOrder from './placeOrder';
 import { loadStripe } from '@stripe/stripe-js';
 import { stripeSessionAPI } from '@/app/services/apis/user';
-
+import { delAddressByIdAPI } from '@/app/services/apis/address';
+import {DelIcon} from "@/public/svg/del"
+import { EditIcon } from '@/public/svg/edit';
+import { AddIcon } from "@/public/svg/add";
+import ModalCompo  from './modal';
 
 const CheckoutForm = () => {
 
@@ -37,20 +41,26 @@ const CheckoutForm = () => {
     const [subTotal, setSubTotal]     = useState("")
     const [orderStatus,setOrderStatus] = useState(false)
 
+    const [checked,setChecked] = useState(false);
+
+
+    const allAddress = async() =>{
+        const getAllAdd = await getAddressAPI();
+        if(getAllAdd.status == 200 && getAllAdd.addressData !=""){
+            // console.log("getAllAdd--", getAllAdd)
+            setFillForm(true);
+            setShowAddress(getAllAdd.addressData)
+        }else{
+            setChecked(false)
+        }
+    }
 
     useEffect(() => {
-        const allAddress = async() =>{
-            const getAllAdd = await getAddressAPI();
-            if(getAllAdd.status == 200&& getAllAdd.addressData !=""){
-                console.log("getAllAdd--", getAllAdd)
-                setFillForm(true);
-                setShowAddress(getAllAdd.addressData)
-            } 
-        }
+        
         allAddress()
 
         GetState().then((result: any) => {
-            console.log(result)
+            // console.log(result)
             setStateList(result);
         });        
 
@@ -58,7 +68,7 @@ const CheckoutForm = () => {
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
-        console.log("name", name)
+        // console.log("name", name)
         setFormValue((prevProps: addressType) => ({
             ...prevProps,
             [name]: value
@@ -81,11 +91,12 @@ const CheckoutForm = () => {
 
         if (!Object.keys(errForm).length) {
         
-
             const resp = await addAddressApi(updatedObject);
-            // console.log("enter in object",resp);
+            console.log("addAddressApi ****************",resp);
             if (resp.status == 201) {
-                console.log("resp--", resp)
+                console.log("resp--", resp.data._id)
+                setCheckBoxId(resp.data._id)
+                setOrderStatus(true)
                 const getAllAdd = await getAddressAPI();
                 if(getAllAdd.status == 200){
                     console.log("getAllAdd--", resp)
@@ -308,19 +319,58 @@ const CheckoutForm = () => {
         "emoji": "🇮🇳"
     },]
 
+
+    const delAddressHandler = async(id:any) =>{
+        // console.log(id);
+        const resp = await delAddressByIdAPI(id);
+        if(resp.status == 200){
+          allAddress()
+        }
+        // console.log("dele----",resp)
+      }
+    
+    const checkedAddress = (e:any) =>{
+        const {value} = e.target;
+        if(value == "check1"){
+           setChecked(true)
+        }else if(value == "check2"){
+            setChecked(false)
+        }
+        // console.log("checkedAddress",e.target.value)
+    } 
+    
+
     return (
         <>
-        {fillForm ==false  ? 
 
-            <div className="mx-auto w-full max-w-lg">
+{orderStatus==false  ? 
+    <div className="mx-auto w-full max-w-lg">
+            <div className="flex items-center mb-4">
+                <input id="default-radio-1" type="radio" value="check1" name="default-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 dark:bg-gray-700 dark:border-gray-600"
+                onChange={(e)=>checkedAddress(e)}
+                />
+                <label htmlFor="default-radio-1" className="ms-2 text-sm font-medium text-gray-900 dark:text-black-300">Shipping Previous Address</label>
+            </div>
+            <div className="flex items-center">
+                <input  id="default-radio-2" type="radio" value="check2" name="default-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 dark:bg-gray-700 dark:border-gray-600" 
+                checked={checked ==false ?true :""}
+                onChange={(e)=>checkedAddress(e)}
+                />
+                <label htmlFor="default-radio-2" className="ms-2 text-sm font-medium text-gray-900 dark:text-black-300">Shipping New Address</label>
+            </div>
+            </div>
+:""}
+         {checked ==false  && orderStatus==false? 
+
+     <div className="mx-auto w-full max-w-lg mt-5">
 
                 {/* <h3>Previous address</h3> */}
+           
 
-                <h1 className="relative text-2xl font-medium text-gray-700 sm:text-3xl">Secure Checkout<span className="mt-2 block h-1 w-10 bg-teal-600 sm:w-20"></span></h1>
+                <h1 className="relative text-2xl font-medium text-gray-700 sm:text-3xl">New Address <span className="mt-2 block h-1 w-10 bg-teal-600 sm:w-20"></span></h1>
 
 
-                <form className="mt-10 flex flex-col " onSubmit={handleSubmit}>
-
+                <form className="mt-10 flex flex-col" onSubmit={handleSubmit}>
 
                     <div className="flex flex-wrap -mx-3 mb-6">
 
@@ -393,9 +443,9 @@ const CheckoutForm = () => {
 
                             <div className="relative">
                                 {/* <input name="state" className="mt-1 block w-full rounded border-gray-300 bg-gray-50 py-3 px-4 text-sm placeholder-gray-300 shadow-sm outline-none transition focus:ring-2 focus:ring-teal-500" id="grid-city" type="text" placeholder="State"
-         value={formValue.state}
-         onChange={(e) => handleChange(e)}
-        /> */}
+            value={formValue.state}
+            onChange={(e) => handleChange(e)}
+            /> */}
 
                                 <StateSelect
                                     countryid={countryid}
@@ -416,9 +466,9 @@ const CheckoutForm = () => {
                                 City
                             </label>
                             {/* <input name="city" className="mt-1 block w-full rounded border-gray-300 bg-gray-50 py-3 px-4 text-sm placeholder-gray-300 shadow-sm outline-none transition focus:ring-2 focus:ring-teal-500" id="grid-city" type="text" placeholder="City"
-         value={formValue.city}
-         onChange={(e) => handleChange(e)}        
-        />      */}
+            value={formValue.city}
+            onChange={(e) => handleChange(e)}        
+            />      */}
 
                             <CitySelect
                                 countryid={countryid}
@@ -445,7 +495,7 @@ const CheckoutForm = () => {
 
                     </div>
 
-                    <button type="submit" className="mt-10 inline-flex w-full items-center justify-center rounded bg-teal-600 py-2.5 px-4 text-base font-semibold tracking-wide text-white text-opacity-80 outline-none ring-offset-2 transition hover:text-opacity-100 focus:ring-2 focus:ring-teal-500 sm:text-lg">Place Order</button>
+                    <button type="submit" className="mt-10 inline-flex w-full items-center justify-center rounded bg-teal-600 py-2.5 px-4 text-base font-semibold tracking-wide text-white text-opacity-80 outline-none ring-offset-2 transition hover:text-opacity-100 focus:ring-2 focus:ring-teal-500 sm:text-lg">Add Address</button>
 
                 </form>
 
@@ -453,13 +503,22 @@ const CheckoutForm = () => {
 
         </div>     
 
-: fillForm ==true && orderStatus ==false ?
 
-        <div>
-            <h1 className="relative text-2xl font-medium text-gray-700 sm:text-3xl">Shipping & Payment<span className="mt-2 block h-1 w-10 bg-teal-600 sm:w-20"></span></h1>
-           
 
-            <h3 className="text-lg font-semibold text-gray-500 mt-5">Select Address</h3>
+
+: checked ==true  && orderStatus==false ?
+        
+        <div className='mx-auto w-full max-w-lg mt-5'>
+            <h1 className="relative text-2xl font-medium text-gray-700 sm:text-1xl">Previous Saved Address<span className="mt-2 block h-1 w-10 bg-teal-600 sm:w-20"></span></h1>
+
+
+            <div className="flex items-center mt-5">
+                {/* <h3 className="text-lg font-semibold text-gray-500 mt-5">Select Address</h3>
+
+                <button className="ml-auto bg-blue-500 text-white px-1 py-1 rounded mr-4"><AddIcon /> Add New Address</button>
+                <ModalCompo /> */}
+            
+            </div>
                
             <fieldset className='mt-4'>
 
@@ -468,11 +527,21 @@ const CheckoutForm = () => {
                 showAddress.map((dm:any, i) => (
 
                 <div className="flex items-center mb-4" key={i}>
-                    <input id="country-option-1" type="radio" name="countries" value={dm._id} className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600" onChange={(e)=>handleCheckbox(dm._id)}  />
-
+                    <input id="country-option-1" type="radio" name="countries" value={dm._id} className="w-4 h-4 border-gray-300  dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600" onChange={(e)=>handleCheckbox(dm._id)}  />
+{/* 
                     <label htmlFor="country-option-1" className="block ms-2  text-sm font-medium text-gray-900 dark:text-gray-500">
                     {dm?.streetAddress}, {dm?.nearByAddress}, {dm?.areaPincode}
+                    </label> */}
+                <div className="flex items-center">
+                <label htmlFor="country-option-1" className="block ms-2 text-sm font-medium text-gray-900 dark:text-gray-500">
+                    {dm?.streetAddress}, {dm?.nearByAddress}, {dm?.areaPincode}
                     </label>
+                    {/* <button className=" bg-gray-400 text-white px-2 py-1 rounded flex items-center ml-12"><EditIcon/></button> */}
+                    <ModalCompo data={dm} />
+                    <button className="bg-red-400 text-white px-2 py-1 rounded flex items-center ml-2" type="submit" onClick={() => delAddressHandler(dm._id)}><DelIcon /></button>
+
+                </div>
+
                 </div>
                 ))
 
@@ -485,7 +554,7 @@ const CheckoutForm = () => {
             <button type="submit" className="mt-10 inline-flex w-full items-center justify-center rounded bg-teal-600 py-2.5 px-4 text-base font-semibold tracking-wide text-white text-opacity-80 outline-none ring-offset-2 transition hover:text-opacity-100 focus:ring-2 focus:ring-teal-500 sm:text-lg" onClick={handlePaymentSubmit}>Place Order </button>
         </div>
         :""
-    }
+    } 
 
         {orderStatus ==true ? 
         <PlaceOrder  checkBoxId={checkBoxId}/>
@@ -496,3 +565,5 @@ const CheckoutForm = () => {
 }
 
 export default CheckoutForm
+
+{/* : fillForm ==true && orderStatus ==false ? */}
