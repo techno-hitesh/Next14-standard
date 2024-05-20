@@ -12,7 +12,7 @@ const ProductCard = (usrProducts:ProductTypeProps|any) => {
     const router = useRouter();
     const pathname = usePathname()
 
-    console.log('usrProducts',usrProducts.usrProducts)
+    // console.log('usrProducts',usrProducts.usrProducts)
     const {products} = usrProducts.usrProducts;
 
     const handleCart = (e: MouseEvent<HTMLButtonElement>,product:ProductType) =>{

@@ -6,7 +6,7 @@ import { addAddressApi,getAddressAPI } from '@/app/services/apis/address';
 import { getToCartAPI } from '@/app/services/apis/user';
 import { CitySelect, CountrySelect, StateSelect, GetState } from "react-country-state-city";
 import "react-country-state-city/dist/react-country-state-city.css";
-import SelectBoxComp from './selectBox';
+import PlaceOrder from './placeOrder';
 import { loadStripe } from '@stripe/stripe-js';
 import { stripeSessionAPI } from '@/app/services/apis/user';
 
@@ -35,6 +35,7 @@ const CheckoutForm = () => {
     const [checkBoxId ,setCheckBoxId] = useState("")
     const [getAllData, setGetAllData] = useState<any|[]>([])
     const [subTotal, setSubTotal]     = useState("")
+    const [orderStatus,setOrderStatus] = useState(false)
 
 
     useEffect(() => {
@@ -67,7 +68,7 @@ const CheckoutForm = () => {
     const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
         e.preventDefault()
 
-        console.log("formValue", formValue, objData)
+        // console.log("formValue", formValue, objData)
         const updatedObject = {
             ...formValue,
             stateName: objData.stateName,
@@ -79,9 +80,11 @@ const CheckoutForm = () => {
         let errForm: {} | "" = validate(updatedObject);
 
         if (!Object.keys(errForm).length) {
+        
 
             const resp = await addAddressApi(updatedObject);
-            if (resp == 201) {
+            // console.log("enter in object",resp);
+            if (resp.status == 201) {
                 console.log("resp--", resp)
                 const getAllAdd = await getAddressAPI();
                 if(getAllAdd.status == 200){
@@ -221,7 +224,8 @@ const CheckoutForm = () => {
             })
             console.log(showAddress,"******************",finalAd._id)
             if(finalAd._id){
-                createCheckOutSession()
+                setOrderStatus(true)
+                // createCheckOutSession()
             }
         }
        
@@ -233,6 +237,7 @@ const CheckoutForm = () => {
 
     // stripe payment functions...  
     const createCheckOutSession = async () => {
+   
         console.log("getAllData--start")
     
         const stripePromise = loadStripe(publishableKey);
@@ -448,7 +453,7 @@ const CheckoutForm = () => {
 
         </div>     
 
-:(
+: fillForm ==true && orderStatus ==false ?
 
         <div>
             <h1 className="relative text-2xl font-medium text-gray-700 sm:text-3xl">Shipping & Payment<span className="mt-2 block h-1 w-10 bg-teal-600 sm:w-20"></span></h1>
@@ -463,10 +468,10 @@ const CheckoutForm = () => {
                 showAddress.map((dm:any, i) => (
 
                 <div className="flex items-center mb-4" key={i}>
-                    <input id="country-option-1" type="radio" name="countries" value={dm._id} className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600" onChange={(e)=>handleCheckbox(dm._id)} checked ={showAddress.length ===1 ? true : false} />
+                    <input id="country-option-1" type="radio" name="countries" value={dm._id} className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600" onChange={(e)=>handleCheckbox(dm._id)}  />
 
                     <label htmlFor="country-option-1" className="block ms-2  text-sm font-medium text-gray-900 dark:text-gray-500">
-                    {dm?.streetAddress} {dm?.areaPincode}
+                    {dm?.streetAddress}, {dm?.nearByAddress}, {dm?.areaPincode}
                     </label>
                 </div>
                 ))
@@ -477,10 +482,14 @@ const CheckoutForm = () => {
 
             </fieldset>
 
-            <button type="submit" className="mt-10 inline-flex w-full items-center justify-center rounded bg-teal-600 py-2.5 px-4 text-base font-semibold tracking-wide text-white text-opacity-80 outline-none ring-offset-2 transition hover:text-opacity-100 focus:ring-2 focus:ring-teal-500 sm:text-lg" onClick={handlePaymentSubmit}>Payment </button>
+            <button type="submit" className="mt-10 inline-flex w-full items-center justify-center rounded bg-teal-600 py-2.5 px-4 text-base font-semibold tracking-wide text-white text-opacity-80 outline-none ring-offset-2 transition hover:text-opacity-100 focus:ring-2 focus:ring-teal-500 sm:text-lg" onClick={handlePaymentSubmit}>Place Order </button>
         </div>
-    )}
+        :""
+    }
 
+        {orderStatus ==true ? 
+        <PlaceOrder  checkBoxId={checkBoxId}/>
+        :""}
 
      </>
     )
