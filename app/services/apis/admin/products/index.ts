@@ -22,7 +22,7 @@ export const GetAllProductAPI = async () =>{
 export const getproductBySearch=async(data:any)=>{
   try{
     const response=await axiosInstance.get(adminRoutes.getproductBySearch+data)
-    return response.data
+    return response?.data
   }catch(err:any){
     toast.error(err?.response?.data?.message || err?.message)
   }

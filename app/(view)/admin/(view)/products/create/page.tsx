@@ -21,8 +21,11 @@ const page = () => {
         e.preventDefault();
         console.log(sub)
         if(productname==="" || productprice==="" || productDescription==="" || productImg===null || selectedOption===""){
-          setcreaterror("All fields are requried !")
-        }else{
+        toast.error("All fields are requried !")
+        } else if (!isNaN(productname)) {
+          toast.error("Enter valid name")
+      }
+        else{
            setcreaterror("")
           let data={
             categoryName:selectedOption,
