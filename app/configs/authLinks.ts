@@ -16,4 +16,5 @@ export const dashboardLinks ={
 export const adminLinks = {
     adminHomeLink : '/admin',
     productsLink :  '/admin/products',
+    searchLinks:'/admin/products/search'
 }
