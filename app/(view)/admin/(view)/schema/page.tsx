@@ -2,7 +2,8 @@ import  * as Yup from "yup"
 
 export  const categoryschema=Yup.object({
     categoryName:Yup.string().max(30).required("Enter category name"),
-    categoryDescription:Yup.string().max(40).required("Enter description")
+    categoryDescription:Yup.string().max(40).required("Enter description"),
+    categoryImg:Yup.string().required("Image is requried")
 })
 export  const subcategoryschema=Yup.object({
     categoryName:Yup.string().required("Select a catergory first"),

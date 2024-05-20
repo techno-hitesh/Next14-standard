@@ -94,6 +94,7 @@ export interface category{
   export type createcategory={
     categoryName:string
     categoryDescription:string
+    categoryImg:string
   }
   export type createsubcategoty={
     categoryName:string

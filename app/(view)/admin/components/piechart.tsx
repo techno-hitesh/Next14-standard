@@ -34,7 +34,7 @@ const Piechart = () => {
           </button>
           <div id="dateRangeDropdown" className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-80 lg:w-96 dark:bg-gray-700 dark:divide-gray-600">
               <div className="p-3" aria-labelledby="dateRangeButton">
-                <div date-rangepicker datepicker-autohide={true} className="flex items-center">
+                <div date-rangepicker={true} datepicker-autohide={true} className="flex items-center">
                     <div className="relative">
                       <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                           <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">

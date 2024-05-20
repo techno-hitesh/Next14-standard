@@ -50,6 +50,15 @@ export const deleteadminproductApi=async(id:any)=>{
   }
 }
 
+export const deleteadminCategoryApi=async(id:any)=>{
+  try{
+      const response=await axiosInstance.delete(adminRoutes.deleteCategoryById+id)
+      return response?.data
+  }catch(err:any){
+      toast.error(err?.response?.data?.message || err?.message)
+  }
+}
+
 export const Getallcategories=async()=>{
   try{
       const response=await axiosInstance.get(adminRoutes.getallcategories)
@@ -92,10 +101,29 @@ export const adminUpdateProductApi=async(id:string|any,formdata:any)=>{
         console.log(err)
       }
 }
-
-export const createcategoryAPI=async(val:createcategory)=>{
+export const adminUpdateCategoryApi=async(id:string|any,formdata:any)=>{
+  const token=localStorage.getItem(auth.storageTokenKeyName)
+      try{
+        const response=await axios.patch(baseurl+adminRoutes.adminUpdateCategoryAPi+id,formdata,{
+          headers:{
+            'Authorization':`Bearer ${token}`,
+            'Content-Type':'multipart/form-data'
+          }
+        })
+        return response?.data
+      }catch(err:any){
+        console.log(err)
+      }
+}
+export const createcategoryAPI=async(val:any)=>{
   try{
-      const response=await axiosInstance.post(adminRoutes.createcategory,val)
+    const token=localStorage.getItem(auth.storageTokenKeyName)
+      const response=await axios.post(baseurl+adminRoutes.createcategory,val,{
+        headers:{
+          "Authorization":`Bearer ${token}`,
+          'Content-Type': 'multipart/form-data'
+        }
+      })
       return response?.data
   }catch(err:any){
       toast.error(err?.response?.data?.message || err?.message)
