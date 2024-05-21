@@ -1,9 +1,6 @@
 "use client"
-import { Getallcategories, createcategoryAPI } from '@/app/services/apis/admin/products'
+import { Getallcategories } from '@/app/services/apis/admin/products'
 import React, { useEffect, useState } from 'react'
-import { ToastContainer, toast } from 'react-toastify'
-import { categoryschema } from '../schema/page'
-import { useFormik } from 'formik'
 import 'react-toastify/dist/ReactToastify.css';
 import Link from 'next/link'
 
@@ -22,37 +19,19 @@ const CategoryPage = () => {
             setcategories(response?.data)
         }
     }
-
-    const {values,touched,errors,handleBlur ,setFieldValue,handleChange,handleSubmit}=useFormik({
-        initialValues:val,
-        validationSchema:categoryschema,
-        onSubmit:async(values:any,action:any)=>{
-           console.log(values)
-           const response=await createcategoryAPI(values)
-           if(response?.status===200 || response?.status===201){
-             action.resetForm()
-             getallcategories()
-             toast.success("Category created sucessfully")
-           }
-        }
-     })
-     const handleImgChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      const file = e.target.files?.[0]; 
-      console.log(file);
-      if (file) {
-        setFieldValue("categoryImg", file)
-      }
-    };
     useEffect(()=>{
         getallcategories()
     },[])
    
   return (
     <>
-    <div className='flex flex-col items-center justify-center'>
-      <div className='my-5'>
+      <div className='my-5  flex justify-between items-center'>
         <h1 className='text-3xl font-bold'>All categories</h1>
+        <Link href={'/admin/category/categorycreate'}>
+        <button className='bg-blue-800 text-white rounded-md px-3 py-2'>Create Category</button>
+        </Link>       
       </div>
+    
       <div className='grid grid-cols-4  gap-5'>
       {categories?.map((category: { categoryName: string ,_id:string,categoryDescription:string,categoryImg:string},index:any)=>(
         <div key={index} className="max-w-sm relative  shadow-gray-500 bg-white border w-full  border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
@@ -74,35 +53,6 @@ const CategoryPage = () => {
         </div>    
  ))}
       </div>
-    </div>
-      <div className='mt-10  border border-gray-200 p-4'>
-       <h1 className='font-bold text-3xl'>Create Category :</h1>
-       <div>
-       <form onSubmit={handleSubmit}>
-        <div className='flex  flex-col'>
-        <div className='flex flex-col '>
-            <label htmlFor="name" className='text-xl text-gray-600 font-semibold mt-6'>Catgory name <span className='text-red-400 '>*</span></label>
-            <input type="text" placeholder='Enter name' name='categoryName' className='px-3 py-2 m-1 rounded-md border border-gray-200 shadow-sm shadow-gray-300' required value={values.categoryName} onChange={handleChange} onBlur={handleBlur}/>
-             {errors.categoryName && touched.categoryName ? <p className='text-red-500'>{errors.categoryName}</p> : null}
-        </div>
-        <div className='flex flex-col mt-4'>
-            <label htmlFor="description" className='text-xl text-gray-600 mt-2 font-semibold'>Catgory Description<span className='text-red-400 '>*</span></label>
-            <input type="text" placeholder='Enter description seprated by commas' className='px-3 py-2 m-1 rounded-md border border-gray-200 shadow-sm shadow-gray-300' name='categoryDescription' required value={values.categoryDescription} onChange={handleChange} onBlur={handleBlur}/>
-             <p className='font-thin text-sm'>Enter description seprated by commas</p>
-             {errors.categoryDescription && touched.categoryDescription ? <p className='text-red-500'>{errors.categoryDescription}</p> : null}
-        </div>
-        <div className='flex flex-col mt-4'>
-            <label htmlFor="Image" className='text-xl text-gray-600 mt-2 font-semibold'>Catgory Image<span className='text-red-400 '>*</span></label>
-            <input type="file"  className='px-3 py-2 m-1 rounded-md border border-gray-200 shadow-sm shadow-gray-300' name='categoryImg' required  onChange={handleImgChange} onBlur={handleBlur}/>
-             {errors.categoryImg && touched.categoryImg ? <p className='text-red-500'>{errors.categoryImg}</p> : null}
-        </div>
-        <button type='submit' className='bg-blue-800 w-fit text-white rounded-md px-3 py-2 cursor-pointer hover:bg-blue-800 mt-3'>Add category</button>
-        </div>
-    </form>
-       </div>
-      </div>
-
-       <ToastContainer/>
     </>
   )
 }
