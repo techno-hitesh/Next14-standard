@@ -13,8 +13,10 @@ import { jwtDecodeData } from '@/app/helpers';
 const ProductCard = (usrProducts:ProductTypeProps|any) => {
     const router = useRouter();
     const pathname = usePathname()
-    var role:any
+    var role : any;
     // console.log('usrProducts',usrProducts.usrProducts)
+    
+    const [links,setLinks] =useState("")
     const {products} = usrProducts.usrProducts;
 
     const handleCart = (e: MouseEvent<HTMLButtonElement>,product:ProductType) =>{
@@ -26,11 +28,18 @@ const ProductCard = (usrProducts:ProductTypeProps|any) => {
       const token=localStorage.getItem(auth.storageRole)
       const decodeRole:any=jwtDecodeData(token)
         role=decodeRole
+        const link = role==="user" ? dashboardLinks.productsLink : adminLinks.productsLink
+        setLinks(link);
     }
-     const link=role==="user" ? dashboardLinks.productsLink : adminLinks.productsLink
 
+   
     useEffect(()=>{
       getrole()
+setTimeout(()=>{
+
+  console.log("sdfsdf",links)
+},1000)
+
     },[])
   return (
     <>
@@ -39,7 +48,7 @@ const ProductCard = (usrProducts:ProductTypeProps|any) => {
         products.map((data:any,i:any)=>(     
         <div className="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl" key={data._id}>
            
-            <Link href={link+"/"+data._id}>
+            <Link href={links+"/"+data._id}>
                 <img  src={data?.productImg}
                         alt="Product" className="h-72 w-72 object-cover rounded-t-xl" />
                 <div className="px-4 py-3 w-72">

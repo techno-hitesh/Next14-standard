@@ -10,8 +10,11 @@ const ProductsPage = () => {
     const handleProducts = async() =>{
       try {
         const data = await GetAllProductAPI();
-        setUsrProducts(data.data)
-        // console.log("handleProducts",data.data)        
+        if(data.status ==200 && data.data.totalCount >0){
+          setUsrProducts(data.data)
+          console.log("handleProducts",data)    
+        }
+           
       } catch (error) {
         console.log("error handleProducts",error)
       }
@@ -27,7 +30,7 @@ const ProductsPage = () => {
         className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5">
       { usrProducts ?
           <ProductCard  usrProducts={usrProducts}/>
-              :"Loading.."
+              :"Loading...."
         }
             
     </section>
