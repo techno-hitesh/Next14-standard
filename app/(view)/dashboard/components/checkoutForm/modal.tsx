@@ -1,11 +1,33 @@
 import React,{useState,memo} from 'react'
 import { EditIcon } from '@/public/svg/edit';
 import { updateAddressAPI } from '@/app/services/apis/address';
+import { CitySelect, CountrySelect, StateSelect, GetState } from "react-country-state-city";
+import { addressType } from '@/app/types/userTypes';
 
 const ModalCompo = (data:any) => {
-    // console.log("data--",data)
+    console.log("data--",data?.data)
+
     const formData = data?.data
+
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [countryid, setCountryid] = useState(101);
+    const [stateid, setstateid] = useState(0);
+    
+    const [objData, setObjData] = useState({
+       stateName :formData.stateName,
+       stateId :  formData.stateId,
+       cityName : formData.cityName,
+       cityId :   formData.cityId
+    });
+
+    const [formValue, setFormValue] = useState<addressType | any>({
+      streetAddress: formData.streetAddress,
+      nearByAddress: formData.nearByAddress,
+      country: "india",
+      areaPincode: formData.areaPincode,
+      mobileNumber: formData.mobileNumber
+  })
+
 
     const toggleModal = () => {
       setIsModalOpen(!isModalOpen);
@@ -13,10 +35,12 @@ const ModalCompo = (data:any) => {
 
     const updateAddressHanlder = async(e:React.SyntheticEvent<HTMLFormElement>) =>{
         e.preventDefault();
-        // console.log("update--",formData._id)
+        console.log("update--",formData._id)
 
         // const resp = await updateAddressAPI(formData._id)
     }
+
+
 
   return (
     <>

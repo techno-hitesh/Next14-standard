@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { addressType } from '@/app/types/userTypes'
 import { toast } from 'react-toastify';
 import { addAddressApi,getAddressAPI } from '@/app/services/apis/address';
-import { getToCartAPI } from '@/app/services/apis/user';
+import { getToCartAPI ,getItemInCartAPI} from '@/app/services/apis/user';
 import { CitySelect, CountrySelect, StateSelect, GetState } from "react-country-state-city";
 import "react-country-state-city/dist/react-country-state-city.css";
 import PlaceOrder from './placeOrder';
@@ -32,7 +32,6 @@ const CheckoutForm = () => {
     const [countryid, setCountryid] = useState(101);
     const [stateid, setstateid] = useState(0);
     const [objData, setObjData] = useState({ stateName: "",stateId:0, cityName: "",cityId:0 });
-    const [stateList, setStateList] = useState<any>([]);
 
     const [fillForm, setFillForm] = useState(false)
     const [showAddress, setShowAddress] =useState([])
@@ -56,13 +55,8 @@ const CheckoutForm = () => {
     }
 
     useEffect(() => {
-        
-        allAddress()
 
-        GetState().then((result: any) => {
-            // console.log(result)
-            setStateList(result);
-        });        
+        allAddress()
 
     }, []);
 
@@ -75,6 +69,7 @@ const CheckoutForm = () => {
         }));
     }
 
+    // Add New Address into Database
     const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
         e.preventDefault()
 
@@ -193,7 +188,7 @@ const CheckoutForm = () => {
         }
     }
 
-
+    // cart Data show in these functions
     const getAllCart = async () => {
         const resp = await getToCartAPI();
         if (resp.status == 200) {
@@ -215,7 +210,6 @@ const CheckoutForm = () => {
 
     // validate payment methods
     const handleCheckbox = (e: any) => {
-        // const {name,value} = e
         console.log("e checkbox---",e)
         setCheckBoxId(e)
     }
@@ -236,82 +230,10 @@ const CheckoutForm = () => {
             console.log(showAddress,"******************",finalAd._id)
             if(finalAd._id){
                 setOrderStatus(true)
-                // createCheckOutSession()
             }
         }
-       
-        // console.log(showAddress,"******************",finalAd._id)
+
     }
-
-
-   
-
-    // stripe payment functions...  
-    const createCheckOutSession = async () => {
-   
-        console.log("getAllData--start")
-    
-        const stripePromise = loadStripe(publishableKey);
-    
-        let formattedData
-        if(getAllData.length ===1){
-            formattedData = {
-                totalProduct:[
-                    {
-                        "cartId":getAllData[0]?._id,
-                        "productId": getAllData[0]?.productDetails?.productId,
-                        "productName": getAllData[0]?.productDetails?.productName,
-                        "productPrice": getAllData[0]?.productDetails?.productPrice,
-                        "productDescription": getAllData[0]?.productDetails?.productDescription,
-                        "productQuantity":getAllData[0]?.quantity,
-                        "itemPrice":getAllData[0]?.itemPrice
-                    }                
-                ],
-                "totalCartAmount": subTotal,
-                "addressId":checkBoxId
-            }
-    
-        }else if(getAllData.length >1){
-            const totalProduct  = getAllData.map((cartItem:any)=>(
-                {
-                    "cartId":cartItem?._id,
-                    "productId": cartItem?.productDetails?.productId,
-                    "productName": cartItem?.productDetails?.productName,
-                    "productPrice": cartItem?.productDetails?.productPrice,
-                    "productDescription": cartItem?.productDetails?.productDescription,
-                    "productQuantity":cartItem?.quantity,
-                    "itemPrice":cartItem?.itemPrice
-                }
-            ))
-    
-            const totalCartAmount = subTotal
-            const addressId = checkBoxId
-            formattedData = {
-              totalProduct,
-              totalCartAmount,
-              addressId
-            };
-    
-        }
-    
-        const stripe:any = await stripePromise;
-    
-        const checkoutSession = await stripeSessionAPI(formattedData);
-    
-        console.log("checkoutSession*********",checkoutSession,"********",checkoutSession.sessionId)
-        if(checkoutSession.status == 201){
-    
-            const result = await stripe.redirectToCheckout({
-                sessionId: checkoutSession.sessionId,
-                
-            });
-    
-            if (result.error) {
-            alert(result.error.message);
-            }
-        }
-        
-      };
 
     const india = [{
         "id": 101,

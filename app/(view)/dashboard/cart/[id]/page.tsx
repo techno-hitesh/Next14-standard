@@ -2,15 +2,22 @@
 import React, { useEffect, useState } from 'react'
 import { getItemInCartAPI } from '@/app/services/apis/user'
 import { loadStripe } from '@stripe/stripe-js';
-import CheckoutForm from "../../components/checkoutForm"; 
+// import CheckoutForm from "../../components/checkoutForm"; 
 import axios from 'axios';
 import { getToCartAPI,updateCartItemAPI,delCartItemAPI,addToCartAPI ,delCartQuantityAPI,stripeSessionAPI} from '@/app/services/apis/user'
 import { useRouter } from "next/navigation"
 import Link from 'next/link';
+import { useDispatch, useSelector } from "react-redux"
+import { addCartId } from '@/app/store/slices/userSlicer';
+import { jwtEncodeData } from '@/app/helpers';
+import { dashboardLinks } from '@/app/configs/authLinks';
+import authConfig from '@/app/configs/auth';
 
 const CarTByID = ({ params }: { params: { id: any | string } }) => {
 
     const router = useRouter();
+
+    const dispatch = useDispatch();
 
     const [cartItem, setCartItem] = useState<any|[]>([])
     const [subTotal, setSubTotal] = useState("")
@@ -106,6 +113,18 @@ const CarTByID = ({ params }: { params: { id: any | string } }) => {
 
     const handleClose = () =>{
         router.replace("/dashboard/products")
+    }
+
+    const handleCheckoutById = () =>{
+        try {
+            const decode:any = jwtEncodeData(params.id);
+            dispatch(addCartId(decode))
+            localStorage.setItem(authConfig.storageCart, decode)
+            // console.log(dashboardLinks.checkoutLinks);
+            router.push(dashboardLinks.checkoutLinks);
+        } catch (error) {
+            console.log("handleCheckoutById ---",error);
+        }   
     }
   
     return (
@@ -207,7 +226,7 @@ const CarTByID = ({ params }: { params: { id: any | string } }) => {
                     {/* <PaymentElement /> */}
                 <div className="mt-6">
                     
-                    <button className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700" onClick={createCheckOutSession}>Checkout</button>
+                    <button className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700" onClick={handleCheckoutById}>Checkout</button>
                 </div>
             </div>
 
