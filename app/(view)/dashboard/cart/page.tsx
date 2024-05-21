@@ -17,7 +17,7 @@ const UserCart = () => {
 
   const getAllCart = async () => {
     const resp = await getToCartAPI();
-    if (resp.status == 200) {
+    if (resp?.status === 200) {
       const datas = resp.data.cartItems.filter((data:any)=>{
         if(data.message !== "Product not found"){
             return data

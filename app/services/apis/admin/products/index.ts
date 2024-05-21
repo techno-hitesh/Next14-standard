@@ -122,8 +122,8 @@ export const adminUpdateProductApi=async(id:string|any,formdata:any)=>{
         })
         return response?.data
       }catch(err:any){
-        console.log(err)
-      }
+        toast.error(err?.response?.data?.message || err?.message)
+    }
 }
 export const adminUpdateCategoryApi=async(id:string|any,formdata:any)=>{
   const token=localStorage.getItem(auth.storageTokenKeyName)
@@ -136,8 +136,8 @@ export const adminUpdateCategoryApi=async(id:string|any,formdata:any)=>{
         })
         return response?.data
       }catch(err:any){
-        console.log(err)
-      }
+        toast.error(err?.response?.data?.message || err?.message)
+    }
 }
 export const adminUpdateSubCategoryApi=async(id:string|any,formdata:any)=>{
   const token=localStorage.getItem(auth.storageTokenKeyName)
@@ -150,8 +150,8 @@ export const adminUpdateSubCategoryApi=async(id:string|any,formdata:any)=>{
         })
         return response?.data
       }catch(err:any){
-        console.log(err)
-      }
+        toast.error(err?.response?.data?.message || err?.message)
+    }
 }
 export const createCategoryAPI=async(val:any)=>{
   try{
@@ -192,10 +192,17 @@ export const adminCreateProductApi=async(formdata:any)=>{
             'Content-Type': 'multipart/form-data'
         }
     })
-    console.log("createapi=-----------",formdata)
     return response?.data
   }catch(err:any){
-    console.log("createapi-----------",formdata,err)
     toast.error(err?.response?.data?.message || err?.message)
 }
+}
+
+export const GetUsersAdminAPI=async()=>{
+     try{
+      const response=await axiosInstance.get(adminRoutes.getallUsers)
+      return response?.data
+     }catch(err:any){
+      toast.error(err?.response?.data?.message || err?.message)
+  }
 }
