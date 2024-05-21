@@ -1,5 +1,6 @@
 export default {
     storageTokenKeyName: 'accessToken',
     storageRole:"userRole",
-    toastShownBefore:"toastShownBefore"
+    toastShownBefore:"toastShownBefore",
+    storageCart:"cartId"
 }

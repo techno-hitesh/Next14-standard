@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from "react";
 import { getAddressByIdAPI } from "@/app/services/apis/address";
-import { getToCartAPI } from "@/app/services/apis/user";
+import { getToCartAPI,getItemInCartAPI} from "@/app/services/apis/user";
 import { useSelector } from "react-redux";
 import { jwtDecodeData } from "@/app/helpers";
 import { loadStripe } from '@stripe/stripe-js';
@@ -9,8 +9,9 @@ import { addressType } from "@/app/types/userTypes";
 import {DelIcon} from "@/public/svg/del"
 import {EditIcon} from "@/public/svg/edit"
 import { AddIcon } from "@/public/svg/add";
-import { ModalCompo } from "./modal";
+// import { ModalCompo } from "./modal";
 import { delAddressByIdAPI } from "@/app/services/apis/address";
+import authConfig from '@/app/configs/auth';
 
 export default function placeOrder(checkBoxId:{checkBoxId:string}) {
   // console.log("chekced id ---",checkBoxId.checkBoxId)
@@ -23,6 +24,7 @@ export default function placeOrder(checkBoxId:{checkBoxId:string}) {
   const [subTotal, setSubTotal]     = useState("")
   const [addressData, setAddressData] = useState<addressType|any>("")
   const [userName,setUserName] = useState("")
+  const [userCartId,setUserCartId] = useState("")
 
 
   //get user from redux
@@ -31,20 +33,49 @@ export default function placeOrder(checkBoxId:{checkBoxId:string}) {
         const decodedData:any = jwtDecodeData(userDataName?.users?.data);
         setUserName(decodedData?.fullName)
     }
+
+    if (userDataName !="" && typeof userDataName?.cartId?.data === 'string') {
+      const decodedData:any = jwtDecodeData(userDataName?.cartId?.data);
+      setUserCartId(decodedData)
+    }
+
   }
   
 // all data in cart
   const getAllCart = async () => {
-    const resp = await getToCartAPI();
-    if (resp.status == 200) {
-      const datas = resp.data.cartItems.filter((data:any)=>{
-        if(data.message !== "Product not found"){
-            return data
+
+    const cart = localStorage.getItem(authConfig.storageCart);
+    const localCartId = jwtDecodeData(cart);
+    const userCartIds:any = userCartId ? userCartId : localCartId;
+    console.log("local cart place oerder",userCartIds)
+
+    if(userCartIds !=""){
+
+      const resp = await getItemInCartAPI(userCartIds)
+      if (resp.status == 200) {
+          const datas = resp.data.cartItems.filter((data:any)=>{
+            if(data.message !== "Product not found"){
+                return data
+            }
+          })
+          // console.log("datas",datas)
+          setGetAllData(datas)
+          setSubTotal(resp.data.totalCartAmount);
         }
-      })
-      setGetAllData(datas)
-      setSubTotal(resp.data.totalCartAmount);
+
+    }else if(userCartId == "" || undefined){
+        const resp = await getToCartAPI();
+        if (resp.status == 200) {
+          const datas = resp.data.cartItems.filter((data:any)=>{
+            if(data.message !== "Product not found"){
+                return data
+            }
+          })
+          setGetAllData(datas)
+          setSubTotal(resp.data.totalCartAmount);
+        }
     }
+    
   }
 
   // get Address by ID

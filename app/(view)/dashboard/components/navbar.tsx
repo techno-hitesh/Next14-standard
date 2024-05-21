@@ -69,7 +69,7 @@ const Navbar = () => {
             </Link>
           </h1>
           <Link href={links}>
-            <h1 className="ml-8 mt-1">Zipkart</h1>
+            <h1 className="ml-8 mt-1">UrbanCart</h1>
           </Link>
         </div>
 

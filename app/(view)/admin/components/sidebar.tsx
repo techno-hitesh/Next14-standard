@@ -46,10 +46,10 @@ const Sidebar = () => {
         <a href="https://flowbite.com" className="flex ms-2 md:me-24">
          <Image
          src={logo}
-         alt='Zipkart'
+         alt='UrbanCart'
          className="h-8 me-3 w-fit"
          />
-          <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Zipkart</span>
+          <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">UrbanCart</span>
         </a>
          </div>
 

@@ -1,18 +1,29 @@
 "use client"
 import React,{useState,useEffect} from 'react'
-import { getToCartAPI } from '@/app/services/apis/user';
+import { getToCartAPI,getItemInCartAPI } from '@/app/services/apis/user';
 import { loadStripe } from '@stripe/stripe-js';
 import { addressType } from '@/app/types/userTypes';
 import { addAddressApi } from '@/app/services/apis/address';
 import { toast,ToastContainer } from 'react-toastify';
 import 'react-phone-number-input/style.css'
-import PhoneInput from 'react-phone-number-input'
+// import PhoneInput from 'react-phone-number-input'
 import CheckoutForm from '../components/checkoutForm/checkoutForm';
+import { useSelector } from "react-redux";
+import { jwtDecodeData } from '@/app/helpers';
+import authConfig from '@/app/configs/auth';
+
 
 const CheckoutPage = () => {
 
   const publishableKey:string|any =  process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY;
   // const stripePromise = loadStripe(publishableKey);
+
+  const userSelectData = useSelector((states:any) => states.users)
+  let userCartId:any
+  if(userSelectData?.cartId?.data !== undefined){
+      userCartId = jwtDecodeData(userSelectData?.cartId?.data)
+  }
+
 
   const [getAllData, setGetAllData] = useState<any|[]>([])
   const [subTotal, setSubTotal]     = useState("")
@@ -29,17 +40,41 @@ const CheckoutPage = () => {
 
 
   const getAllCart = async () => {
-    const resp = await getToCartAPI();
-    if (resp.status == 200) {
-      const datas = resp.data.cartItems.filter((data:any)=>{
-        if(data.message !== "Product not found"){
-            return data
+
+    const cart = localStorage.getItem(authConfig.storageCart);
+    const localCartId = jwtDecodeData(cart);
+    userCartId = userCartId ? userCartId : localCartId;
+    console.log("local cart",userCartId)
+
+    if(userCartId !=""){
+
+      const resp = await  getItemInCartAPI(userCartId)
+      if (resp.status == 200) {
+          const datas = resp.data.cartItems.filter((data:any)=>{
+            if(data.message !== "Product not found"){
+                return data
+            }
+          })
+          // console.log("datas",datas)
+          setGetAllData(datas)
+          setSubTotal(resp.data.totalCartAmount);
         }
-      })
-      // console.log("datas",datas)
-      setGetAllData(datas)
-      setSubTotal(resp.data.totalCartAmount);
+
+    }else if(userCartId == "" || undefined){
+
+      const resp = await getToCartAPI();
+      if (resp.status == 200) {
+        const datas = resp.data.cartItems.filter((data:any)=>{
+          if(data.message !== "Product not found"){
+              return data
+          }
+        })
+        // console.log("datas",datas)
+        setGetAllData(datas)
+        setSubTotal(resp.data.totalCartAmount);
+      }
     }
+    
   }
 
   useEffect(() => {
