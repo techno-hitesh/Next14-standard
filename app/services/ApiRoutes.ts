@@ -12,6 +12,20 @@ export const adminRoutes = {
     getAdminUser: '/admin/users',
     getAllProducts:'/admin/get-all-products',
     getProductById:"/admin/get-product/",
+    deleteProductById:"admin/delete-product/",
+    deleteCategoryById:"/admin/delete-category/",
+    deletesubcategoryById:'/admin/delete-sub-category/',
+    getallcategories:"/admin/get-all-categories",
+    getcategory:"/admin/get-category/",
+    getsubcategorybyId:'/admin/get-sub-category/',
+    getallsubcategories:"/admin/get-all-sub-categories",
+    adminUpdateProduct:"/admin/update-product/",
+    adminUpdateCategoryAPi:"/admin/update-category/",
+    adminUpdateSubCategoryAPi:"/admin/update-sub-category/",
+    createcategory:"/admin/create-category",
+    createsubcategory:"/admin/create-sub-category",
+    createproduct:"/admin/create-product",
+    getproductBySearch:"/admin/get-all-products?searchQuery="
     
 }
 

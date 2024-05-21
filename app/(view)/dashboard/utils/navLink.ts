@@ -17,12 +17,12 @@ export const userRoute = [
 export const adminRoute = [
   {
     id: 1,
-    link: "/dashboard/products",
+    link: "/admin/products",
     name:"Products",
   },
   {
     id: 2,
-    link: "/dashboard/category",
+    link: "/admin/category",
     name:"Category",
   },
 ];
