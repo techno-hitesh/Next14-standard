@@ -14,7 +14,7 @@ export default function RootLayout({
 
         <div className="lg:container relative w-screen mx-auto"> 
         <Sidebar/>
-        <div className="p-4 absolute top-16 sm:ml-64">
+        <div className="p-4 absolute  top-16 sm:ml-64">
           {children}
         </div>
         </div>

@@ -21,9 +21,6 @@ const SubCategoryUpdate = ({ id, onUpdateSuccess }: { id: { id: any | string }, 
       }
       const handlesubmit=async(e:any)=>{
         e.preventDefault()
-       if(productImage===null || des==="" ){
-           toast.error("All fields are requried !")
-       }else{
          let val={
            subCategoryImg:productImage,
            subCategoryDescription:des
@@ -36,7 +33,7 @@ const SubCategoryUpdate = ({ id, onUpdateSuccess }: { id: { id: any | string }, 
            onUpdateSuccess()
            
           }
-         }
+         
        }
 
 useEffect(()=>{
