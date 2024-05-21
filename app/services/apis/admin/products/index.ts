@@ -153,7 +153,7 @@ export const adminUpdateSubCategoryApi=async(id:string|any,formdata:any)=>{
         console.log(err)
       }
 }
-export const createcategoryAPI=async(val:any)=>{
+export const createCategoryAPI=async(val:any)=>{
   try{
     const token=localStorage.getItem(auth.storageTokenKeyName)
       const response=await axios.post(baseurl+adminRoutes.createcategory,val,{

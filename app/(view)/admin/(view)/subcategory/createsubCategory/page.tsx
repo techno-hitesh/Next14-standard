@@ -6,6 +6,8 @@ import { ToastContainer, toast } from 'react-toastify'
 import { useFormik } from 'formik'
 import { category } from '@/app/types/userTypes'
 import { useRouter } from 'next/navigation'
+import Image from 'next/image'
+import back from  "@/public/images/sub.jpeg"
 
 
 let val={
@@ -25,6 +27,10 @@ let val={
              console.log(response)
              if(response?.status===201 || response.status===200){
                  action.resetForm()
+                 const input = document.querySelector('input[type="file"]');
+                 if (input) {
+                     (input as HTMLInputElement).value = '';
+                 }
               toast.success("Subcategory created")
               setTimeout(() => {
                 router.replace("/admin/subcategory")
@@ -58,46 +64,51 @@ let val={
        category()
      },[])
   return (
-    <div className=''>  
-        <div className='flex flex-col mt-5 border border-gray-200 rounded-md p-5 shadow-md shadow-gray-500'>
-    <div className='flex flex-col'>
-        <h1 className=' font-bold text-3xl shadow-sm shadow-blue-200 my-4 text-gray-800 rounded-md px-2 py-1'>Create Subcategory</h1>
+    <div className='mt-5'>  
+    <div className='flex justify-between  border border-gray-200 rounded-md  shadow-md shadow-gray-500'>
+        <div className='flex flex-col p-8'>
+            <h1 className=' font-bold text-3xl   my-4 text-gray-800 rounded-md px-5 py-2'>Create Subcategory</h1>
+          <div className='p-5'>
+          <form onSubmit={handleSubmit} >
+              <div className='flex flex-col  gap-y-5'>
+            <div className='flex flex-col '>
+              <label htmlFor="name" className='text-xl text-gray-800 font-bold'>Category Name <span className='text-red-400 '>*</span></label>
+              <select name="categoryName" value={values.categoryName}  className='px-3 py-2 m-1 rounded-md border border-gray-200 shadow-sm shadow-gray-300' onChange={handleChange} onBlur={handleBlur}>
+                <option value="">Please Select a category</option>
+                {categories.map((option, index) => (
+                  <option key={index} value={option.categoryName} data-id={option._id}>
+                    {option.categoryName}
+                  </option>
+                ))}
+              </select>
+              {errors.categoryName && touched.categoryName ? <p className='text-red-500'>{errors.categoryName}</p> : null}
+            </div>
+            <div  className='flex flex-col '>
+              <label  className='text-xl text-gray-800 font-bold' htmlFor="name">Subcategory name <span className='text-red-400 '>*</span></label>
+              <input type="text" placeholder='Enter subcategory name' name='subCategoryName' value={values.subCategoryName} onChange={handleChange} className='px-3 py-2 m-1 rounded-md border border-gray-200 shadow-sm shadow-gray-300' onBlur={handleBlur}/>
+              {errors.subCategoryName && touched.subCategoryName ? <p className='text-red-500'>{errors.subCategoryName}</p> : null}
+            </div>
+            <div className='flex flex-col '>
+              <label className='text-xl text-gray-800 font-bold' htmlFor="description">Subcategory Description <span className='text-red-400 '>*</span></label>
+              <input type="text" placeholder='Enter subcategory description' name='subCategoryDescription' value={values.subCategoryDescription} onChange={handleChange} className='px-3 py-2 m-1 rounded-md border border-gray-200 shadow-sm shadow-gray-300' onBlur={handleBlur}/>
+              {errors.subCategoryDescription && touched.subCategoryDescription ? <p className='text-red-500'>{errors.subCategoryDescription}</p> : null}
+            </div>
+            <div className='flex flex-col mt-2'>
+              <label htmlFor="Image" className='text-xl text-gray-800 mt-2 font-bold'>Subcategory Image<span className='text-red-400 '>*</span></label>
+              <input type="file"  className='px-3 py-2 m-1 rounded-md border border-gray-200 shadow-sm shadow-gray-300' name='subCategoryImg' required  onChange={handleImgChange} onBlur={handleBlur}/>
+              {errors.subCategoryImg && touched.subCategoryImg ? <p className='text-red-500'>{errors.subCategoryImg}</p> : null}
+          </div>
+            <button type='submit' className='bg-blue-800 px-3 py-1 rounded-md text-white w-fit hover:bg-blue-700'>Add subcategory</button>
+            </div>
+          </form>
+          </div>
+        </div>
+    <Image
+         src={back}
+         alt='Loading...'
+         className=' overflow-hidden w-full rounded-md'
+        />
     </div>
-    <div className=''>
-    <form onSubmit={handleSubmit} >
-        <div className='flex flex-col  gap-y-5'>
-      <div className='flex flex-col '>
-        <label htmlFor="name" className='text-xl text-gray-800 font-bold'>Category Name <span className='text-red-400 '>*</span></label>
-        <select name="categoryName" value={values.categoryName}  className='px-3 py-2 m-1 rounded-md border border-gray-200 shadow-sm shadow-gray-300' onChange={handleChange} onBlur={handleBlur}>
-          <option value="">Please Select a category</option>
-          {categories.map((option, index) => (
-            <option key={index} value={option.categoryName} data-id={option._id}>
-              {option.categoryName}
-            </option>
-          ))}
-        </select>
-        {errors.categoryName && touched.categoryName ? <p className='text-red-500'>{errors.categoryName}</p> : null}
-      </div>
-      <div  className='flex flex-col '>
-        <label  className='text-xl text-gray-800 font-bold' htmlFor="name">Subcategory name <span className='text-red-400 '>*</span></label>
-        <input type="text" placeholder='Enter subcategory name' name='subCategoryName' value={values.subCategoryName} onChange={handleChange} className='px-3 py-2 m-1 rounded-md border border-gray-200 shadow-sm shadow-gray-300' onBlur={handleBlur}/>
-        {errors.subCategoryName && touched.subCategoryName ? <p className='text-red-500'>{errors.subCategoryName}</p> : null}
-      </div>
-      <div className='flex flex-col '>
-        <label className='text-xl text-gray-800 font-bold' htmlFor="description">Subcategory Description <span className='text-red-400 '>*</span></label>
-        <input type="text" placeholder='Enter subcategory description' name='subCategoryDescription' value={values.subCategoryDescription} onChange={handleChange} className='px-3 py-2 m-1 rounded-md border border-gray-200 shadow-sm shadow-gray-300' onBlur={handleBlur}/>
-        {errors.subCategoryDescription && touched.subCategoryDescription ? <p className='text-red-500'>{errors.subCategoryDescription}</p> : null}
-      </div>
-      <div className='flex flex-col mt-2'>
-        <label htmlFor="Image" className='text-xl text-gray-800 mt-2 font-bold'>Subcategory Image<span className='text-red-400 '>*</span></label>
-        <input type="file"  className='px-3 py-2 m-1 rounded-md border border-gray-200 shadow-sm shadow-gray-300' name='subCategoryImg' required  onChange={handleImgChange} onBlur={handleBlur}/>
-         {errors.subCategoryImg && touched.subCategoryImg ? <p className='text-red-500'>{errors.subCategoryImg}</p> : null}
-    </div>
-      <button type='submit' className='bg-blue-800 px-3 py-1 rounded-md text-white w-fit hover:bg-blue-700'>Add subcategory</button>
-      </div>
-    </form>
-    </div>
-</div>
 <ToastContainer/>
     </div>
   )
