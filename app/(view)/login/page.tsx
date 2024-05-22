@@ -102,10 +102,8 @@ const Login = () => {
 
       return isLoginData;
 
-    } else if (isLoginData?.status === 400) {
-      const { message } = isLoginData
-      // setApiErr(isLoginData);
-      toast.error(message);
+    } else  {
+      toast.error(isLoginData?.message);
       return false;
     }
   }

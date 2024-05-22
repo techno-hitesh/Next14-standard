@@ -94,64 +94,13 @@ const UserCart = () => {
 
     // console.log("getAllData",getAllData)
     router.push(dashboardLinks.checkoutLinks);
-
-    // let formattedData
-    // if(getAllData.length ===1){
-    //     formattedData = {
-    //         totalProduct:[
-    //             {
-    //                 "cartId":getAllData[0]?._id,
-    //                 "productId": getAllData[0]?.productDetails?.productId,
-    //                 "productName": getAllData[0]?.productDetails?.productName,
-    //                 "productPrice": getAllData[0]?.productDetails?.productPrice,
-    //                 "productDescription": getAllData[0]?.productDetails?.productDescription,
-    //                 "productQuantity":getAllData[0]?.quantity,
-    //                 "itemPrice":getAllData[0]?.itemPrice
-    //             }                
-    //         ],
-    //         "totalCartAmount": subTotal
-    //     }
-
-    // }else if(getAllData.length >1){
-    //     const totalProduct  = getAllData.map((cartItem:any)=>(
-    //         {
-    //             "cartId":cartItem?._id,
-    //             "productId": cartItem?.productDetails?.productId,
-    //             "productName": cartItem?.productDetails?.productName,
-    //             "productPrice": cartItem?.productDetails?.productPrice,
-    //             "productDescription": cartItem?.productDetails?.productDescription,
-    //             "productQuantity":cartItem?.quantity,
-    //             "itemPrice":cartItem?.itemPrice
-    //         }
-    //     ))
-
-    //     const totalCartAmount = subTotal
-    //     formattedData = {
-    //       totalProduct,
-    //       totalCartAmount
-    //     };
-
-    // }
-
-    // const stripe:any = await stripePromise;
-
-    // const checkoutSession = await stripeSessionAPI(formattedData);
-
-    // console.log("checkoutSession*********",checkoutSession,"********",checkoutSession.sessionId)
-    // if(checkoutSession.status == 201){
-
-    //     const result = await stripe.redirectToCheckout({
-    //         sessionId: checkoutSession.sessionId,
-            
-    //     });
-
-    //     if (result.error) {
-    //     alert(result.error.message);
-    //     }
-    // }
     
   };
-
+    const checkout=()=>{
+     localStorage.setItem("multiple","true")
+      router.push( getAllData.length > 0 ?dashboardLinks.checkoutLinks :dashboardLinks.productsLink)
+     
+    }
 
   return (
     <>
@@ -256,7 +205,7 @@ const UserCart = () => {
             </div>
             <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
             <div className="mt-6">
-              <Link href={getAllData.length > 0 ?dashboardLinks.checkoutLinks :dashboardLinks.productsLink} className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700">Checkout</Link>
+              <button onClick={()=>checkout()} type='submit' className="flex items-center justify-center rounded-md border w-full border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700">Checkout</button>
             </div>
           </div>
 

@@ -21,6 +21,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/store/reduxProvider.tsx", "app/store/slices/userSlicer.js", "app/store/rootReducer.js", "app/(view)/admin/components/piechart.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/store/reduxProvider.tsx", "app/store/slices/userSlicer.js", "app/store/rootReducer.js", "app/(view)/admin/components/piechart.tsx", "app/(view)/admin/context/UserContext.js"],
   "exclude": ["node_modules"]
 }

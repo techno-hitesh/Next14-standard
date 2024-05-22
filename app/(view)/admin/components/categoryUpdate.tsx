@@ -1,9 +1,14 @@
-import { adminUpdateCategoryApi, adminUpdateProductApi } from '@/app/services/apis/admin/products'
-import React, { useState } from 'react'
+
+import { adminUpdateCategoryApi, adminUpdateProductApi, getcategorybyidAPI } from '@/app/services/apis/admin/products'
+import { useParams } from 'next/navigation'
+import React, { useEffect, useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
 
-const CategoryUpdate = ({ id, onUpdateSuccess }: { id: { id: any | string }, onUpdateSuccess: () => void }) => {
+const CategoryUpdate = ({ id, onUpdateSuccess }: { id:any, onUpdateSuccess: () => void }) => {
     const [showModal,setShowModal]=useState(false)
+    const [name,setname]=useState("")
+    const [description,setdescription]=useState("")
+   
        const [productImage, setImage] = useState<string | null>(null)
        const handleImgupdate = (e: any) => {
         const file = e.target.files[0];
@@ -13,21 +18,21 @@ const CategoryUpdate = ({ id, onUpdateSuccess }: { id: { id: any | string }, onU
       }
       const handlesubmit=async(e:any)=>{
         e.preventDefault()
-       if(productImage===null){
-           toast.error("All fields are requried !")
-       }else{
-         let val={
-           categoryImg:productImage
-         }
-          console.log(val)
-          const response=await adminUpdateCategoryApi(id,val)
-          if(response?.status===200){
-           setShowModal(false)
-           onUpdateSuccess()
-           
-          }
-         }
+        if(productImage===null){
+            setShowModal(false)
+        }else{
+            let val={
+               categoryImg:productImage,
+            }
+             console.log(val)
+             const response=await adminUpdateCategoryApi(id,val)
+             if(response?.status===200){
+              setShowModal(false)
+              onUpdateSuccess()
+            }
+        }
        }
+      
     return (
     <div>  
         <div className="flex justify-center ">
@@ -47,16 +52,17 @@ const CategoryUpdate = ({ id, onUpdateSuccess }: { id: { id: any | string }, onU
             </button>
             <div>
             <form className='p-4'>
+           
        <div>
             <label htmlFor="categoryImg" className='font-bold text-lg'>Category Image <span className='text-red-500'>*</span></label>
-            <input type="file" className='my-3 border border-gray-200 py-1 px-2' name='categoryImg' required onChange={handleImgupdate} />
+            <input type="file" className='my-3 border border-gray-200 py-1 px-2' name='categoryImg'  onChange={handleImgupdate} />
        </div>
      
             <div className="flex justify-center items-center space-x-4">
                 <button onClick={()=>setShowModal(false)} data-modal-toggle="deleteModal" type="button" className="py-2 px-3 text-sm font-medium text-gray-500 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-primary-300 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
                     No, cancel
                 </button>
-                <button onClick={(e)=>handlesubmit(e)}  type="submit" className="py-2 px-3 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-900">
+                <button onClick={handlesubmit}  type="submit" className="py-2 px-3 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-900">
                     Update
                 </button>
             </div>

@@ -1,8 +1,78 @@
-import React, { useEffect } from 'react'
+import React, {useRef,useEffect } from 'react'
 import ApexCharts from 'apexcharts'
 
-const Piechart = () => {
+const Piechart =() => {
+  const chartRef = useRef(null);
 
+  const  getChartOptions = () => {
+    
+    return {
+      series: [52.8, 26.8, 20.4],
+      colors: ["#1C64F2", "#16BDCA", "#9061F9"],
+      chart: {
+        height: 420,
+        width: "100%",
+        type: "pie",
+      },
+      stroke: {
+        colors: ["white"],
+        lineCap: "",
+      },
+      plotOptions: {
+        pie: {
+          labels: {
+            show: true,
+          },
+          size: "100%",
+          dataLabels: {
+            offset: -25
+          }
+        },
+      },
+      labels: ["Direct", "Organic search", "Referrals"],
+      dataLabels: {
+        enabled: true,
+        style: {
+          fontFamily: "Inter, sans-serif",
+        },
+      },
+      legend: {
+        position: "bottom",
+        fontFamily: "Inter, sans-serif",
+      },
+      yaxis: {
+        labels: {
+          formatter: function (value:any) {
+            return value + "%"
+          },
+        },
+      },
+      xaxis: {
+        labels: {
+          formatter: function (value:any) {
+            return value  + "%"
+          },
+        },
+        axisTicks: {
+          show: false,
+        },
+        axisBorder: {
+          show: false,
+        },
+      },
+    }
+  }
+
+  useEffect(() => {
+    if (chartRef.current) {
+        const chart = new ApexCharts(chartRef.current, getChartOptions());
+        chart.render();
+
+        return () => {
+            chart.destroy(); // Destroy the chart instance on unmount
+        };
+    }
+}, []);
 
   
   return (
@@ -93,7 +163,7 @@ const Piechart = () => {
       </div>
       </div>
     
-      <div className="py-6" id="pie-chart"></div>
+      <div className="py-6"  ref={chartRef}  id="pie-chart"></div>
     
       <div className="grid grid-cols-1 items-center border-gray-200 border-t dark:border-gray-700 justify-between">
         <div className="flex justify-between items-center pt-5">

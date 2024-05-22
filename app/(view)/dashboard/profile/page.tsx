@@ -31,13 +31,17 @@ const userProfile = () => {
     {userVal !="" && loading ==true ?  
 
       <div className="bg-white overflow-hidden shadow rounded-lg border">
-        <div className="px-4 py-5 sm:px-6">
+        <div className="px-4 py-5 sm:px-6 flex justify-between">
+          <div>
           <h3 className="text-lg leading-6 font-medium text-gray-900">
             User Profile
           </h3>
           <p className="mt-1 max-w-2xl text-sm text-gray-500">
             This is some information about the user.
           </p>
+          </div>
+          
+          <button className='bg-blue-800 rounded-md text-white px-2 py-1'>Update Profile</button>
         </div>
         <div className="border-t border-gray-200 px-4 py-5 sm:p-0">
           <dl className="sm:divide-y sm:divide-gray-200">
@@ -79,7 +83,7 @@ const userProfile = () => {
           <Link href={'/dashboard/changePassword'}>
             <button  className='px-3 my-2 py-1 bg-blue-500 rounded-md hover:bg-blue-700 cursor-pointer text-white'>Reset password</button>
           </Link>
-          {/* <Resetpass email={userVal?.email}/> */}
+
         </div>
       </div>
       

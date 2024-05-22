@@ -53,7 +53,8 @@ const RegisterPage = () => {
         },1000)
             
       }else if(registerResp.status == 400){  
-        console.log("error registerResp",registerResp)    
+        console.log("error registerResp",registerResp) 
+        toast.error(registerResp?.message)   
         const {message} = registerResp;
         // setBackendErrors(apiErrValidate(message));
       }

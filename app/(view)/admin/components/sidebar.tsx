@@ -4,9 +4,12 @@ import React, { useEffect, useState } from 'react'
 import { useCookies } from 'next-client-cookies'
 import logo from  "@/public/images/logo.svg"
 import Image from 'next/image'
+import back from "@/public/images/pro.webp"
 import auth from '@/app/configs/auth'
 import { useRouter } from 'next/navigation'
 import { UserRoleAPI } from '@/app/services/apis/user'
+import UpdateProfile from './updateProfile'
+
 
 
 
@@ -32,7 +35,7 @@ const Sidebar = () => {
    }
    useEffect(()=>{
     getadmin()
-   },[])
+   }, [])
   return (
     <>
 
@@ -59,8 +62,18 @@ const Sidebar = () => {
             <div>
               <button onClick={()=>setshow(true)} type="button" className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" aria-expanded="false" data-dropdown-toggle="dropdown-user">
                 <span className="sr-only">Open user menu</span>
-                <img className="w-8 h-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo"/>
-              </button>
+                { data?.profileImg==="null" ? 
+                     <Image
+                     src={back}
+                     alt='Loading..'
+                     className="w-8 h-8 rounded-full" 
+                      /> : 
+                     <img src={data?.profileImg}
+                     className="w-8 h-8 rounded-full" 
+                     alt="" />
+                     }
+                </button>
+
             </div>
             {show && (
             <div className="z-50  absolute top-6 right-0 shadow-md my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow-gray-600 dark:bg-gray-700 dark:divide-gray-600" id="dropdown-user">
@@ -86,10 +99,10 @@ const Sidebar = () => {
                   <Link href={'/admin'} onClick={()=>setshow(false)} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Dashboard</Link>
                 </li>
                 <li>
-                  <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Settings</a>
-                </li>
-                <li>
-                  <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Earnings</a>
+                  <Link href={'/admin/profile/setting'} onClick={()=>setshow(false)}
+                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100
+                   dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" 
+                   role="menuitem">Reset Password</Link>
                 </li>
                 <li>
                   <button onClick={logoutuser} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Sign out</button>
@@ -146,9 +159,7 @@ const Sidebar = () => {
                <svg className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                   <path d="m17.418 3.623-.018-.008a6.713 6.713 0 0 0-2.4-.569V2h1a1 1 0 1 0 0-2h-2a1 1 0 0 0-1 1v2H9.89A6.977 6.977 0 0 1 12 8v5h-2V8A5 5 0 1 0 0 8v6a1 1 0 0 0 1 1h8v4a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-4h6a1 1 0 0 0 1-1V8a5 5 0 0 0-2.582-4.377ZM6 12H4a1 1 0 0 1 0-2h2a1 1 0 0 1 0 2Z"/>
                </svg>
-               <span className="flex-1 ms-3 whitespace-nowrap">Subcategory</span>
-               <span className="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">3</span>
-            </Link>
+               <span className="flex-1 ms-3 whitespace-nowrap">Subcategory</span>            </Link>
          </li>
          <li>
             <Link href={'/admin/profile'} className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">

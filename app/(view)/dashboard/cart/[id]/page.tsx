@@ -34,43 +34,6 @@ const CarTByID = ({ params }: { params: { id: any | string } }) => {
    const publishableKey:string|any =  process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY;
    const stripePromise = loadStripe(publishableKey);
 
-   
-   const createCheckOutSession = async () => {
-
-    const stripe:any = await stripePromise;
-
-    const items = {
-        totalProduct:[
-            {
-                "cartId":cartItem[0]?._id,
-                "productId": cartItem[0]?.productDetails?.productId,
-                "productName": cartItem[0]?.productDetails?.productName,
-                "productPrice": cartItem[0]?.productDetails?.productPrice,
-                "productDescription": cartItem[0]?.productDetails?.productDescription,
-                "productQuantity":cartItem[0]?.quantity,
-                "itemPrice":cartItem[0]?.itemPrice
-            }                
-        ],
-        "totalCartAmount": subTotal
-    }
-  
-    const checkoutSession = await stripeSessionAPI(items);
-
-    // console.log("checkoutSession*********",checkoutSession,"********",checkoutSession.sessionId)
-    if(checkoutSession.status == 201){
-
-        const result = await stripe.redirectToCheckout({
-            sessionId: checkoutSession.sessionId,
-
-        });
-
-        if (result.error) {
-        alert(result.error.message);
-        }
-    }
-    
-  };
-
 
   const handleAddToCart = async (productData:any) => {
     const param = {
@@ -120,7 +83,7 @@ const CarTByID = ({ params }: { params: { id: any | string } }) => {
             const decode:any = jwtEncodeData(params.id);
             dispatch(addCartId(decode))
             localStorage.setItem(authConfig.storageCart, decode)
-            // console.log(dashboardLinks.checkoutLinks);
+            localStorage.setItem("multiple","false")
             router.push(dashboardLinks.checkoutLinks);
         } catch (error) {
             console.log("handleCheckoutById ---",error);
