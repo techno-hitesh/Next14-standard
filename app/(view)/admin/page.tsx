@@ -1,17 +1,16 @@
 "use client"
 import React from 'react'
-import LineChart from './components/linechart'
-
 import Radialchart from './components/radialchart'
 import Piechart from './components/piechart'
 import Transcation from './components/transcation'
+import Barchart from './components/barchart'
 
 const AdminPage = () => {
   return (
     <>
     <div className='flex flex-col '>
-      <div className='grid gap-3 grid-cols-3'>
-        <LineChart/>
+      <div className='grid gap-3  grid-cols-3'>
+        <Barchart/>
         <Piechart/>
         <Radialchart/>
       </div>
@@ -19,7 +18,6 @@ const AdminPage = () => {
         <h1 className='text-3xl font-bold'>Transcations</h1>
         <p className='text-gray-400'>All customer transcations. Upto date !</p>
          <Transcation/>
-
        </div>
     </div>
     </>

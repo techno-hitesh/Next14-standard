@@ -4,7 +4,6 @@ import React, { useEffect, useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
 import Spiner from './spiner'
 
-
 const UpdateProfile = ({onUpdateSuccess }: {onUpdateSuccess: () => void }) => {
        const [showModal,setShowModal]=useState(false)
        const [name,setname]=useState("")
@@ -43,6 +42,7 @@ const UpdateProfile = ({onUpdateSuccess }: {onUpdateSuccess: () => void }) => {
                toast.success("Updated Successfully !")
                onUpdateSuccess()
              }else{
+              setpending(false)
               toast.error(response?.message)
              }
         }
@@ -56,7 +56,6 @@ const UpdateProfile = ({onUpdateSuccess }: {onUpdateSuccess: () => void }) => {
     
    useEffect(()=>{
     getuser()
-
    },[])
   return (
   <>

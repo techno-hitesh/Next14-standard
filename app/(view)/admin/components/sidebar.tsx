@@ -35,7 +35,7 @@ const Sidebar = () => {
    }
    useEffect(()=>{
     getadmin()
-   },[])
+   }, [])
   return (
     <>
 
