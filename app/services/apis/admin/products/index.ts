@@ -76,10 +76,10 @@ export const Getallcategories=async()=>{
   }
 }
 
-export const getcategorybyidAPI=async(id:string)=>{
+export const getcategorybyidAPI=async(id:any)=>{
   try{
       const response=await axiosInstance.get(adminRoutes.getcategory+id)
-      return response.data
+      return response?.data
   }catch(err:any){
       toast.error(err?.response?.data?.message || err?.message)
   }
@@ -205,4 +205,28 @@ export const GetUsersAdminAPI=async()=>{
      }catch(err:any){
       toast.error(err?.response?.data?.message || err?.message)
   }
+}
+
+export const UpdateProfileAdminApi=async(data:any)=>{
+  const token=localStorage.getItem(auth.storageTokenKeyName)
+  try{
+    const response=await axios.patch(baseurl+adminRoutes.updateProfileAdmin,data,{
+      headers:{
+          'Authorization':`Bearer ${token}`,
+          'Content-Type': 'multipart/form-data'
+      }
+  })
+  return response?.data
+  }catch(err:any){
+    toast.error(err?.response?.data?.message || err?.message)
+}
+}
+
+export const ChangePasswordAdminAp=async(resetdata:any)=>{
+  try{
+    const response=await axiosInstance.patch(adminRoutes.resetpasswordAdmin,resetdata)
+    return response?.data
+   }catch(err:any){
+    toast.error(err?.response?.data?.message || err?.message)
+}
 }

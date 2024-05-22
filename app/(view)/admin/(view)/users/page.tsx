@@ -1,13 +1,18 @@
 "use client"
 import { GetUsersAdminAPI } from '@/app/services/apis/admin/products'
 import React, { useEffect, useState } from 'react'
+import Spiner from '../../components/spiner'
 
 const Userpage = () => {
     const [users,sertusers]=useState([])
+    const [pending,setpending]=useState(true)
+    
+    //getting all users
      const getAllUsers=async()=>{
       const response=await GetUsersAdminAPI()
       if(response?.status===200){
         sertusers(response?.userData)
+        setpending(false)
       }
      }
     useEffect(()=>{
@@ -15,6 +20,7 @@ const Userpage = () => {
     },[])
   return (
     <>
+    { !pending ? <div>
       <div className='flex'>
         <h1 className='font-bold text-3xl my-6'>Users :</h1>
       </div>
@@ -36,10 +42,11 @@ const Userpage = () => {
             <td><img src={user?.profileImg} alt={user?.fullName} className=' h-[50%]' /></td>
         </tr>   
 
-      ))}
+))}
     </tbody>
 </table>
-
+</div>
+   :"Loading......" }
     </>
  
   )

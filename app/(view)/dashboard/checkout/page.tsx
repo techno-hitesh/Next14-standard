@@ -40,14 +40,14 @@ const CheckoutPage = () => {
 
 
   const getAllCart = async () => {
-
     const cart = localStorage.getItem(authConfig.storageCart);
     const localCartId = jwtDecodeData(cart);
+    const multiple=localStorage.getItem("multiple")
     userCartId = userCartId ? userCartId : localCartId;
     console.log("local cart",userCartId)
-
-    if(userCartId !=""){
-
+    console.log("multipe",multiple)  
+    if(userCartId !="" && multiple==="false"){
+  
       const resp = await  getItemInCartAPI(userCartId)
       if (resp.status == 200) {
           const datas = resp.data.cartItems.filter((data:any)=>{
@@ -60,8 +60,7 @@ const CheckoutPage = () => {
           setSubTotal(resp.data.totalCartAmount);
         }
 
-    }else if(userCartId == "" || undefined){
-
+    }else if(multiple==="true"){
       const resp = await getToCartAPI();
       if (resp.status == 200) {
         const datas = resp.data.cartItems.filter((data:any)=>{

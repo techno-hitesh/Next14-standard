@@ -8,7 +8,8 @@ const LineChart = () => {
   return (
     <div>
     <div className="max-w-sm w-full h-[100%] bg-white rounded-lg shadow-md shadow-gray-600 dark:bg-gray-800 p-4 md:p-6">
-      <div className="flex justify-between mb-5">
+       
+      {/* <div className="flex justify-between mb-5">
         <div className="grid gap-4 grid-cols-2">
           <div>
             <h5 className="inline-flex items-center text-gray-500 dark:text-gray-400 leading-none font-normal mb-2">Clicks
@@ -89,7 +90,7 @@ const LineChart = () => {
             View full report
           </a>
         </div>
-      </div>
+      </div> */}
     </div>
     </div>
   )

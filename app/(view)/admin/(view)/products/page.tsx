@@ -3,16 +3,18 @@ import { GetAllProductAPI } from '@/app/services/apis/admin/products'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
-import Search from '../../components/search'
+import Spiner from '../../components/spiner'
+
 
 const Products = () => {
     
     const [usrProducts, setUsrProducts] = useState([])
+    const [pending,setpending]=useState(true)
     const handleProducts = async() =>{
         const data = await GetAllProductAPI();
         if(data?.status===200){
+         setpending(false)
           setUsrProducts(data?.data?.products)
-          console.log(data?.data?.products)
         }
     }
 
@@ -21,6 +23,7 @@ const Products = () => {
     },[])
   return (
     <>
+    {!pending ? 
     <div>
     <div className='flex ml-5 justify-between items-center'>
       <h1 className='text-3xl font-bold my-5'>Products :</h1>
@@ -82,8 +85,10 @@ const Products = () => {
 
 
       </div>
+      <ToastContainer/>  
     </div>
-  <ToastContainer/>  
+         : "Loading......" 
+          }
     </>
   )
 }

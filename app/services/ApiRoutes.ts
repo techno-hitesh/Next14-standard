@@ -10,7 +10,9 @@ export const apiRoutes = {
 export const adminRoutes = {
     adminUsers: '/admin/get-admin',
     getAdminUser: '/admin/users',
+    updateProfileAdmin:'/user/update-profile',
     getallUsers:'/admin/get-all-users',
+    resetpasswordAdmin:'/user/change-password',
     getAllProducts:'/admin/get-all-products',
     getProductById:"/admin/get-product/",
     deleteProductById:"admin/delete-product/",

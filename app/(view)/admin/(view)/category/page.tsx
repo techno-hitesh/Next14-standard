@@ -33,8 +33,8 @@ const CategoryPage = () => {
 <Link href={'/admin/category/categorycreate'}>
 <button className='bg-blue-800 rounded-md text-white px-3 py-2'>Create Category</button>
 </Link>
-
     </div>
+
       <div className='mt-4'>
       <div className="overflow-x-auto shadow-md sm:rounded-lg flex justify-center">
     <table className="w-full text-sm text-gray-700 dark:text-gray-400">
