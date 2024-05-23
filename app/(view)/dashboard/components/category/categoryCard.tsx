@@ -27,11 +27,9 @@ const CategoryCard = () => {
       <h2 className="font-serif text-2xl font-bold sm:text-3xl">Our featured Aroma Range</h2>
       <p className="mt-4 text-base text-gray-700">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Purus faucibus massa dignissim tempus.</p>
     </div>
-
     <div className="mt-10 grid grid-cols-2 gap-6 lg:mt-16 lg:grid-cols-4 lg:gap-4">
 
-    {catData.length > 0 && catData ? 
-        
+    {catData.length > 0 && catData ?         
         catData.map((catValue : any, i:number)=>(
       <article className="relative mt-4">
 
@@ -46,10 +44,8 @@ const CategoryCard = () => {
         <div className="mt-4 flex items-start justify-between">
           <div className="">
             <h3 className="text-xs font-semibold sm:text-sm md:text-base">
-              {/* <a href={dashboardLinks?.productsLink} title="" className="cursor-pointer"> */}
                 {catValue.categoryName}
                 <span className="absolute" aria-hidden="true"></span>
-              {/* </a> */}
             </h3>
             <div className="mt-2 flex items-center">
               <svg className="block h-3 w-3 align-middle text-black sm:h-4 sm:w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -68,29 +64,16 @@ const CategoryCard = () => {
 
             <p>{catValue.categoryDescription.split(',')[0]}</p>
           </div>
-
-
-          {/* <div className="text-right">
-            <del className="mt-px text-xs font-semibold text-gray-600 sm:text-sm"> $79.00 </del>
-            <p className="text-xs font-normal sm:text-sm md:text-base">$99.00</p>
-          </div> */}
         </div>    
         </Link>    
 
       </article>    
-      ))
-        
+      ))        
       :""
     }  
-
     </div>
   </div>
-</section>
-
-
-
-
-      
+</section>      
     </>
   )
 }

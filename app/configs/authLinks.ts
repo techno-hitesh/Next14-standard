@@ -11,7 +11,8 @@ export const dashboardLinks ={
     ordersLink : '/dashboard/order',
     ordersIdLink : '/dashboard/order/',
     checkoutLinks: '/dashboard/checkout',
-    subcategoryLinks:'/dashboard/subcategory/'
+    subcategoryLinks:'/dashboard/subcategory/',
+    subCatProductLinks:'/dashboard/subcategory/products/'
 
 }
 

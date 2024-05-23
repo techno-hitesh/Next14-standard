@@ -25,3 +25,14 @@ export const getSubCategoryByIdAPI = async (id:string) =>{
       return err?.response?.data?.message || err?.message
     }
 }
+
+
+export const getSubCateProductByIdAPI = async (id:string) =>{
+    try {
+      const response = await axiosInstance.get(`${categories.getSubCategoryById}${id}`)
+      return response.data;
+    } catch (err:any) {
+      toast.error(err?.response?.data?.message || err?.message)
+      return err?.response?.data?.message || err?.message
+    }
+}
