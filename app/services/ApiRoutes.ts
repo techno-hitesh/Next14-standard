@@ -32,6 +32,12 @@ export const adminRoutes = {
     
 }
 
+export const categories = {
+    getAllCategory  : "/user/get-categories",
+    getCategoryById : "/user/get-categories/",
+    getSubCategory  : "/user/get-sub-categories/"
+}
+
 export const cartRoutes = {
     addToCart:"/user/add-to-cart",
     getAllCart: "/user/get-cart",

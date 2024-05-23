@@ -22,7 +22,7 @@ return (
     <ReduxProvider>
     <CookiesProvider>
     <html lang="en">
-      <body className={inter.className}>
+      <body className={inter.className} suppressHydrationWarning={true}>
        <div className="lg:container w-screen mx-auto"> 
         {children}
         </div>

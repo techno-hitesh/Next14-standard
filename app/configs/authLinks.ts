@@ -5,12 +5,14 @@ export const authLinks = {
 }
 
 export const dashboardLinks ={
-    userHomeLink :  '/dashboard',
+    userHomeLink : '/dashboard',
     cartsLink :  '/dashboard/cart',
-    productsLink :  '/dashboard/products',
+    productsLink : '/dashboard/products',
     ordersLink : '/dashboard/order',
     ordersIdLink : '/dashboard/order/',
-    checkoutLinks: '/dashboard/checkout'
+    checkoutLinks: '/dashboard/checkout',
+    subcategoryLinks:'/dashboard/subcategory/'
+
 }
 
 export const adminLinks = {
