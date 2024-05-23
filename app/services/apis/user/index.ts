@@ -93,7 +93,7 @@ export const getToCartAPI = async () =>{
   }
 }
 
-export const getItemInCartAPI = async (id:string) =>{
+export const getItemInCartAPI = async (id:string|any) =>{
   try {
     const response = await axiosInstance.get(`${cartRoutes.getItemCart}${id}`)
     return response.data;

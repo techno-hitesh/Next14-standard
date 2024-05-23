@@ -42,16 +42,51 @@ export default function placeOrder(checkBoxId:{checkBoxId:string}) {
   }
   
 // all data in cart
-  const getAllCart = async () => {
+  // const getAllCart = async () => {
 
+  //   const cart = localStorage.getItem(authConfig.storageCart);
+  //   const localCartId = jwtDecodeData(cart);
+  //   const userCartIds:any = userCartId ? userCartId : localCartId;
+  //   console.log("local cart place oerder",userCartIds)
+
+  //   if(userCartIds !=""){
+
+  //     const resp = await getItemInCartAPI(userCartIds)
+  //     if (resp.status == 200) {
+  //         const datas = resp.data.cartItems.filter((data:any)=>{
+  //           if(data.message !== "Product not found"){
+  //               return data
+  //           }
+  //         })
+  //         // console.log("datas",datas)
+  //         setGetAllData(datas)
+  //         setSubTotal(resp.data.totalCartAmount);
+  //       }
+
+  //   }else if(userCartId == "" || undefined){
+  //       const resp = await getToCartAPI();
+  //       if (resp.status == 200) {
+  //         const datas = resp.data.cartItems.filter((data:any)=>{
+  //           if(data.message !== "Product not found"){
+  //               return data
+  //           }
+  //         })
+  //         setGetAllData(datas)
+  //         setSubTotal(resp.data.totalCartAmount);
+  //       }
+  //   }
+    
+  // }
+
+  const getAllCart = async () => {
     const cart = localStorage.getItem(authConfig.storageCart);
     const localCartId = jwtDecodeData(cart);
-    const userCartIds:any = userCartId ? userCartId : localCartId;
-    console.log("local cart place oerder",userCartIds)
+    const multiple=localStorage.getItem("multiple")
+    let userCartIds:any = userCartId ? userCartId : localCartId;
 
-    if(userCartIds !=""){
-
-      const resp = await getItemInCartAPI(userCartIds)
+    if(userCartIds !="" && multiple==="false"){
+  
+      const resp = await  getItemInCartAPI(userCartIds)
       if (resp.status == 200) {
           const datas = resp.data.cartItems.filter((data:any)=>{
             if(data.message !== "Product not found"){
@@ -63,17 +98,18 @@ export default function placeOrder(checkBoxId:{checkBoxId:string}) {
           setSubTotal(resp.data.totalCartAmount);
         }
 
-    }else if(userCartId == "" || undefined){
-        const resp = await getToCartAPI();
-        if (resp.status == 200) {
-          const datas = resp.data.cartItems.filter((data:any)=>{
-            if(data.message !== "Product not found"){
-                return data
-            }
-          })
-          setGetAllData(datas)
-          setSubTotal(resp.data.totalCartAmount);
-        }
+    }else if(multiple==="true"){
+      const resp = await getToCartAPI();
+      if (resp.status == 200) {
+        const datas = resp.data.cartItems.filter((data:any)=>{
+          if(data.message !== "Product not found"){
+              return data
+          }
+        })
+        // console.log("datas",datas)
+        setGetAllData(datas)
+        setSubTotal(resp.data.totalCartAmount);
+      }
     }
     
   }
@@ -85,8 +121,7 @@ export default function placeOrder(checkBoxId:{checkBoxId:string}) {
       if(resp.status == 200){
         // console.log("resp--",resp?.addressData)
         setAddressData(resp?.addressData)
-      }      
-
+      } 
     } catch (error) {
       console.log("address data --",error)
     }   
@@ -102,7 +137,6 @@ export default function placeOrder(checkBoxId:{checkBoxId:string}) {
 
       // stripe payment functions...  
   const createCheckOutSession = async () => {
-
     // console.log("getAllData--start",getAllData )
 
     const stripePromise = loadStripe(publishableKey);
@@ -137,7 +171,6 @@ export default function placeOrder(checkBoxId:{checkBoxId:string}) {
                 "itemPrice":cartItem?.itemPrice
             }
         ))
-
         const totalCartAmount = subTotal
         const addressId = checkBoxId.checkBoxId
         formattedData = {
@@ -145,27 +178,22 @@ export default function placeOrder(checkBoxId:{checkBoxId:string}) {
           totalCartAmount,
           addressId
         };
-
     }
 
-    // console.log("form-dasta-----",formattedData)
     const stripe:any = await stripePromise;
 
     const checkoutSession = await stripeSessionAPI(formattedData);
 
     // console.log("checkoutSession*********",checkoutSession,"********",checkoutSession.sessionId)
     if(checkoutSession.status == 201){
-
         const result = await stripe.redirectToCheckout({
-            sessionId: checkoutSession.sessionId,
-            
+            sessionId: checkoutSession.sessionId,            
         });
 
         if (result.error) {
           alert(result.error.message);
         }
-    }
-    
+    }    
   };
 
   const delAddressHandler = async(data:any) =>{
