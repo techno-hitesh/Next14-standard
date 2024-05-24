@@ -32,6 +32,11 @@ export const adminRoutes = {
     
 }
 
+export const charts={
+    revenueApi:"/admin/get-total-revenue",
+    AllPayment:"/admin/get-all-payments"
+}
+
 export const categories = {
     getAllCategory  : "/user/get-categories",
     getCategoryById : "/user/get-categories/",

@@ -137,7 +137,7 @@ export default function placeOrder(checkBoxId:{checkBoxId:string}) {
 
       // stripe payment functions...  
   const createCheckOutSession = async () => {
-    // console.log("getAllData--start",getAllData )
+    console.log("getAllData--start",getAllData )
 
     const stripePromise = loadStripe(publishableKey);
 
@@ -184,7 +184,7 @@ export default function placeOrder(checkBoxId:{checkBoxId:string}) {
 
     const checkoutSession = await stripeSessionAPI(formattedData);
 
-    // console.log("checkoutSession*********",checkoutSession,"********",checkoutSession.sessionId)
+    console.log("checkoutSession*********",checkoutSession,"********",checkoutSession.sessionId)
     if(checkoutSession.status == 201){
         const result = await stripe.redirectToCheckout({
             sessionId: checkoutSession.sessionId,            
