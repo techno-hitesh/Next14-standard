@@ -2,7 +2,7 @@
 import { GetProductByIdAPI, adminUpdateProductApi } from '@/app/services/apis/admin/products'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
-import { toast } from 'react-toastify'
+import { ToastContainer, toast } from 'react-toastify'
 
 
 const UpdateModal = ({ id, onUpdateSuccess }: { id: { id: any | string }, onUpdateSuccess: () => void }) => {
@@ -15,13 +15,15 @@ const UpdateModal = ({ id, onUpdateSuccess }: { id: { id: any | string }, onUpda
        const [productImage, setImage] = useState<string | null>(null)
       const getProductById=async()=>{
         const response=await GetProductByIdAPI(id)
+        console.log("response",response)
         if(response?.status===200){
-          // console.log('byId----------',response)
             setname(response?.getProduct?.productName)
             setdescription(response?.getProduct?.productDescription)
             setprice(response?.getProduct?.productPrice)
-            setImage(response?.getProduct?.productImg)
+            setImage(response?.getProduct?.productImg[0])
             setquan(response?.getProduct?.productStockQuantity)
+        }else{
+          toast.error(response?.message)
         }
       }
 
