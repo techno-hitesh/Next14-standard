@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react'
 import ModalDelete from '../../../components/modal'
 import Link from 'next/link'
 import UpdateModal from '../../../components/updateModal'
+import { ToastContainer } from 'react-toastify'
 
 const ProductById = () => {
     const {id}=useParams()
@@ -15,6 +16,7 @@ const ProductById = () => {
      const fetchdata=async()=>{
         const response=await GetProductByIdAPI(id)
         if(response?.status===200){
+            console.log(response?.getProduct)
            setSelectedImage(response?.getProduct.productImg[0])
             setProductData(response?.getProduct)
         }
@@ -61,6 +63,10 @@ setSelectedImage(image);
                 <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">
                   {productData.productDescription}
                 </p>
+                <label htmlFor="Brand" className='text-gray-800 font-bold text-lg'>Brand </label>
+                <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">
+                {productData.productBrand}
+                </p>
                 <div className="flex mb-4">
                     <div className="mr-4">
                         <span className="font-bold text-gray-700 dark:text-gray-300">Price:</span>
@@ -70,6 +76,12 @@ setSelectedImage(image);
                         <span className="font-bold text-gray-700 dark:text-gray-300">Availability:</span>
                         <span className="text-gray-600 dark:text-gray-300">{productData.productStockQuantity}</span>
                     </div>
+                </div>
+                <div className='my-4'>
+
+                <span className="font-bold text-gray-700 dark:text-gray-300">Product Features :</span>
+                <span className="text-gray-600 dark:text-gray-300 ">{productData.productFeature}</span>
+
                 </div>
                 <div>
                     <span className="font-bold text-gray-700 dark:text-gray-300">Product Description:</span>
@@ -96,6 +108,7 @@ setSelectedImage(image);
             </div>
         </div>
     </div>
+    <ToastContainer/>
        </div>
     :"Loading..........."    
     }

@@ -170,31 +170,3 @@ export const middlewareRoleAPI = async (token:string | undefined) =>{
   }
 }
 
-
-// export const getAdminApi = async(token:any|{}) => {
-//   try {
-//     // console.log("admin-sdsd",token)
-//     const response = await fetch(`${apiUrl}${apiRoutes.adminUsers}`, {
-//       method: 'GET',
-//       headers: {
-//         'Content-Type': 'application/json',
-//         "Authorization": `Bearer ${token}` 
-//       },
-//     });
-
-//      // Check if the response is successful
-//      if (!response.ok) {
-//       console.log("getAdminApi---",response)
-//       return response;
-//       // throw new Error('GEt ADmin Login failed');
-//     }
-
-//     // // Assuming the response is JSON
-//     const responseData = await response.json();
-//     return responseData;
-    
-//   } catch (error) {
-//         console.log("error",error);
-//         throw new Error('getAdminApi func failed');
-//   }
-// }
