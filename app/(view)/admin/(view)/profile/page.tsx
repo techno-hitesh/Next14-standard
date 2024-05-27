@@ -31,7 +31,7 @@ const page = () => {
   return (
     <>
   {user ?
-    <section className="w-full overflow-hidden dark:bg-gray-900">
+    <section className="w-full overflow-hidden font-sans dark:bg-gray-900">
     <div className="flex flex-col">
         {/* <!-- Cover Image --> */}
         <Image
@@ -53,7 +53,7 @@ const page = () => {
                      }
                         {/* <!-- FullName --> */}
             <h1
-                className="w-full text-left my-4 sm:mx-4 xs:pl-4 text-gray-800 dark:text-white lg:text-4xl md:text-3xl sm:text-3xl xs:text-xl font-serif">
+                className="w-full font-sans text-left my-4 sm:mx-4 xs:pl-4 text-gray-800 dark:text-white lg:text-4xl md:text-3xl sm:text-3xl xs:text-xl ">
                     {user.fullName}
               </h1>
              <UpdateProfile onUpdateSuccess={handleUpdateSuccess}/>

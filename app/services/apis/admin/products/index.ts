@@ -8,6 +8,8 @@ import { createcategory, createsubcategoty } from '@/app/types/userTypes';
 
 const baseurl=process.env.NEXT_PUBLIC_API_BASE_URL
 
+
+
 export const GetAllProductAPI = async () =>{
     try {
       const response = await axiosInstance.get(adminRoutes.getAllProducts)

@@ -4,7 +4,6 @@ import Radialchart from './components/radialchart'
 import Piechart from './components/piechart'
 import Transcation from './components/transcation'
 import Barchart from './components/barchart'
-import { RevenueChartAPI } from '@/app/services/apis/admin/charts'
 
 const AdminPage = () => {
  
