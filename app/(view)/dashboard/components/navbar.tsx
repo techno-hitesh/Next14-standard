@@ -20,7 +20,7 @@ const Navbar = () => {
   const [arrLink, setArrLink] = useState<[] | any>([]);
   const [subTotal, setSubTotal] = useState(0);
   var decodeRole: any;
-  // const getAllCart = async () => {
+  /// const getAllCart = async () => {
   //     const resp = await getToCartAPI();
   //     if (resp.status == 200) {
   //       const datas = resp.data.cartItems.filter((data:any)=>{
