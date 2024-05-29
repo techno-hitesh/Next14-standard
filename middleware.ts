@@ -9,7 +9,7 @@ export async function middleware(request: NextRequest) {
 
   const path = request.nextUrl.pathname;
   const token = request.cookies.get(auth.storageTokenKeyName)?.value; 
-  const isPublicPath = path === "/login" || path === "/register" || path === "/"  ;
+  const isPublicPath = path === "/login" || path === "/register" || path === "/" || path==="/landing" ;
   const authRole	= request.cookies.get(auth.storageRole)?.value;
   let getRole:any
   if(authRole){
@@ -56,16 +56,9 @@ export const config = {
   matcher: [
         '/' ,
         '/login',
+        '/landing',
         '/register',
         '/admin/:path*',
         '/dashboard/:path*',
     ],
 }
-
-
-
-  // return NextResponse.json(
-  //   { success: false, message: 'authentication failed' },
-  //   { status: 401 })
-  
-  // New comment 

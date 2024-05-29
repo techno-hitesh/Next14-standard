@@ -13,7 +13,14 @@ const config = {
   }
 };
 
-
+export const LogoutUserAPI=async()=>{
+  try{
+    const response=await axiosInstance.post(apiRoutes.logoutUser)
+    return response.data
+  }catch (err:any) {
+    toast.error(err?.response?.data?.message || err?.message)
+  }
+}
 export const loginUserAPI = async (params?: UserType|string) =>{
   try {
     const response = await axiosInstance.post(apiRoutes.userLogin, params)

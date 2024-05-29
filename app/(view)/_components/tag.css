@@ -1,0 +1,86 @@
+.custom-option {
+    position: relative;
+    display: inline-block;
+    padding: 4px 10px;
+    background-color: rgb(102, 53, 61);
+    color: #fff;
+    border-radius: -1px 0 0 20px;
+    margin-right: 30px;
+    cursor: pointer;
+  }
+  
+  .custom-option::before {
+    content: "";
+    position: absolute;
+    top: -1px;
+    right: -20px;
+    width: 0;
+    height: 0;
+    border-top: 15px solid transparent;
+    border-bottom: 20px solid transparent;
+    border-left: 20px solid rgb(102, 53, 61);
+  }
+
+
+.MuiChip-fixedTag {
+  background-color: rgba(112, 61, 61, 0.12); 
+  pointer-events: none; 
+  opacity: 10;
+}
+
+.MuiChip-fixedTag::before {
+  display: none;
+}
+
+.MuiButtonBase-root{
+  margin-left: 10px;
+}
+
+.MuiSvgIcon-root{
+  width: 20px;
+  top: -10px;
+  right: -8px;
+  position:absolute;
+}
+
+
+  .MuiAutocomplete-listbox {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .MuiAutocomplete-option {
+    display: inline-flex; 
+    align-items: center;
+    margin-right: 8px;
+    margin-bottom: 8px; 
+  }
+
+  .custom-option1 {
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+    padding: 4px 12px;
+    background-color:rgb(102, 53, 61);
+    color: #fff;
+    border-radius: -1px 0 0 20px;
+    margin-right: 30px;
+  }
+  
+  .custom-option1::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: -20px;
+    width: 0;
+    height: 0;
+    border-top: 16px solid transparent;
+    border-bottom: 16px solid transparent;
+    border-left: 20px solid rgb(102, 53, 61)
+  }
+
+  .MuiAutocomplete-endAdornment .MuiButtonBase-root .MuiSvgIcon-root{
+  display:none;
+}
+
+
