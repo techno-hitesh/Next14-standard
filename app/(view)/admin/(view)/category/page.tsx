@@ -49,7 +49,7 @@ const CategoryPage = () => {
         <thead className="text-xs  uppercase bg-gray-100 dark:bg-gray-800 dark:text-gray-300">
             <tr>
                 <th scope="col" className="px-6 py-3">
-                    Subcategory
+                    Category
                 </th>
                 <th scope="col" className="px-6 py-3">
                     Description
