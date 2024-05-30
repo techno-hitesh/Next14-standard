@@ -9,7 +9,7 @@ import Subcategory from "../subcategory";
 
 const CategoryCard = () => {
   const [catData, setCatData] = useState<any>("");
-  const [sub,setsub]=useState<any>([])
+  const [sub, setsub] = useState<any>([])
 
   const getData = async () => {
     const categories = await getAllCategoryAPI();
@@ -18,11 +18,11 @@ const CategoryCard = () => {
 
   const getallSubcategories = async () => {
     const response = await Getallsubcategory();
-    if(response?.status===200){
+    if (response?.status === 200) {
       setsub(response?.data)
     }
   };
- 
+
 
   useEffect(() => {
     getData();
@@ -46,7 +46,7 @@ const CategoryCard = () => {
             <Carousel />
           </div>
           <hr />
-          <div className="overflow-auto flex mt-20  flex-col">
+          <div className="overflow-auto flex mt-20  mb-16 flex-col">
             <h1 className="my-2 text-3xl font-bold  text-gray-700">
               Shop by Category{" "}
             </h1>
@@ -77,15 +77,15 @@ const CategoryCard = () => {
                 ))}
             </div>
           </div>
-          <hr />
-          {sub.map((data:any,index:any)=>(
-          <div className=" flex mt-20  flex-col">
-            {/* <h1 className="my-2 text-3xl font-bold  text-gray-700">{data?.subCategoryName}</h1> */}
-            <div key={index}>
-            <Subcategory  key={index} data={data}/>
+          {/* <hr /> */}
+          {sub.map((data: any, index: any) => (
+            <div className=" flex mt-10  flex-col">
+              {/* <h1 className="my-2 text-3xl font-bold  text-gray-700">{data?.subCategoryName}</h1> */}
+              <div key={index}>
+                <Subcategory key={index} data={data} />
+              </div>
+
             </div>
-            
-          </div>
           ))}
         </div>
       </section>
