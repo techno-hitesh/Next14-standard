@@ -28,7 +28,7 @@ const subCateProducts = ({ params }: { params: { id: any | string } } ) => {
       <div className="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl" key={data._id}>
          
           <Link href={dashboardLinks.productsLink+"/"+data._id}>
-              <img  src={data?.productImg}
+              <img  src={data?.productImg[0]}
                       alt="Product" className="h-72 w-72 object-cover rounded-t-xl" />
               <div className="px-4 py-3 w-72">
                   <span className="text-gray-400 mr-3 uppercase text-xs">Brand</span>

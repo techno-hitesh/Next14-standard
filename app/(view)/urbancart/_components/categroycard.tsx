@@ -1,11 +1,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { getAllCategoryAPI } from "@/app/services/apis/user/categories";
-import { dashboardLinks } from "@/app/configs/authLinks";
-import Link from "next/link";
-import Carousel from "../carousel";
+import Carousel from "./carousel";
 import { Getallsubcategory } from "@/app/services/apis/admin/products";
-import Subcategory from "../subcategory";
+import Subcategory from "./subcategory";
 import Logo from "@/app/(view)/_components/logo";
 
 const CategoryCard = () => {

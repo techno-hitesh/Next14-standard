@@ -6,6 +6,7 @@ import React,{ useEffect, useLayoutEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { jwtEncodeData } from "@/app/helpers";
 import { addUser } from "@/app/store/slices/userSlicer";
+import Footer from "../_components/footer";
 
 
 export default function RootLayout({
@@ -33,6 +34,7 @@ export default function RootLayout({
           <div className="lg:container w-screen mx-auto"> 
           <Navbar />
             {children}
+            <Footer/>
           </div>
         </React.Suspense>
         </>

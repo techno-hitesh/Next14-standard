@@ -4,6 +4,9 @@ import { useCookies } from 'next-client-cookies';
 import { useRouter } from "next/navigation"
 import './style/style.css';
 import CategoryCard from './components/category/categoryCard';
+import Logo from '../_components/logo';
+import Des from '../_components/des';
+
 
 const DashboardPage = () => {
 
@@ -15,6 +18,7 @@ const DashboardPage = () => {
      
        <div className="lg:container w-screen mx-auto">
           <div>
+            <Des/>
           <CategoryCard />
           
           </div>
