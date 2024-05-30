@@ -3,35 +3,36 @@
 import { useEffect, useState, useRef } from "react"
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
-import { getSubCateProductByIdAPI } from '@/app/services/apis/user/categories'
 import 'swiper/css';
 import Link from "next/link";
 import { dashboardLinks } from "@/app/configs/authLinks";
+import { Getallcategories } from "@/app/services/apis/admin/products";
+import { getAllCategoryAPI } from "@/app/services/apis/user/categories";
 
 
-const Subcategory = ({ key, data }: any) => {
+const Des = () => {
     const [subdata, setSubData] = useState<any>([]);
     const prevButtonRef = useRef(null);
     const nextButtonRef = useRef(null);
 
-    let subCatId = data?._id;
-
-    const fetchsubbyid = async () => {
-        const response = await getSubCateProductByIdAPI(subCatId);
-        if (response?.status === 200) {
-            setSubData(response?.data?.Products);
-        }
+   
+    const fetchcategory = async () => {
+      const response=await getAllCategoryAPI()
+      if(response?.status===200){
+        console.log(response)
+        setSubData(response?.data)
+      }
     };
-    
+
     useEffect(() => {
-        fetchsubbyid();
-    }, [subCatId]);
+        fetchcategory();
+    }, []);
 
     return (
-        <section className="py-2 relative" key={key}>
-            <div className="w-full max-w-7xl px-4 lg:px-1 mx-auto">
+        <section className="py-2 relative" >
+            <div className="w-full max-w-7xl px-4 lg:px-6 mx-auto">
                 <div className="flex items-center justify-between flex-col sm:flex-row gap-y-2 mb-3">
-                    <h2 className="font-manrope font-bold text-2xl text-gray-900">{data?.subCategoryName}</h2>
+                    <h2 className="font-manrope font-bold text-2xl text-gray-900"></h2>
                     <div className="flex justify-center items-center gap-2">
                         <button ref={prevButtonRef}
                             className="swiper-button-prev rounded-full w-6 h-6 flex items-center justify-center p-1.5 bg-indigo-200 group transition-all duration-300 hover:bg-indigo-600">
@@ -69,13 +70,13 @@ const Subcategory = ({ key, data }: any) => {
             >
                 {subdata && subdata.length > 0 ? subdata.map((subval: any, index: number) => (
                     <SwiperSlide key={index} className="flex flex-col items-center">
-                        <Link href={dashboardLinks.productsLink + '/' + subval?._id}>
+                        <Link href={dashboardLinks.subcategoryLinks + '/' + subval?._id}>
                             <div className="w-30 h-28 mb-2">
-                                <img src={subval?.productImg[0]} alt=""
+                                <img src={subval?.categoryImg} alt=""
                                     className="w-full h-full object-cover" />
                             </div>
                         </Link>
-                        <span className="text-sm text-center px-2">{subval?.productName}</span>
+                        <span className="text-sm text-center px-2">{subval?.categoryName}</span>
                     </SwiperSlide>
                 ))
                     :
@@ -86,4 +87,4 @@ const Subcategory = ({ key, data }: any) => {
     );
 };
 
-export default Subcategory;
+export default Des;

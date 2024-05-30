@@ -47,7 +47,7 @@ const Dropdown = () => {
         localStorage.removeItem(authConfig.storageRole);
         cookies.remove(authConfig.storageTokenKeyName)
         cookies.remove(authConfig.storageRole)
-        router.replace("/login")
+        router.replace("/urbancart")
     }
 
     const userPrfRedirect = ()=>{

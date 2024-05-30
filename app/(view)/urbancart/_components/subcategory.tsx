@@ -6,7 +6,7 @@ import { Navigation } from 'swiper/modules';
 import { getSubCateProductByIdAPI } from '@/app/services/apis/user/categories'
 import 'swiper/css';
 import Link from "next/link";
-import { dashboardLinks } from "@/app/configs/authLinks";
+import { dashboardLinks, urbancartLinks } from "@/app/configs/authLinks";
 
 
 const Subcategory = ({ key, data }: any) => {
@@ -69,7 +69,7 @@ const Subcategory = ({ key, data }: any) => {
             >
                 {subdata && subdata.length > 0 ? subdata.map((subval: any, index: number) => (
                     <SwiperSlide key={index} className="flex flex-col items-center">
-                        <Link href={dashboardLinks.productsLink + '/' + subval?._id}>
+                        <Link href={urbancartLinks.productsLink + '/' + subval?._id}>
                             <div className="w-30 h-28 mb-2">
                                 <img src={subval?.productImg[0]} alt=""
                                     className="w-full h-full object-cover" />

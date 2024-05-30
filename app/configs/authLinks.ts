@@ -21,3 +21,11 @@ export const adminLinks = {
     productsLink :  '/admin/products',
     searchLinks:'/admin/products/search'
 }
+
+
+export const urbancartLinks={
+    userHomeLink : '/urbancart',
+    productsLink : '/urbancart/products',
+    subcategoryLinks:'/urbancart/subcategory/',
+    subCatProductLinks:'/urbancart/subcategory/products/'
+}
