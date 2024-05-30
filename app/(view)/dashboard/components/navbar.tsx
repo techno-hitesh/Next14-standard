@@ -14,6 +14,9 @@ import { getToCartAPI } from "@/app/services/apis/user";
 import auth from "@/app/configs/auth";
 import { jwtDecodeData } from "@/app/helpers";
 import { NextRequest } from "next/server";
+import Search from "../../admin/components/search";
+import Tag from "../../_components/tag";
+import HoverDropdown from "../../_components/hoverDropdown";
 
 const Navbar = () => {
   const pathname = usePathname();
@@ -72,7 +75,7 @@ const Navbar = () => {
             <h1 className="ml-8 mt-1">UrbanCart</h1>
           </Link>
         </div>
-
+       
         <ul className="hidden md:flex">
           {arrLink != "" && arrLink.length > 0
             ? arrLink.map(({ id, link, name }: NavbarUserType) => (
@@ -85,7 +88,7 @@ const Navbar = () => {
               ))
             : ""}
         </ul>
-
+        
         <Link href={`${links}/cart`}>
           <div className="relative py-2">
             <div className="t-0 absolute left-6">
@@ -101,6 +104,7 @@ const Navbar = () => {
             />
           </div>
         </Link>
+        
 
         <Dropdown />
       </div>

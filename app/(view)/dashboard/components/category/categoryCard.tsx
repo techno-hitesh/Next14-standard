@@ -1,81 +1,96 @@
-"use client"
-import React,{useEffect, useState} from 'react'
-import { getAllCategoryAPI } from '@/app/services/apis/user/categories'
-import { dashboardLinks } from '@/app/configs/authLinks'
-import Link from 'next/link'
+"use client";
+import React, { useEffect, useState } from "react";
+import { getAllCategoryAPI } from "@/app/services/apis/user/categories";
+import { dashboardLinks } from "@/app/configs/authLinks";
+import Link from "next/link";
+import Carousel from "../carousel";
+import { Getallsubcategory } from "@/app/services/apis/admin/products";
+import Subcategory from "../subcategory";
 
 const CategoryCard = () => {
-
   const [catData, setCatData] = useState<any>("");
+  const [sub, setsub] = useState<any>([])
 
-  const getData = async()=>{
+  const getData = async () => {
     const categories = await getAllCategoryAPI();
     setCatData(categories.data);
-    console.log("cart data  categoryName ",categories.data)
-  }
+  };
+
+  const getallSubcategories = async () => {
+    const response = await Getallsubcategory();
+    if (response?.status === 200) {
+      setsub(response?.data)
+    }
+  };
 
 
-  useEffect(()=>{
+  useEffect(() => {
     getData();
-  },[]);
+    getallSubcategories();
+  }, []);
 
   return (
     <>
-<section className="bg-white py-12 text-gray-700 sm:py-16 lg:py-20">
-  <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
-    <div className="mx-auto max-w-md text-center">
-      <h2 className="font-serif text-2xl font-bold sm:text-3xl">Our featured Aroma Range</h2>
-      <p className="mt-4 text-base text-gray-700">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Purus faucibus massa dignissim tempus.</p>
-    </div>
-    <div className="mt-10 grid grid-cols-2 gap-6 lg:mt-16 lg:grid-cols-4 lg:gap-4">
-
-    {catData.length > 0 && catData ?         
-        catData.map((catValue : any, i:number)=>(
-      <article className="relative mt-4">
-
-        <Link href={dashboardLinks?.subcategoryLinks+catValue._id}>
-        <div className="aspect-square overflow-hidden">
-          <img className="group-hover:scale-125 h-full w-full object-cover transition-all duration-300" src={catValue.categoryImg} alt="" />
-        </div>
-        <div className="absolute top-0 m-1 rounded-full bg-white">
-          <p className="text-[10px] rounded-full bg-black p-1 font-bold uppercase tracking-wide text-white sm:px-3 sm:py-1">Sale</p>
-        </div>
-
-        <div className="mt-4 flex items-start justify-between">
-          <div className="">
-            <h3 className="text-xs font-semibold sm:text-sm md:text-base">
-                {catValue.categoryName}
-                <span className="absolute" aria-hidden="true"></span>
-            </h3>
-            <div className="mt-2 flex items-center">
-              <svg className="block h-3 w-3 align-middle text-black sm:h-4 sm:w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" className=""></path>
-              </svg>
-              <svg className="block h-3 w-3 align-middle text-black sm:h-4 sm:w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" className=""></path>
-              </svg>  
-              <svg className="block h-3 w-3 align-middle text-black sm:h-4 sm:w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" className=""></path>
-              </svg>  
-              <svg className="block h-3 w-3 align-middle text-black sm:h-4 sm:w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" className=""></path>
-              </svg>  
-            </div>
-
-            <p>{catValue.categoryDescription.split(',')[0]}</p>
+      <section className="bg-white py-12 text-gray-700 sm:py-16 lg:py-20">
+        <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-md text-center">
+            <h2 className="font-serif text-2xl font-bold sm:text-3xl">
+              Our featured Aroma Range
+            </h2>
+            <p className="mt-4 text-base text-gray-700">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Purus
+              faucibus massa dignissim tempus.
+            </p>
           </div>
-        </div>    
-        </Link>    
+          <div className="my-4">
+            <Carousel />
+          </div>
+          <hr />
+          <div className="overflow-auto flex mt-20  mb-16 flex-col">
+            <h1 className="my-2 text-3xl font-bold  text-gray-700">
+              Shop by Category{" "}
+            </h1>
+            <div className="mb-5 flex w-[120%] h-[90%]  gap-7 ">
+              {catData?.length > 0 &&
+                catData.map((catValue: any, i: any) => (
+                  <article key={i} className="relative  mt-4 w-40">
+                    <Link
+                      href={dashboardLinks?.subcategoryLinks + catValue._id}
+                    >
+                      <div className="aspect-square overflow-hidden">
+                        <img
+                          className="group-hover:scale-125 h-full w-full object-cover transition-all duration-300"
+                          src={catValue.categoryImg}
+                          alt=""
+                        />
+                      </div>
+                    </Link>
+                    <div className="mt-4 flex items-start justify-between">
+                      <div className="">
+                        <h3 className="text-xs font-semibold sm:text-sm md:text-base">
+                          {catValue.categoryName}
+                          <span className="absolute" aria-hidden="true"></span>
+                        </h3>
+                      </div>
+                    </div>
+                  </article>
+                ))}
+            </div>
+          </div>
+          {/* <hr /> */}
+          {sub.map((data: any, index: any) => (
+            <div className=" flex mt-10  flex-col">
+              {/* <h1 className="my-2 text-3xl font-bold  text-gray-700">{data?.subCategoryName}</h1> */}
+              <div key={index}>
+                <Subcategory key={index} data={data} />
+              </div>
 
-      </article>    
-      ))        
-      :""
-    }  
-    </div>
-  </div>
-</section>      
+            </div>
+          ))}
+        </div>
+      </section>
     </>
-  )
-}
+  );
+};
 
-export default CategoryCard
+export default CategoryCard;

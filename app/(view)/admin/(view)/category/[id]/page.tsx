@@ -3,13 +3,11 @@ import { getcategorybyidAPI } from '@/app/services/apis/admin/products'
 import { useParams, useSearchParams } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import CategoryDelete from '../../../components/categoryDelete'
-import UpdateModal from '../../../components/updateModal'
 import CategoryUpdate from '../../../components/categoryUpdate'
 
 const page = () => {
     const {id}:any=useParams()
     const [categorydata,setcategoryData]=useState<any>({})
-    console.log(id)
     const fetchCategory=async()=>{
         const response=await getcategorybyidAPI(id)
          console.log(response?.data)

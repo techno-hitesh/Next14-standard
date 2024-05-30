@@ -88,7 +88,7 @@ const ProductDesp = ({ params }: { params: { id: any | string } }) => {
       {productData ?
 
         <div className="product-card">
-                <img src={productData.productImg}
+                <img src={productData.productImg[0]}
                         alt="Product" className="h-72 w-72 object-cover rounded-t-xl" />
                 <div className="px-4 py-3 w-72">
                     {/* <span className="text-gray-400 mr-3 uppercase text-xs">Brand</span> */}
