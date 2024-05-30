@@ -1,0 +1,6 @@
+.grid-container {
+    display: flex;
+    flex-wrap: wrap; /* Allow items to wrap onto multiple lines */
+    justify-content: center; /* Center items horizontally */
+    gap: 20px; /* Add gap between items */
+  }

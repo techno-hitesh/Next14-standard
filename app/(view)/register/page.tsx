@@ -139,10 +139,16 @@ const RegisterPage = () => {
   return (
     <>
     
-    <div className="container mx-auto">
+    <div className="">
        <ToastContainer autoClose={2000} />
+       <div className="bg-[#53c28b]  relative p-6 flex justify-center items-center text-white w-full h-full">
+         <Link href={'/urbancart'}>
+         <h1 className="font-bold text-2xl">UrbanCart</h1>
+         </Link>
+          
+      </div>
     <form
-    className='flex flex-col justify-center items-center gap-5 max-w-lg  shadow-2xl shadow-gray-900 h-screen hover:shadow-gray-300  bg-white mx-auto rounded-md text-gray-900 mt-4' onSubmit={handleSubmit} >
+    className='flex flex-col py-10 justify-center items-center gap-5 max-w-lg  shadow-2xl shadow-gray-900 h-[80%] hover:shadow-gray-300  bg-white mx-auto rounded-md text-gray-900 mt-4' onSubmit={handleSubmit} >
 
     <h3 className='text-2xl '>Create New Account! </h3>
     <label className="block">

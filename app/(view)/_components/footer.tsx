@@ -178,7 +178,7 @@ const Footer = () => {
                     </div>
                 </div>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 min-[890px]:grid-cols-3 lg:grid-cols-3 gap-4 xl:gap-8 w-full max-w-sm mx-auto sm:max-w-3xl min-[890px]:max-w-full">
+            <div className="grid grid-cols-1 sm:grid-cols-2 min-[890px]:grid-cols-2 lg:grid-cols-2 gap-4 xl:gap-8 w-full max-w-sm mx-auto sm:max-w-3xl min-[890px]:max-w-full">
                 <div className="w-full  text-left">
                     <h4 className="text-xl text-gray-900 font-medium mb-7">#</h4>
                     <ul className=" transition-all duration-500">
@@ -193,18 +193,7 @@ const Footer = () => {
                     </ul>
                 </div>
 
-                <div className="w-full  text-left">
-                    <h4 className="text-xl text-gray-900 font-medium mb-7">Companies</h4>
-                    <ul className=" transition-all duration-500">
-                        <li className="mb-6"><a href="javascript:;" className="text-gray-600 hover:text-gray-900">Mytnra</a></li>
-                        <li className="mb-6"><a href="javascript:;" className=" text-gray-600 hover:text-gray-900">Flipkart</a></li>
-                        <li className="mb-6"><a href="javascript:;"
-                                className=" text-gray-600 hover:text-gray-900">Urbanic</a></li>
-                        <li className="mb-6"><a href="javascript:;"
-                                className=" text-gray-600 hover:text-gray-900">Amazon</a></li>
-                        <li className=""><a href="javascript:;" className=" text-gray-600 hover:text-gray-900">Guide</a></li>
-                    </ul>
-                </div>
+             
 
                 <div className="w-full  text-left">
                     <h4 className="text-xl text-gray-900 font-medium mb-7">Help</h4>

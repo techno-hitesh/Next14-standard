@@ -23,7 +23,7 @@ return (
     <CookiesProvider>
     <html lang="en">
       <body className={inter.className} suppressHydrationWarning={true}>
-       <div className="lg:container w-screen mx-auto"> 
+       <div className="w-screen "> 
         {children}
         </div>
       </body>
