@@ -5,7 +5,7 @@ import { getproductBySearch } from '@/app/services/apis/admin/products'
 import { useParams } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
-const page = () => {
+const Page = () => {
   const {id}=useParams()
   const [usrProducts,setsearchProdcuts]=useState([])
   const fetchdata=async()=>{
@@ -32,4 +32,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

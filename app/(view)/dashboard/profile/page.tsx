@@ -7,7 +7,7 @@ import Link from 'next/link'
 import auth from '@/app/configs/auth'
 import Resetpass from '../changePassword/page'
 
-const userProfile = () => {
+const UserProfile = () => {
 
   const [userVal, setUserVal] = useState<UserDataType|any>()
   const [loading,setLoading] = useState<boolean>(false)
@@ -92,4 +92,4 @@ const userProfile = () => {
   )
 }
 
-export default userProfile
+export default UserProfile

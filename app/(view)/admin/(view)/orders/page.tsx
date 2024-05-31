@@ -7,7 +7,7 @@ import { FaEye } from 'react-icons/fa';
 import { AllPaymentsAdminApi } from '@/app/services/apis/admin/charts';
 
 
-const orders = () => {
+const Orders = () => {
 
   const [products,setproducts]=useState([])
   const [pending,setpending]=useState(true)
@@ -117,6 +117,6 @@ const orders = () => {
   )
 }
 
-export default orders
+export default Orders
 
 

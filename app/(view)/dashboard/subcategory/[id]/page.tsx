@@ -4,7 +4,7 @@ import { getSubCategoryByIdAPI } from '@/app/services/apis/user/categories'
 import Link from 'next/link'
 import { dashboardLinks } from '@/app/configs/authLinks'
 
-const subCategory = ({ params }: { params: { id: any | string } } ) => {
+const SubCategory = ({ params }: { params: { id: any | string } } ) => {
     const [subCatData, setSubCatData] = useState<any>("");
 
     const getData = async()=>{
@@ -30,7 +30,7 @@ const subCategory = ({ params }: { params: { id: any | string } } ) => {
     
         {subCatData.length > 0 && subCatData ?         
             subCatData.map((SubValue : any, i:number)=>(
-          <article className="relative mt-4">
+          <article key={i} className="relative mt-4">
     
             <Link href={dashboardLinks.subCatProductLinks+SubValue._id}>
             <div className="aspect-square overflow-hidden">
@@ -78,4 +78,4 @@ const subCategory = ({ params }: { params: { id: any | string } } ) => {
   )
 }
 
-export default subCategory
+export default SubCategory

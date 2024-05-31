@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react'
 import SubCategoryDelete from '../../../components/subcategoryDelete'
 import SubCategoryUpdate from '../../../components/subcategoryUpdate'
 
-const page = () => {
+const Page = () => {
     const {id}:any=useParams()
     const [subcategorydata,setcategoryData]=useState<any>({})
     console.log(id)
@@ -69,4 +69,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

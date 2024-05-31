@@ -13,12 +13,12 @@ import { AddIcon } from "@/public/svg/add";
 import { delAddressByIdAPI } from "@/app/services/apis/address";
 import authConfig from '@/app/configs/auth';
 
-export default function placeOrder(checkBoxId:{checkBoxId:string}) {
+export default function PlaceOrder(checkBoxId:{checkBoxId:string}) {
   // console.log("chekced id ---",checkBoxId.checkBoxId)
 
   const publishableKey:string|any =  process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY;
 
-  const userDataName = useSelector((data:any)=> data.users);
+  const UserDataName = useSelector((data:any)=> data.users);
 
   const [getAllData, setGetAllData] = useState<any|[]>([])
   const [subTotal, setSubTotal]     = useState("")
@@ -29,13 +29,13 @@ export default function placeOrder(checkBoxId:{checkBoxId:string}) {
 
   //get user from redux
   const getUserData = ()=>{
-    if (userDataName !="" && typeof userDataName?.users?.data === 'string') {
-        const decodedData:any = jwtDecodeData(userDataName?.users?.data);
+    if (UserDataName !="" && typeof UserDataName?.users?.data === 'string') {
+        const decodedData:any = jwtDecodeData(UserDataName?.users?.data);
         setUserName(decodedData?.fullName)
     }
 
-    if (userDataName !="" && typeof userDataName?.cartId?.data === 'string') {
-      const decodedData:any = jwtDecodeData(userDataName?.cartId?.data);
+    if (UserDataName !="" && typeof UserDataName?.cartId?.data === 'string') {
+      const decodedData:any = jwtDecodeData(UserDataName?.cartId?.data);
       setUserCartId(decodedData)
     }
 

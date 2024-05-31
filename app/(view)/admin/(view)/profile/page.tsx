@@ -6,7 +6,7 @@ import back from "@/public/images/pro.webp"
 import { UserRoleAPI, loginUserAPI } from '@/app/services/apis/user';
 import { UserDataType } from '@/app/types/userTypes';
 import UpdateProfile from '../../components/updateProfile';
-const page = () => {
+const Page = () => {
     const [user,setuser]=useState<UserDataType|any>()
     const [pending,setpending]=useState(true)
      const fetchadmin=async()=>{
@@ -127,4 +127,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

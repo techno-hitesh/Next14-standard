@@ -4,7 +4,7 @@ import { getSubCateProductByIdAPI } from '@/app/services/apis/user/categories'
 import Link from 'next/link'
 import { dashboardLinks } from '@/app/configs/authLinks'
 
-const subCateProducts = ({ params }: { params: { id: any | string } } ) => {
+const SubCateProducts = ({ params }: { params: { id: any | string } } ) => {
     const [subCatProduct, setSubCatProduct] = useState<any>("");
 
     const getData = async()=>{
@@ -99,4 +99,4 @@ const subCateProducts = ({ params }: { params: { id: any | string } } ) => {
   )
 }
 
-export default subCateProducts
+export default SubCateProducts
