@@ -1,3 +1,4 @@
+"use client";
 import { GetUsersAdminAPI } from '@/app/services/apis/admin/products'
 import React, { useEffect, useState} from 'react'
 import Image from 'next/image'

@@ -5,8 +5,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 import 'swiper/css';
 import Link from "next/link";
-import { dashboardLinks, urbancartLinks } from "@/app/configs/authLinks";
-import { Getallcategories } from "@/app/services/apis/admin/products";
+import { urbancartLinks } from "@/app/configs/authLinks";
 import { getAllCategoryAPI } from "@/app/services/apis/user/categories";
 
 

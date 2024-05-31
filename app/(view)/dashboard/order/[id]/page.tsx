@@ -5,7 +5,7 @@ import Images from "@/public/images/t1.jpg";
 import Image from 'next/image';
 import FileDownloader from '../components/pdf';
 
-const orderByIdView = ({ params }: { params: { id: any | string } }) => {
+const OrderByIdView = ({ params }: { params: { id: any | string } }) => {
     console.log("params sdfsdf-- ",params.id)    
 
     const [orderVal,setOrderVal] = useState<[]|any>("")
@@ -43,7 +43,7 @@ const orderByIdView = ({ params }: { params: { id: any | string } }) => {
   {orderVal.totalProduct.length > 0 ? 
     orderVal?.totalProduct.map((data:any, i:number) => (
 
-      <div className="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"> 
+      <div key={i} className="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"> 
             <img src={data?.productImageUrl}
                     alt="Product" className="h-80 w-72 object-cover rounded-t-xl" />
             <div className="px-4 py-3 w-72">
@@ -96,4 +96,4 @@ const orderByIdView = ({ params }: { params: { id: any | string } }) => {
   )
 }
 
-export default orderByIdView
+export default OrderByIdView

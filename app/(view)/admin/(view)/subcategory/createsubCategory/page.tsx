@@ -1,6 +1,6 @@
 "use client"
 import React, { useEffect, useState } from 'react'
-import { subcategoryschema } from '../../schema/page'
+import { subcategoryschema } from '../../schema/schema'
 import { Getallcategories, createsubcategoryAPI } from '@/app/services/apis/admin/products'
 import { ToastContainer, toast } from 'react-toastify'
 import { useFormik } from 'formik'

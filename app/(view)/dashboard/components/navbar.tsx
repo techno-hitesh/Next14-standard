@@ -15,7 +15,7 @@ import auth from "@/app/configs/auth";
 import { jwtDecodeData } from "@/app/helpers";
 import { NextRequest } from "next/server";
 import Search from "../../admin/components/search";
-import Tag from "../../_components/tag";
+// import Tag from "../../_components/tag";
 import HoverDropdown from "../../_components/hoverDropdown";
 
 const Navbar = () => {

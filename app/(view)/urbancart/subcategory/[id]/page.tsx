@@ -2,7 +2,7 @@
 import React,{useEffect,useState} from 'react'
 import { getSubCategoryByIdAPI } from '@/app/services/apis/user/categories'
 import Link from 'next/link'
-import { dashboardLinks } from '@/app/configs/authLinks'
+import { dashboardLinks, urbancartLinks } from '@/app/configs/authLinks'
 
 const SubCategory = ({ params }: { params: { id: any | string } } ) => {
     const [subCatData, setSubCatData] = useState<any>("");
@@ -32,7 +32,7 @@ const SubCategory = ({ params }: { params: { id: any | string } } ) => {
             subCatData.map((SubValue : any, i:number)=>(
           <article key={i} className="relative mt-4">
     
-            <Link href={dashboardLinks.subCatProductLinks+SubValue._id}>
+            <Link href={urbancartLinks.subCatProductLinks+SubValue._id}>
             <div className="aspect-square overflow-hidden">
               <img className="group-hover:scale-125 h-full w-full object-cover transition-all duration-300" src={SubValue.subCategoryImg ? SubValue.subCategoryImg :""} alt="" />
             </div>

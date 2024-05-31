@@ -117,7 +117,7 @@ const ResetPass = (props:{formValue:{email:string}}) => {
             <h1 className="mb-1 text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
               Reset your password?
             </h1>
-            <p className="font-light text-gray-500 dark:text-gray-400">Don't fret! Just type in your OTP and your new password!</p>
+            <p className="font-light text-gray-500 dark:text-gray-400">Do not fret, Just type in your OTP and your new password!</p>
 
             <form className="mt-4 space-y-4 lg:mt-5 md:space-y-5"  onSubmit={handleSubmit}>
               <div>

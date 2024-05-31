@@ -4,7 +4,7 @@ import { useParams } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import moment from 'moment-timezone';
 
-const orderById = () => {
+const OrderById = () => {
     const {id}:any=useParams()
     const [pending,setpending]=useState(true)
     const [orderdetail,setorderdetail]=useState<any>([])
@@ -133,4 +133,4 @@ const dateTimeFormat = formatDateAndTime.split(" ");
   )
 }
 
-export default orderById
+export default OrderById

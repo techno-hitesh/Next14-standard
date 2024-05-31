@@ -1,9 +1,9 @@
 "use client"
 import React,{useState} from 'react'
 
-const nextForm = () => {
+const NextForm = () => {
 
-    const [formVal,setFormVal] = useState({})
+    const [formVal,setFormVal] = useState<any>({})
 
     const handleChange = (e:any) =>{    
         const {name,value} = e.target;
@@ -100,4 +100,4 @@ const nextForm = () => {
   )
 }
 
-export default nextForm
+export default NextForm

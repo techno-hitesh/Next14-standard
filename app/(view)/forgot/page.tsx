@@ -8,7 +8,7 @@ import { UserForgotType } from "@/app/types/userTypes";
 import { forgotPasswordAPI } from "@/app/services/apis/user";
 import ResetPass from "./reset";
 
-const forgotPass = () => {
+const ForgotPass = () => {
 
   const [formValue, setFormValue] = useState<UserForgotType>({ email: ""})
   const [otpSend , setOtpSend] = useState(false)
@@ -67,7 +67,7 @@ const forgotPass = () => {
             <h1 className="mb-1 text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
               Forgot your password?
             </h1>
-            <p className="font-light text-gray-500 dark:text-gray-400">Don't fret! Just type in your email and we will send you a code to reset your password!</p>
+            <p className="font-light text-gray-500 dark:text-gray-400">Do not fret,Just type in your email and we will send you a code to reset your password!</p>
             <form className="mt-4 space-y-4 lg:mt-5 md:space-y-5" onSubmit={handleForgot}>
               <div>
                 <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
@@ -90,4 +90,4 @@ const forgotPass = () => {
 )
 }
 
-export default forgotPass
+export default ForgotPass

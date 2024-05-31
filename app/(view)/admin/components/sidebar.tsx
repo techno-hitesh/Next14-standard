@@ -22,7 +22,7 @@ const Sidebar = () => {
     localStorage.removeItem(auth.storageRole);
     cookies.remove(auth.storageTokenKeyName);
     cookies.remove(auth.storageRole);
-    router.replace("/login");
+    router.replace("/urbancart");
   };
   const getadmin = async () => {
     const response = await UserRoleAPI();

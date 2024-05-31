@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import { createCategoryAPI } from '@/app/services/apis/admin/products'
 import { ToastContainer, toast } from 'react-toastify'
-import { categoryschema } from '../../schema/page'
+import { categoryschema } from '../../schema/schema'
 import { useFormik } from 'formik'
 import 'react-toastify/dist/ReactToastify.css';
 import Image from 'next/image'

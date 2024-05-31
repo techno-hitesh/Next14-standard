@@ -1,0 +1,21 @@
+.swiper-slide.swiper-slide-active > .slide\:w-full {
+  width: 100%;
+}
+
+.swiper-button-prev:after,
+.swiper-rtl .swiper-button-next:after {
+  content: "" !important;
+}
+.swiper-wrapper {
+  height: max-content !important;
+}
+
+.swiper-button-next:after,
+.swiper-rtl .swiper-button-prev:after {
+  content: "" !important;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  position: relative !important;
+}

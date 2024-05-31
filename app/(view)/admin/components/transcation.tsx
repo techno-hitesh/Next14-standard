@@ -1,4 +1,4 @@
-
+"use client";
 import { AllPaymentsAdminApi } from '@/app/services/apis/admin/charts'
 import React, { useEffect, useState } from 'react'
 import Image from 'next/image'

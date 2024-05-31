@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react'
 import CategoryDelete from '../../../components/categoryDelete'
 import CategoryUpdate from '../../../components/categoryUpdate'
 
-const page = () => {
+const Page = () => {
     const {id}:any=useParams()
     const [categorydata,setcategoryData]=useState<any>({})
     const fetchCategory=async()=>{
@@ -32,6 +32,7 @@ const page = () => {
     <div className="flex flex-col md:flex-row -mx-4">
         <div className="md:flex-1 px-4">
             <div className="h-[460px] rounded-lg bg-gray-300 dark:bg-gray-700 mb-4">
+                
                 <img className="w-full h-full object-cover" src={categorydata?.categoryImg} alt="Product Image"/>
             </div>
             <div className="flex -mx-2 mb-4">
@@ -68,4 +69,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

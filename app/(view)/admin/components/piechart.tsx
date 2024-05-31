@@ -1,3 +1,4 @@
+"use client";
 import React, {useRef,useEffect, useState } from 'react'
 import ApexCharts from 'apexcharts'
 import { AllPaymentsAdminApi } from '@/app/services/apis/admin/charts'

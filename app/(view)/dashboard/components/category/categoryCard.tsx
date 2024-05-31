@@ -54,10 +54,10 @@ const CategoryCard = () => {
           <img draggable="false" className="image-image undefined " src="https://assets.myntassets.com/w_980,c_limit,fl_progressive,dpr_2.0/assets/images/2024/5/28/0efc48ea-42c8-496b-82d5-863e9271fc101716906763403-OMG.jpg" />
           </div>
           {sub.map((data: any, index: any) => (
-            <div className=" flex mt-10  flex-col">
-              <div key={index}>
+            <div key={index} className=" flex mt-10  flex-col">
+             
                 <Subcategory key={index} data={data} />
-              </div>
+              
 
             </div>
           ))}

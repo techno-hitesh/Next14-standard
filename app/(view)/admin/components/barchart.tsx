@@ -1,6 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react'
+"use client";
+import React, { useEffect, useRef, useState } from 'react';
 import ApexCharts from 'apexcharts';
 import { RevenueChartAPI } from '@/app/services/apis/admin/charts';
+
 
 const Barchart = () => {
   const [data,setdata]=useState<any>([])

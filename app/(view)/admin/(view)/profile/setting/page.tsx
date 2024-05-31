@@ -3,14 +3,14 @@ import React, { useEffect } from 'react'
 import Image from 'next/image';
 import back from "@/public/images/ppbg.jpg"
 import { useFormik } from 'formik';
-import { resetpasswordSchema } from '../../schema/page';
+import { resetpasswordSchema } from '../../schema/schema';
 import { UserRoleAPI } from '@/app/services/apis/user';
 import { ChangePasswordAdminAp } from '@/app/services/apis/admin/products';
 import { ToastContainer, toast } from 'react-toastify';
 
 
 
-const resetpassword =() => {
+const Resetpassword =() => {
     const getuser=async()=>{
         const response=await UserRoleAPI()
         console.log(response?.userData)
@@ -42,7 +42,7 @@ const resetpassword =() => {
      <div>
         <h1 className='font-bold text-2xl'>Reset Password :</h1>
         <p className="text-gray-700 mb-4">
-        We're here to help you reset your password and get you back on track. Please follow the instructions
+        We are here to help you reset your password and get you back on track. Please follow the instructions
           below to reset your password securely.
         </p>
         <div className="text-gray-700 mb-4">
@@ -92,4 +92,4 @@ const resetpassword =() => {
   )
 }
 
-export default resetpassword
+export default Resetpassword

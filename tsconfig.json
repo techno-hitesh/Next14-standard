@@ -1,6 +1,10 @@
 {
   "compilerOptions": {
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -11,6 +15,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
+    "outDir": "./dist",
     "incremental": true,
     "plugins": [
       {
@@ -18,9 +23,24 @@
       }
     ],
     "paths": {
-      "@/*": ["./*"]
+      "@/*": [
+        "./*"
+      ]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/store/reduxProvider.tsx", "app/store/slices/userSlicer.js", "app/store/rootReducer.js", "app/(view)/admin/components/piechart.tsx", "app/(view)/admin/context/UserContext.js"],
-  "exclude": ["node_modules"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "app/store/reduxProvider.tsx",
+    "app/store/slices/userSlicer.js",
+    "app/store/rootReducer.js",
+    "app/(view)/admin/components/piechart.tsx",
+    "app/(view)/admin/context/UserContext.js",
+    "dist/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }
