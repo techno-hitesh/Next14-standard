@@ -9,7 +9,8 @@ export const apiRoutes = {
     wishlistUser:'/user/add-to-wishlist',
     getuserWishlist:'/user/get-user-wishlist',
     deleteWishlist:'/user/remove-wishlist/',
-    getAllReview:'/user/get-all-reviews/'
+    getAllReview:'/user/get-all-reviews/',
+    addReview:'/user/submit-review/'
 }
 
 export const adminRoutes = {

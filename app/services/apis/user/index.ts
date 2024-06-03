@@ -4,15 +4,31 @@ import { apiRoutes,adminRoutes ,cartRoutes,payments} from '../../ApiRoutes';
 import { TokenType,UserType,RegisterType,addToCartType,updateCartItemType,UserForgotType } from '@/app/types/userTypes';
 import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.css';
+import auth from '@/app/configs/auth';
 
-
+const base=process.env.NEXT_PUBLIC_API_BASE_URL
 const config = {
   baseURL: `${process.env.NEXT_PUBLIC_API_BASE_URL}`,
   headers: {
     'Content-Type': 'application/json'
   }
 };
-
+export const reviewADdAPi=async(reviewData:any)=>{
+  try{
+    const token=localStorage.getItem(auth.storageTokenKeyName)
+    const response=await axios.post(base+apiRoutes.addReview,
+     reviewData,{
+      headers:{
+        'Authorization':`Bearer ${token}`,
+        'Content-Type':'application/json'
+      }
+     }
+    )
+  return response?.data
+  }catch (err:any) {
+    toast.error(err?.response?.data?.message || err?.message)
+  }
+}
 export const LogoutUserAPI=async()=>{
   try{
     const response=await axiosInstance.post(apiRoutes.logoutUser)

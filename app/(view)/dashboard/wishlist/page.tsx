@@ -49,12 +49,12 @@ const RemoveWishlist=async(id:any)=>{
             <div className="p-4">
               <h2 className="mb-2 text-lg font-medium dark:text-white text-gray-900">{wishlistItem?.productName}</h2>
               <p className="mb-2 text-base dark:text-gray-300 text-gray-700">{wishlistItem?.productId?.productDescription}</p>
-              <div className="flex items-center">
+              <div className="flex justify-between items-center">
                 <p className="mr-2 text-lg font-semibold text-gray-900 dark:text-white">₹{wishlistItem?.productId?.productPrice}</p>
-                <p className="text-base  font-medium text-gray-500 line-through dark:text-gray-300">{wishlistItem?.productId?.productPrice - 20}</p>
-                <p className="ml-auto text-base font-medium text-green-500">20% off</p>
+                <button onClick={()=>RemoveWishlist(wishlistItem?._id)} className='flex justify-center items-center text-white bg-red-600 px-2 py-1 rounded-md'>Remove</button>
+
               </div>
-              <button onClick={()=>RemoveWishlist(wishlistItem?._id)} className='flex justify-center items-center text-white bg-red-600 px-2 py-1 rounded-md'>Remove</button>
+            
             </div>
           </div>
         ))

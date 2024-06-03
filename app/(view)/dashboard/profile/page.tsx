@@ -4,8 +4,6 @@ import { UserRoleAPI } from '@/app/services/apis/user'
 import LoadingSpiner from "../components/loading"
 import { UserDataType } from '@/app/types/userTypes'
 import Link from 'next/link'
-import auth from '@/app/configs/auth'
-import Resetpass from '../changePassword/page'
 
 const UserProfile = () => {
 
@@ -32,6 +30,8 @@ const UserProfile = () => {
 
       <div className="bg-white overflow-hidden shadow rounded-lg border">
         <div className="px-4 py-5 sm:px-6 flex justify-between">
+          <div className='flex items-center gap-5'>
+          <img src={userVal?.profileImg} className='w-10 h-10 rounded-full' alt="" />
           <div>
           <h3 className="text-lg leading-6 font-medium text-gray-900">
             User Profile
@@ -39,6 +39,7 @@ const UserProfile = () => {
           <p className="mt-1 max-w-2xl text-sm text-gray-500">
             This is some information about the user.
           </p>
+          </div>
           </div>
           <Link href={'/dashboard/profile/update'}>
           <button  className='bg-blue-800 rounded-md text-white px-3 py-2'>Update Profile</button>
@@ -67,7 +68,7 @@ const UserProfile = () => {
                 Phone number
               </dt>
               <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                (123) 456-7890
+                {userVal?.mobileNumber}
               </dd>
             </div>
             <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -75,8 +76,7 @@ const UserProfile = () => {
                 Address
               </dt>
               <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                123 Main St<br />
-                  Anytown, USA 12345
+              {userVal?.address}
               </dd>
             </div>
           </dl>

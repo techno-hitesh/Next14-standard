@@ -10,12 +10,15 @@ import { usePathname } from 'next/navigation'
 import { dashboardLinks } from '@/app/configs/authLinks'
 import Link from 'next/link'
 import { ToastContainer, toast } from 'react-toastify'
+import Rating from '@mui/material/Rating';
+import Box from '@mui/material/Box';
+import StarIcon from '@mui/icons-material/Star';
 
 const ProductDesp = ({ params }: { params: { id: any | string } }) => {
 
   const router = useRouter();
   const pathname = usePathname()
-
+  const [value, setValue] = useState()
   const [productData, setProductData] = useState<any>()
   const [selectedImage, setSelectedImage] = useState<any>([]);
   const [itemGet, setItemGet] = useState(false)
@@ -201,21 +204,13 @@ const ProductDesp = ({ params }: { params: { id: any | string } }) => {
       <span className="ml-2 text-green-600 text-xs">Verified Buyer</span>
     </p>
     <div className="flex items-center mt-1">
-    {[1, 2, 3, 4, 5].map((starIndex) => (
-          <svg key={starIndex} className={`w-4 h-4 fill-current text-${data?.rating >= starIndex ? 'yellow' : 'gray'}-600`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-            <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
-          </svg>
-        ))}
+    <Rating name="half-rating-read" defaultValue={data?.rating} precision={0.5} readOnly />
     </div>
     <div className="flex items-center mt-4 text-gray-600">
       <div className="flex items-center">
         <span className="text-sm">Rating</span>
         <div className="flex items-center ml-2">
-        {[1, 2, 3, 4, 5].map((starIndex) => (
-          <svg key={starIndex} className={`w-4 h-4 fill-current text-${data?.rating >= starIndex ? 'yellow' : 'gray'}-600`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-            <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
-          </svg>
-        ))}
+        <Rating name="half-rating-read" defaultValue={data?.rating} precision={0.5} readOnly />
         </div>
       </div>
      
