@@ -280,7 +280,7 @@ const CheckoutPage = () => {
         {getAllData && getAllData.length > 0 ? getAllData.map((data: any) => (
           <li className="flex justify-between" key={data?.productDetails?.productId}>
             <div className="inline-flex">
-              <img src={data?.productDetails.productImage} alt="" className="max-h-16" />
+              <img src={data?.productDetails.productImage[0]} alt="" className="max-h-16" />
               <div className="ml-3">
                 <p className="text-base font-semibold text-white">{data?.productDetails?.productName}</p>
                 <p className="text-sm font-medium text-white text-opacity-80"> Qty {data?.quantity}</p>

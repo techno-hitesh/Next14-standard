@@ -4,6 +4,7 @@ import { getPaymentsById } from '@/app/services/apis/payment'
 import Images from "@/public/images/t1.jpg";
 import Image from 'next/image';
 import FileDownloader from '../components/pdf';
+import Link from 'next/link';
 
 const OrderByIdView = ({ params }: { params: { id: any | string } }) => {
     console.log("params sdfsdf-- ",params.id)    
@@ -44,8 +45,10 @@ const OrderByIdView = ({ params }: { params: { id: any | string } }) => {
     orderVal?.totalProduct.map((data:any, i:number) => (
 
       <div key={i} className="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"> 
+            <Link href={`/dashboard/products/${data?.productId}`}>
             <img src={data?.productImageUrl}
                     alt="Product" className="h-80 w-72 object-cover rounded-t-xl" />
+            </Link>
             <div className="px-4 py-3 w-72">
                 <span className="text-gray-400 mr-3 uppercase text-xs">Brand</span>
                 <p className="text-lg font-bold text-black truncate block capitalize">  {data?.productName}</p>
@@ -58,6 +61,10 @@ const OrderByIdView = ({ params }: { params: { id: any | string } }) => {
                      Qty {data?.productQuantity}
                      </div>
                 </div>
+                <Link href={`/dashboard/review/${data?.productId}`}>
+                
+                     <button className='text-md font-semibold bg-gray-200  rounded-md px-2 py-1 text-black'>Add Review</button>
+                </Link>
             </div>       
     </div>
 

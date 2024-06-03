@@ -126,10 +126,10 @@ const Dropdown = () => {
                             <li>
                                 <span
                                     
-                                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                    className="block cursor-pointer px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                     onClick={handleSubmit}
                                 >
-                                    Singout 
+                                    Logout
                                 </span>
                             </li>
                         </ul>

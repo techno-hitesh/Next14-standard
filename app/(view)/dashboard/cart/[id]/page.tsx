@@ -126,11 +126,13 @@ const CarTByID = ({ params }: { params: { id: any | string } }) => {
 
 
             <div key={data?.productDetails?.productId}>
+                
                 <li className="flex py-6" >
+                <Link href={`/dashboard/products/${data?.productDetails?.productId}`}>
                     <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-                        <img src={data?.productDetails.productImage} alt="Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt." className="h-full w-full object-cover object-center" />
+                        <img src={data?.productDetails.productImage[0]} alt="Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt." className="h-full w-full object-cover object-center" />
                     </div>
-
+                    </Link>
                     <div className="ml-4 flex flex-1 flex-col">
                         <div>
                             <div className="flex justify-between text-base font-medium text-gray-900">
@@ -168,7 +170,8 @@ const CarTByID = ({ params }: { params: { id: any | string } }) => {
                                                     </div>
 
                                                 </div>
-                                            </li>
+                 </li>
+               
                                         </div>
 
 
@@ -189,7 +192,7 @@ const CarTByID = ({ params }: { params: { id: any | string } }) => {
                     {/* <PaymentElement /> */}
                 <div className="mt-6">
                     
-                    <button className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700" onClick={handleCheckoutById}>Checkout</button>
+                    <button className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 w-full px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700" onClick={handleCheckoutById}>Checkout</button>
                 </div>
             </div>
 
@@ -197,7 +200,7 @@ const CarTByID = ({ params }: { params: { id: any | string } }) => {
             <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                 <p>
                     or
-                <Link href="/dashboard/products" className="font-medium text-indigo-600 hover:text-indigo-500">
+                <Link href="/dashboard" className="font-medium text-indigo-600 hover:text-indigo-500">
                   Continue Shopping
                   <span aria-hidden="true"> &rarr;</span>
                 </Link>

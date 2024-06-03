@@ -88,7 +88,11 @@ const Navbar = () => {
               ))
             : ""}
         </ul>
-        
+        <Link href={'/dashboard/wishlist'}>
+          <button className="my-icon-unfilled swym-button swym-add-to-wishlist swym-iconbtnlink swym-heart swym-added swym-loaded">
+          <img src="https://nrercorp.com/wp-content/uploads/2016/10/Wishlist-Icon.png" className="h-[30px]  w-[30px]"/>
+          </button>
+        </Link>
         <Link href={`${links}/cart`}>
           <div className="relative py-2">
             <div className="t-0 absolute left-6">

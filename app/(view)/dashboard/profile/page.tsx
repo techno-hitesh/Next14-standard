@@ -4,8 +4,6 @@ import { UserRoleAPI } from '@/app/services/apis/user'
 import LoadingSpiner from "../components/loading"
 import { UserDataType } from '@/app/types/userTypes'
 import Link from 'next/link'
-import auth from '@/app/configs/auth'
-import Resetpass from '../changePassword/page'
 
 const UserProfile = () => {
 
@@ -32,6 +30,8 @@ const UserProfile = () => {
 
       <div className="bg-white overflow-hidden shadow rounded-lg border">
         <div className="px-4 py-5 sm:px-6 flex justify-between">
+          <div className='flex items-center gap-5'>
+          <img src={userVal?.profileImg} className='w-10 h-10 rounded-full' alt="" />
           <div>
           <h3 className="text-lg leading-6 font-medium text-gray-900">
             User Profile
@@ -40,8 +40,10 @@ const UserProfile = () => {
             This is some information about the user.
           </p>
           </div>
-          
-          <button className='bg-blue-800 rounded-md text-white px-2 py-1'>Update Profile</button>
+          </div>
+          <Link href={'/dashboard/profile/update'}>
+          <button  className='bg-blue-800 rounded-md text-white px-3 py-2'>Update Profile</button>
+          </Link>
         </div>
         <div className="border-t border-gray-200 px-4 py-5 sm:p-0">
           <dl className="sm:divide-y sm:divide-gray-200">
@@ -50,7 +52,7 @@ const UserProfile = () => {
                 Full name
               </dt>
               <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                {userVal?.fullName}
+                {userVal?.fullName[0].toUpperCase()+userVal?.fullName.slice(1)}
               </dd>
             </div>
             <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -66,7 +68,7 @@ const UserProfile = () => {
                 Phone number
               </dt>
               <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                (123) 456-7890
+                {userVal?.mobileNumber}
               </dd>
             </div>
             <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -74,20 +76,19 @@ const UserProfile = () => {
                 Address
               </dt>
               <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                123 Main St<br />
-                  Anytown, USA 12345
+              {userVal?.address}
               </dd>
             </div>
           </dl>
           
-          <Link href={'/dashboard/changePassword'}>
-            <button  className='px-3 my-2 py-1 bg-blue-500 rounded-md hover:bg-blue-700 cursor-pointer text-white'>Reset password</button>
-          </Link>
+        
 
         </div>
       </div>
       
-      : <LoadingSpiner />}
+      : <div className='w-[50px] h-[50px]'>
+        <LoadingSpiner />
+        </div>}
     </>
   )
 }
