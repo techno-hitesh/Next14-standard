@@ -5,7 +5,11 @@ export const apiRoutes = {
     registerUser:'/user/register',
     forgotUser:"/user/forget-password",
     resetPass:"/user/reset-password",
-    logoutUser:'/login/user-logout'
+    logoutUser:'/login/user-logout',
+    wishlistUser:'/user/add-to-wishlist',
+    getuserWishlist:'/user/get-user-wishlist',
+    deleteWishlist:'/user/remove-wishlist/',
+    getAllReview:'/user/get-all-reviews/'
 }
 
 export const adminRoutes = {

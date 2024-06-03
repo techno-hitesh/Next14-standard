@@ -21,6 +21,7 @@ export const LogoutUserAPI=async()=>{
     toast.error(err?.response?.data?.message || err?.message)
   }
 }
+
 export const loginUserAPI = async (params?: UserType|string) =>{
   try {
     const response = await axiosInstance.post(apiRoutes.userLogin, params)
@@ -177,3 +178,40 @@ export const middlewareRoleAPI = async (token:string | undefined) =>{
   }
 }
 
+export const AddtoWishlistAPI=async(id:any)=>{
+  try{
+    const response=await axiosInstance.post(apiRoutes.wishlistUser,id)
+    return response?.data
+  }catch (err:any) {
+    toast.error(err?.response?.data?.message || err?.message)
+    return err?.response?.data?.message || err?.message
+  }
+}
+export const getuserWishlistAPI=async()=>{
+  try{
+    const response=await axiosInstance.get(apiRoutes.getuserWishlist)
+    return response?.data
+  }catch (err:any) {
+    toast.error(err?.response?.data?.message || err?.message)
+    return err?.response?.data?.message || err?.message
+  }
+}
+
+export const  getAllReviwAPI=async(id:any)=>{
+  try{
+    const response=await axiosInstance.get(apiRoutes.getAllReview+id)
+    return response?.data
+  }catch (err:any) {
+    toast.error(err?.response?.data?.message || err?.message)
+    return err?.response?.data?.message || err?.message
+  }
+}
+export const DeleteWishListAPI=async(id:any)=>{
+  try{
+    const response=await axiosInstance.delete(apiRoutes.deleteWishlist+id)
+    return response?.data
+  }catch (err:any) {
+    toast.error(err?.response?.data?.message || err?.message)
+    return err?.response?.data?.message || err?.message
+  }
+}

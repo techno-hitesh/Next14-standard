@@ -39,7 +39,7 @@
     "app/(view)/admin/components/piechart.tsx",
     "app/(view)/admin/context/UserContext.js",
     "dist/types/**/*.ts"
-  ],
+, "app/(view)/dashboard/review/id"  ],
   "exclude": [
     "node_modules"
   ]

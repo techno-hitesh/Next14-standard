@@ -22,10 +22,6 @@ const SubCategory = ({ params }: { params: { id: any | string } } ) => {
     <>
     <section className="bg-white py-12 text-gray-700 sm:py-16 lg:py-20">
       <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-md text-center">
-          <h2 className="font-serif text-2xl font-bold sm:text-3xl">Our featured Aroma Range</h2>
-          <p className="mt-4 text-base text-gray-700">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Purus faucibus massa dignissim tempus.</p>
-        </div>
         <div className="mt-10 grid grid-cols-2 gap-6 lg:mt-16 lg:grid-cols-4 lg:gap-4">
     
         {subCatData.length > 0 && subCatData ?         

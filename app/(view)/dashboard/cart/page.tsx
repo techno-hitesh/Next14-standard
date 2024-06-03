@@ -40,7 +40,7 @@ const UserCart = () => {
   }, [])
 
   const handleClose = () =>{
-      router.replace(dashboardLinks.productsLink)
+      router.replace(dashboardLinks.userHomeLink)
   }
 
   const handleDelCartItem = async(id:string) =>{
@@ -131,7 +131,6 @@ const UserCart = () => {
                 </button>
               </div>
             </div>
-
             <div className="mt-8">
               <div className="flow-root">
                 <ul role="list" className="-my-6 divide-y divide-gray-200">
@@ -140,10 +139,11 @@ const UserCart = () => {
                    
                     <div key={data?.productDetails?.productId}>
                     <li className="flex py-6" >
+                      <Link href={`/dashboard/products/${data?.productDetails?.productId}`}>
                       <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-                        <img src={data?.productDetails.productImage} alt="Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt." className="h-full w-full object-cover object-center" />
+                        <img src={data?.productDetails.productImage[0]} alt="Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt." className="h-full w-full object-cover object-center" />
                       </div>
-
+                      </Link>
                       <div className="ml-4 flex flex-1 flex-col">
                         <div>
                           <div className="flex justify-between text-base font-medium text-gray-900">
@@ -181,6 +181,7 @@ const UserCart = () => {
 
                       </div>
                     </li>
+                
                     </div>
 
             )):
@@ -213,7 +214,7 @@ const UserCart = () => {
           <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
               <p>
                 or
-                <Link href="/dashboard/products" className="font-medium text-indigo-600 hover:text-indigo-500">
+                <Link href="/dashboard" className="font-medium text-indigo-600 hover:text-indigo-500">
                   Continue Shopping
                   <span aria-hidden="true"> &rarr;</span>
                 </Link>

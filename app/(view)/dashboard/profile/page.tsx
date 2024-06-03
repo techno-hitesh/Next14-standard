@@ -40,8 +40,9 @@ const UserProfile = () => {
             This is some information about the user.
           </p>
           </div>
-          
-          <button className='bg-blue-800 rounded-md text-white px-2 py-1'>Update Profile</button>
+          <Link href={'/dashboard/profile/update'}>
+          <button  className='bg-blue-800 rounded-md text-white px-3 py-2'>Update Profile</button>
+          </Link>
         </div>
         <div className="border-t border-gray-200 px-4 py-5 sm:p-0">
           <dl className="sm:divide-y sm:divide-gray-200">
@@ -50,7 +51,7 @@ const UserProfile = () => {
                 Full name
               </dt>
               <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                {userVal?.fullName}
+                {userVal?.fullName[0].toUpperCase()+userVal?.fullName.slice(1)}
               </dd>
             </div>
             <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -80,14 +81,14 @@ const UserProfile = () => {
             </div>
           </dl>
           
-          <Link href={'/dashboard/changePassword'}>
-            <button  className='px-3 my-2 py-1 bg-blue-500 rounded-md hover:bg-blue-700 cursor-pointer text-white'>Reset password</button>
-          </Link>
+        
 
         </div>
       </div>
       
-      : <LoadingSpiner />}
+      : <div className='w-[50px] h-[50px]'>
+        <LoadingSpiner />
+        </div>}
     </>
   )
 }
