@@ -113,7 +113,7 @@ const Dropdown = () => {
                                 </button>
                             </li>
                           
-                            <li>
+                            {/* <li>
                                 
                                 <button
                                     type="submit"
@@ -122,7 +122,7 @@ const Dropdown = () => {
                                 >
                                     Invoice
                                 </button>
-                            </li>
+                            </li> */}
                             <li>
                                 <span
                                     

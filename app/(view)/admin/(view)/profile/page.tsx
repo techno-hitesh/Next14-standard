@@ -14,7 +14,7 @@ const Page = () => {
         if(response?.status===200){
             setuser(response?.userData)
             setpending(false)
-            console.log(response?.userData?.profileImg)
+           
 
         }
      }
@@ -94,8 +94,8 @@ const Page = () => {
                     <div className="w-full">
                         <dl className="text-gray-900 divide-y divide-gray-200 dark:text-white dark:divide-gray-700">
                             <div className="flex flex-col pb-3">
-                                <dt className="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Location</dt>
-                                <dd className="text-lg font-semibold">Ethiopia, Addis Ababa</dd>
+                                <dt className="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Address</dt>
+                                <dd className="text-lg font-semibold">{user.address}</dd>
                             </div>
 
                             <div className="flex flex-col pt-3">
