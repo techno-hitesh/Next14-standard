@@ -6,7 +6,7 @@ const SuccessForm = () => {
   const router = useRouter();
 
   setTimeout(()=>{
-    router.replace("/dashboard/products")
+    router.replace("/dashboard")
   },2000)
 
   return (
@@ -22,7 +22,7 @@ const SuccessForm = () => {
             <p className="text-gray-600 my-2">Thank you for completing your secure online payment.</p>
             <p> Have a great day!  </p>
             <div className="py-10 text-center">
-                <Link href="/dashboard/products" className="px-12 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3">
+                <Link href="/dashboard" className="px-12 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3">
                     GO BACK 
                </Link>
             </div>
