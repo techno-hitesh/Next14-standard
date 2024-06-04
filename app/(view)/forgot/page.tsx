@@ -1,93 +1,115 @@
 "use client"
 import Link from "next/link"
-import React,{useState} from 'react'
+import React, { useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import ImgLogo from "@/public/images/logo.svg"
 import { UserForgotType } from "@/app/types/userTypes";
 import { forgotPasswordAPI } from "@/app/services/apis/user";
 import ResetPass from "./reset";
+import "@/app/style/style.css"
+import { usePathname } from "next/navigation";
+import Image from "next/image";
+import siteIcon from "@/public/images/4.svg";
 
 const ForgotPass = () => {
 
-  const [formValue, setFormValue] = useState<UserForgotType>({ email: ""})
-  const [otpSend , setOtpSend] = useState(false)
-  const [loading , setLoading] = useState(false)
+  const [formValue, setFormValue] = useState<UserForgotType>({ email: "" })
+  const [otpSend, setOtpSend] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const pathname = usePathname();
 
 
-  const handleForgot = async(e: React.SyntheticEvent<HTMLFormElement>) =>{
+  const handleForgot = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     try {
       e.preventDefault()
 
       setLoading(true)
       const resp = await forgotPasswordAPI(formValue);
-      if(resp.status == 404 && resp.message =="Email not found"){
+      if (resp.status == 404 && resp.message == "Email not found") {
         toast.error(resp.message)
 
-      }else if(resp.status ==200){
+      } else if (resp.status == 200) {
 
         toast.success(resp.message)
-        setTimeout(()=>{
+        setTimeout(() => {
           setLoading(false)
           setOtpSend(true)
-          
-        },2000)
-      }    
+
+        }, 2000)
+      }
 
     } catch (error) {
-      console.log("handleForgot--",error);
+      console.log("handleForgot--", error);
     }
   }
 
-  const handleForm = (e: any) =>{
+  const handleForm = (e: any) => {
     try {
-        const { name, value } = e.target;
+      const { name, value } = e.target;
 
-        setFormValue((prevProps: any) => ({
-          ...prevProps,
-          [name]: value
-        }));
+      setFormValue((prevProps: any) => ({
+        ...prevProps,
+        [name]: value
+      }));
 
     } catch (error) {
-      console.log("error--",error);
+      console.log("error--", error);
     }
   }
+  const links = pathname.startsWith("/dashboard") ? "/dashboard" : "/admin";
 
- return (
+  return (
     <>
       <ToastContainer autoClose={2000} />
-      {otpSend ==false ? 
-      <section className="bg-dark-50 dark:bg-white-900">
-        <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-          <Link href="/" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-            <img className="w-8 h-8 mr-3 " src={ImgLogo.src} alt="logo" />
-              <h3 className="text-black">UrbanCart</h3>
-          </Link>
-          <div className="w-full p-6 bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md dark:bg-gray-800 dark:border-gray-700 sm:p-8">
-            <h1 className="mb-1 text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-              Forgot your password?
-            </h1>
-            <p className="font-light text-gray-500 dark:text-gray-400">Do not fret,Just type in your email and we will send you a code to reset your password!</p>
-            <form className="mt-4 space-y-4 lg:mt-5 md:space-y-5" onSubmit={handleForgot}>
-              <div>
-                <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
-                <input type="email" name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required 
-                value={formValue.email}
-                onChange={handleForm}
+      <div className=" flex justify-center items-center ">
+        <div className="absolute top-0 mt-28">
+          <div className="inline-flex">
+            <h1 className="text-5xl font-signature ml-2">
+              <Link href={links}>
+                <Image
+                  priority
+                  src={siteIcon}
+                  height={34}
+                  width={35}
+                  alt="banner"
                 />
-              </div>
-              <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Reset password {loading==true ? "Loading....":""}</button>
-            </form>
+              </Link>
+            </h1>
+            <Link href={links}>
+              <h1 className="ml-8 mt-1 text-2xl font-bold">UrbanCart</h1>
+            </Link>
           </div>
-          
-
         </div>
-      </section>
-
-      : <ResetPass  formValue={formValue}/>}
-      
-</>
-)
+      </div>
+      {otpSend == false ?
+        <div className="h-screen bg-[#f6f5f7] flex items-center justify-center font-poppins">
+          <div className="relative w-[850px] h-[500px] bg-white shadow-custom rounded-lg overflow-hidden flex">
+            <div className="w-1/2 custom-bg-color text-white flex flex-col justify-center items-center p-10">
+              <h1 className="mb-4">Forgot Password!</h1>
+              <p className="text-center mb-8">Enter your email id and we will send the opt on your email</p>
+            </div>
+            <div className="w-1/2 p-10 flex flex-col justify-center items-center">
+              <form className="flex flex-col items-center w-full" onSubmit={handleForgot}>
+                <h1 className="text-black-500 mb-4">Forgot Password</h1>
+                <input
+                  type="email"
+                  placeholder="Email"
+                  name="email"
+                  className="w-full p-3 mb-3 bg-gray-100 border-none outline-none"
+                  value={formValue.email}
+                  onChange={handleForm}
+                />
+                <button className="w-full py-3 mt-4 custom-bg-color text-white font-bold">Reset password {loading == true ? "Loading...." : ""}</button>
+              </form>
+              <button className="w-full py-3 mt-4 custom-bg-color text-white font-bold"><Link href="/login">
+                Back to login
+              </Link></button>
+            </div>
+          </div>
+        </div>
+        : <ResetPass formValue={formValue} />}
+    </>
+  )
 }
 
 export default ForgotPass

@@ -6,6 +6,7 @@ import { Getallsubcategory } from "@/app/services/apis/admin/products";
 import Subcategory from "./subcategory";
 import Logo from "@/app/(view)/_components/logo";
 
+
 const CategoryCard = () => {
   const [catData, setCatData] = useState<any>("");
   const [sub, setsub] = useState<any>([])
@@ -45,17 +46,17 @@ const CategoryCard = () => {
             <Carousel />
           </div>
           <div className="py-4">
-            <Logo/>
+            <Logo />
           </div>
           <hr />
           <div>
-          <img draggable="false" className="image-image undefined " src="https://assets.myntassets.com/w_980,c_limit,fl_progressive,dpr_2.0/assets/images/2024/5/28/0efc48ea-42c8-496b-82d5-863e9271fc101716906763403-OMG.jpg" />
+            <img draggable="false" className="image-image undefined " src="https://assets.myntassets.com/w_980,c_limit,fl_progressive,dpr_2.0/assets/images/2024/5/28/0efc48ea-42c8-496b-82d5-863e9271fc101716906763403-OMG.jpg" />
           </div>
           {sub.map((data: any, index: any) => (
             <div key={index} className=" flex mt-10  flex-col">
-              
-                <Subcategory key={index} data={data} />
-              
+
+              <Subcategory key={index} data={data} />
+
 
             </div>
           ))}
