@@ -4,6 +4,7 @@ import { UserRoleAPI } from '@/app/services/apis/user'
 import LoadingSpiner from "../components/loading"
 import { UserDataType } from '@/app/types/userTypes'
 import Link from 'next/link'
+import UpdateProfile from '../../dashboard/components/updateProfile'
 
 const UserProfile = () => {
 
@@ -19,6 +20,15 @@ const UserProfile = () => {
       
     }
   }
+
+
+  const handleUpdateSuccess=async()=>{
+    const response=await UserRoleAPI()
+    if(response?.status===200){
+
+        data()
+    }
+}
 
   useEffect(() => {
     data();
@@ -41,9 +51,7 @@ const UserProfile = () => {
           </p>
           </div>
           </div>
-          <Link href={'/dashboard/profile/update'}>
-          <button  className='bg-blue-800 rounded-md text-white px-3 py-2'>Update Profile</button>
-          </Link>
+          <UpdateProfile onUpdateSuccess={handleUpdateSuccess}/>
         </div>
         <div className="border-t border-gray-200 px-4 py-5 sm:p-0">
           <dl className="sm:divide-y sm:divide-gray-200">

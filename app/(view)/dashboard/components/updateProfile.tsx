@@ -2,7 +2,7 @@ import { UpdateProfileAdminApi} from '@/app/services/apis/admin/products'
 import { UserRoleAPI } from '@/app/services/apis/user'
 import React, { useEffect, useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
-import Spiner from './spiner'
+import Spiner from '../../admin/components/spiner'
 
 const UpdateProfile = ({onUpdateSuccess }: {onUpdateSuccess: () => void }) => {
        const [showModal,setShowModal]=useState(false)
@@ -65,7 +65,7 @@ const UpdateProfile = ({onUpdateSuccess }: {onUpdateSuccess: () => void }) => {
   <>
   {/* <!-- Modal toggle --> */}
 <div className="flex justify-center ">
-    <button id="deleteButton" data-modal-target="deleteModal" data-modal-toggle="deleteModal"  className="h-[25%] mt-4 bg-gray-900 dark:bg-gray-600 text-white py-2 px-4 rounded-md  hover:bg-gray-800 dark:hover:bg-gray-700" type="button" onClick={()=>setShowModal(true)}>
+    <button id="deleteButton" data-modal-target="deleteModal" data-modal-toggle="deleteModal"  className="h-[65%] mt-4 bg-gray-900 dark:bg-gray-600 text-white py-2 px-4 rounded-md  hover:bg-gray-800 dark:hover:bg-gray-700" type="button" onClick={()=>setShowModal(true)}>
     Update
     </button>
 </div>
