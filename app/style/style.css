@@ -1,0 +1,15 @@
+.custom-bg-color {
+  background-color: #48c1af;
+}
+
+.custom-bg-color:hover {
+  background-color: #2e8478;
+}
+
+.custom-text-color {
+  color: #48c1af;
+}
+
+.custom-text-color:hover {
+  color: #2e8478;
+}

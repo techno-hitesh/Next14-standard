@@ -1,131 +1,123 @@
-"use client"
-import Link from "next/link"
-import { useState} from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { addUser } from "@/app/store/slices/userSlicer"
-import { useRouter } from "next/navigation"
-import { loginUserAPI, UserRoleAPI } from "@/app/services/apis/user/index"
-import { useCookies } from 'next-client-cookies';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { UserType } from "@/app/types/userTypes"
-import authConfig from "@/app/configs/auth"
-import { jwtDecodeData,jwtEncodeData } from "@/app/helpers" 
-import {Icon} from 'react-icons-kit';
-import {eyeOff} from 'react-icons-kit/feather/eyeOff';
-import {eye} from 'react-icons-kit/feather/eye'
+"use client";
+import Link from "next/link";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
+import { loginUserAPI, UserRoleAPI } from "@/app/services/apis/user/index";
+import { useCookies } from "next-client-cookies";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { UserType } from "@/app/types/userTypes";
+import authConfig from "@/app/configs/auth";
+import { jwtEncodeData } from "@/app/helpers";
+import { Icon } from "react-icons-kit";
+import { eyeOff } from "react-icons-kit/feather/eyeOff";
+import { eye } from "react-icons-kit/feather/eye";
+import "@/app/style/style.css"
+import { usePathname } from "next/navigation";
+import Image from "next/image";
+import siteIcon from "@/public/images/4.svg";
 
+const initialFormState = {
+  email: "",
+  password: "",
+};
 
 const Login = () => {
-
   const cookies = useCookies();
   const router = useRouter();
+  const pathname = usePathname();
 
   const dispatch = useDispatch();
   const userData = useSelector((state: any) => {
     return state.user;
-  })
+  });
 
-  const [formValue, setFormValue] = useState<UserType | any>({ email: "", password: "" })
+  const [formValue, setFormValue] = useState<UserType | any>(initialFormState);
   const [formErrors, setFormErrors] = useState<any>({});
   const [isSubmit, setIsSubmit] = useState<Boolean>(false);
-  const [valMatch, setValMatch] = useState("")
-  const [apiErr, setApiErr] = useState<string | {} | any>("")
 
-  const [type, setType] = useState('password');
+  const [type, setType] = useState("password");
   const [icon, setIcon] = useState(eyeOff);
 
   const handleToggle = () => {
-    if (type==='password'){
-       setIcon(eye);
-       setType('text')
+    if (type === "password") {
+      setIcon(eye);
+      setType("text");
     } else {
-       setIcon(eyeOff)
-       setType('password')
+      setIcon(eyeOff);
+      setType("password");
     }
- }
-
+  };
 
   const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
-    e.preventDefault()
+    e.preventDefault();
 
     let errForm: {} | "" = validate(formValue);
 
     if (Object.keys(errForm).length !== 0) {
       setFormErrors(errForm);
-
     } else {
       const check = await LoginChecker(formValue);
 
-        if (check) {
-          setIsSubmit(true);
-          const userResp = await UserRoleAPI();
-          // console.log("userRoleAPI ", userResp)
-          
-          if (userResp.status == 200) {
+      if (check) {
+        setIsSubmit(true);
+        const userResp = await UserRoleAPI();
 
-            setIsSubmit(false);
-            const jwtencode = jwtEncodeData(userResp.userData.fullName);
-            // dispatch(addUser(jwtencode));
-            
+        if (userResp.status == 200) {
+          setIsSubmit(false);
+          const jwtencode = jwtEncodeData(userResp.userData.fullName);
 
-            const { role } = userResp.userData.role;
-            const jwtRole:any = jwtEncodeData(role);
+          const { role } = userResp.userData.role;
+          const jwtRole: any = jwtEncodeData(role);
 
-            if (role === "user") {
-              cookies.set(authConfig.storageRole, jwtRole)
-              localStorage.setItem(authConfig.storageRole, jwtRole)
-              router.push("/dashboard");
-            }else if(role ==="admin"){
-              cookies.set(authConfig.storageRole, jwtRole)
-              localStorage.setItem(authConfig.storageRole, jwtRole)
-              router.push("/admin");
-            }
-
-          } else {
-            toast.error("Server Error Please Wait!!")
+          if (role === "user") {
+            cookies.set(authConfig.storageRole, jwtRole);
+            localStorage.setItem(authConfig.storageRole, jwtRole);
+            router.push("/dashboard");
+          } else if (role === "admin") {
+            cookies.set(authConfig.storageRole, jwtRole);
+            localStorage.setItem(authConfig.storageRole, jwtRole);
+            router.push("/admin");
           }
-          
+        } else {
+          toast.error("Server Error Please Wait!!");
         }
+      }
     }
-  }
-
+  };
 
   const LoginChecker = async (data: UserType) => {
-
-    const isLoginData = await loginUserAPI(JSON.stringify(data))
+    const isLoginData = await loginUserAPI(JSON.stringify(data));
 
     if (isLoginData?.status === 200) {
-
-      cookies.set(authConfig.storageTokenKeyName, isLoginData.token)
-      localStorage.setItem(authConfig.storageTokenKeyName, isLoginData.token)
+      cookies.set(authConfig.storageTokenKeyName, isLoginData.token);
+      localStorage.setItem(authConfig.storageTokenKeyName, isLoginData.token);
 
       return isLoginData;
-
-    } else  {
+    } else {
       toast.error(isLoginData?.message);
       return false;
     }
-  }
+  };
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
     setFormValue((prevProps: any) => ({
       ...prevProps,
-      [name]: value
+      [name]: value,
     }));
-  }
+  };
 
   const validate = (values: any | {}) => {
     const errors: UserType | any = {};
 
     const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
-    console.log("regex email values", regex.test(values.email))
+    console.log("regex email values", regex.test(values.email));
     if (!values.email) {
       errors.email = "Email cannot be empty.";
       toast.error("Email cannot be empty.");
-
     } else if (regex.test(values.email) == false) {
       errors.email = "Please enter a valid email address.";
       toast.error("Please enter a valid email address.");
@@ -140,74 +132,74 @@ const Login = () => {
     }
 
     return errors;
-  }
-
+  };
+  const links = pathname.startsWith("/dashboard") ? "/dashboard" : "/admin";
   return (
     <>
       <ToastContainer autoClose={2000} />
-      <div className="bg-[#53c28b]  relative p-6 flex justify-center items-center text-white w-full h-full">
-         <Link href={'/urbancart'}>
-         <h1 className="font-bold text-2xl">UrbanCart</h1>
-         </Link>
-          
-      </div>
-      <form
-        className='flex mt-20  py-12 flex-col  justify-center items-center gap-5 max-w-lg shadow-2xl shadow-gray-900 h-[90%] hover:shadow-gray-300  bg-white mx-auto rounded-md text-gray-900 ' onSubmit={handleSubmit}  >
-        <h3 className='text-2xl '>Please Log In! </h3>
-
-        <label className="block">
-          <span className="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700">
-            Email
-          </span>
-          <input required type="email" name="email" className="mt-1 px-3 py-4 w-[350px] md:w-[450px] bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block rounded-md sm:text-sm focus:ring-1"
-            value={formValue.email}
-            onChange={(e) => handleChange(e)}
-
-            placeholder="Enter your email address" />
-          {/* <p className="text-red-500">{formErrors.email}</p> */}
-        </label>
-
-        
-        <label className="block">
-        <div className="flex items-center justify-between">
-          <span className="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700">
-              Password
-            </span>         
+      <div className=" flex justify-center items-center ">
+        <div className="absolute top-0 mt-28">
+          <div className="inline-flex">
+            <h1 className="text-5xl font-signature ml-2">
+              <Link href={links}>
+                <Image
+                  priority
+                  src={siteIcon}
+                  height={34}
+                  width={35}
+                  alt="banner"
+                />
+              </Link>
+            </h1>
+            <Link href={links}>
+              <h1 className="ml-8 mt-1 text-2xl font-bold">UrbanCart</h1>
+            </Link>
+          </div>
         </div>
-          
-        <div className="mb-8 flex">
-          <input required type={type} name="password" className="mt-1 w-[350px] md:w-[450px] px-3 py-4 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block rounded-md sm:text-sm focus:ring-1" placeholder="Enter your password"
-            value={formValue.password}
-            onChange={(e) => handleChange(e)}
-          />
-          <span className="flex justify-around items-center select-none" onClick={handleToggle}>
-                  <Icon className="absolute mr-12" icon={icon} size={25}/>
-              </span>
+      </div>
+      <div className="h-screen bg-[#f6f5f7] flex items-center justify-center font-poppins">
+        <div className="relative w-[850px] h-[500px] bg-white shadow-custom rounded-lg overflow-hidden flex">
+          <div className="w-1/2  text-white flex flex-col justify-center items-center p-10 custom-bg-color" >
+            <h1 className="mb-4">Welcome Back!</h1>
+            <p className="text-center mb-8">Enter your personal details and start your journey with us</p>
+            <Link href="/register" className="border border-white py-2 px-6 rounded-full text-white">
+              Sign Up
+            </Link>
           </div>
-          {/* <p className="text-red-500">{formErrors.password}</p> */}
-        </label>
-
-        {isSubmit == false && apiErr != "" ?
-          <p className="text-red-500">{apiErr.message}</p>
-          : ""
-        }
-
-        
-        <div className="flex  flex-inline justify-between">
-          <span className='mr-20 '>Dont have any Account? 
-          <Link className='text-blue-700 font-bold' href="/register">Sign Up</Link>
-          </span>   
-          <div className="text-sm ">
-              <Link href="/forgot" className="font-semibold text-indigo-600 hover:text-indigo-500">Forgot password?</Link>
+          <div className="w-1/2 p-10 flex flex-col justify-center items-center">
+            <form className="flex flex-col items-center w-full" onSubmit={handleSubmit}>
+              <h1 className="text-black-500 mb-4">Login</h1>
+              <input
+                type="email"
+                placeholder="Email"
+                name="email"
+                className="w-full p-3 mb-3 bg-gray-100 border-none outline-none"
+                value={formValue.email}
+                onChange={handleChange}
+              />
+              <div className="w-full relative">
+                <input
+                  type={type}
+                  placeholder="Password"
+                  name="password"
+                  className="w-full p-3 mb-3 bg-gray-100 border-none outline-none"
+                  value={formValue.password}
+                  onChange={handleChange}
+                />
+                <span className="absolute top-3 right-3 cursor-pointer" onClick={handleToggle}>
+                  <Icon icon={icon} size={20} />
+                </span>
+              </div>
+              <button className="w-full py-3 mt-4 custom-bg-color text-white font-bold">{isSubmit ? "Loading......." : "Log In"}</button>
+            </form>
+            <button className="w-full py-3 mt-4 custom-bg-color text-white font-bold"><Link href="/forgot">
+              Forget Password
+            </Link></button>
           </div>
-
-        </div>  
-
-        <button className='bg-[#53c28b] text-lg text-white rounded-md p-[10px] w-[90%]' type="submit">{isSubmit ==true ? "Loading......." :"Log In"}</button>
-      </form>
-      
+        </div>
+      </div>
     </>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

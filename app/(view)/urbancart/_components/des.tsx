@@ -7,20 +7,20 @@ import 'swiper/css';
 import Link from "next/link";
 import { urbancartLinks } from "@/app/configs/authLinks";
 import { getAllCategoryAPI } from "@/app/services/apis/user/categories";
-
+import "@/app/style/style.css"
 
 const Des = () => {
     const [subdata, setSubData] = useState<any>([]);
     const prevButtonRef = useRef(null);
     const nextButtonRef = useRef(null);
 
-   
+
     const fetchcategory = async () => {
-      const response=await getAllCategoryAPI()
-      if(response?.status===200){
-        console.log(response)
-        setSubData(response?.data)
-      }
+        const response = await getAllCategoryAPI()
+        if (response?.status === 200) {
+            console.log(response)
+            setSubData(response?.data)
+        }
     };
 
     useEffect(() => {
@@ -34,8 +34,8 @@ const Des = () => {
                     <h2 className="font-manrope font-bold text-2xl text-gray-900"></h2>
                     <div className="flex justify-center items-center gap-2">
                         <button ref={prevButtonRef}
-                            className="swiper-button-prev rounded-full w-6 h-6 flex items-center justify-center p-1.5 bg-indigo-200 group transition-all duration-300 hover:bg-indigo-600">
-                            <svg className="stroke-indigo-700 transition-all duration-300 group-hover:stroke-white"
+                            className="swiper-button-prev rounded-full w-6 h-6 flex items-center justify-center p-1.5 custom-bg-color group transition-all duration-300 custom-bg-color:hover">
+                            <svg className="stroke-black transition-all duration-300 group-hover:stroke-white"
                                 xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 20 20" fill="none">
                                 <path
                                     d="M8.38449 15.1023L3.33337 10.0512M3.33337 10.0512L8.38449 5.00006M3.33337 10.0512H18.3333"
@@ -43,8 +43,8 @@ const Des = () => {
                             </svg>
                         </button>
                         <button ref={nextButtonRef}
-                            className="swiper-button-next rounded-full w-6 h-6 flex items-center justify-center p-1.5 bg-indigo-200 group transition-all duration-300 hover:bg-indigo-600">
-                            <svg className="stroke-indigo-700 transition-all duration-300 group-hover:stroke-white"
+                            className="swiper-button-next rounded-full w-6 h-6 flex items-center justify-center p-1.5 custom-bg-color group transition-all duration-300 custom-bg-color:hover">
+                            <svg className="stroke-black transition-all duration-300 group-hover:stroke-white"
                                 xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 20 20" fill="none">
                                 <path
                                     d="M11.6155 5.00006L16.6667 10.0512M16.6667 10.0512L11.6155 15.1023M16.6667 10.0512L1.66675 10.0512"
@@ -65,7 +65,7 @@ const Des = () => {
                 centeredSlides={false}
                 loop
                 spaceBetween={10}
-               
+
             >
                 {subdata && subdata.length > 0 ? subdata.map((subval: any, index: number) => (
                     <SwiperSlide key={index} className="flex flex-col items-center">
