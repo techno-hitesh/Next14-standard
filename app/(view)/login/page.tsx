@@ -161,7 +161,7 @@ const Login = () => {
         <div className="relative w-[850px] h-[500px] bg-white shadow-custom rounded-lg overflow-hidden flex">
           <div className="w-1/2  text-white flex flex-col justify-center items-center p-10 custom-bg-color" >
             <h1 className="mb-4">Welcome Back!</h1>
-            <p className="text-center mb-8">To keep connected with us please login with your personal info</p>
+            <p className="text-center mb-8">Enter your personal details and start your journey with us</p>
             <Link href="/register" className="border border-white py-2 px-6 rounded-full text-white">
               Sign Up
             </Link>

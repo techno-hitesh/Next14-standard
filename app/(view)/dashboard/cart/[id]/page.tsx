@@ -163,10 +163,6 @@ const CarTByID = ({ params }: { params: { id: any | string } }) => {
                                                                         <div className="flex">
                                                                             <button type="button" className="font-medium custom-text-color" onClick={(e) => handleDelCartItem(data?._id)}>Remove</button>
                                                                         </div>
-                                                                        {/*
-        <button type="button" className="font-medium text-yellow-600 ml-1 hover:text-indigo-500" onClick={(e)=>handleBuySingleCart(data?._id)}> Buy This Now</button>
-       
-      </div> */}
 
                                                                     </div>
 

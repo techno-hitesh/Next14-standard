@@ -141,8 +141,8 @@ const RegisterPage = () => {
             </form>
           </div>
           <div className="w-1/2  text-white flex flex-col justify-center items-center p-10 custom-bg-color">
-            <h1 className="mb-4">Hello, Friend!</h1>
-            <p className="text-center mb-8">Enter your personal details and start your journey with us</p>
+            <h1 className="mb-4">Hello!</h1>
+            <p className="text-center mb-8">To keep connected with us please login with your personal info</p>
             <Link href="/login" className="border border-white py-2 px-6 rounded-full text-white">
               Sign In
             </Link>

@@ -86,7 +86,7 @@ const ForgotPass = () => {
           <div className="relative w-[850px] h-[500px] bg-white shadow-custom rounded-lg overflow-hidden flex">
             <div className="w-1/2 custom-bg-color text-white flex flex-col justify-center items-center p-10">
               <h1 className="mb-4">Forgot Password!</h1>
-              <p className="text-center mb-8">Enter your email id and we will send the opt on your email</p>
+              <p className="text-center mb-8">Enter your email id and we will send the otp on your email</p>
             </div>
             <div className="w-1/2 p-10 flex flex-col justify-center items-center">
               <form className="flex flex-col items-center w-full" onSubmit={handleForgot}>
